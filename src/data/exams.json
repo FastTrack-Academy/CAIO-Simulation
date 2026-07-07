@@ -1,0 +1,1008 @@
+[
+  {
+    "id": "exam_1",
+    "name": "Past Exam 1 (Questions 1-35 of 35)",
+    "questions": [
+      {
+        "id": "exam_1_q1",
+        "number": 1,
+        "points": 2,
+        "text": "You trained a binary classifier to detect a rare disease where only 1% of patients actually have the disease. Which of the following evaluation metrics would be the most informative in this imbalanced setting?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** Accuracy",
+          "**B.** Mean Squared Error",
+          "**C.** Precision",
+          "**D.** Recall",
+          "**E.** $R^2$ Score"
+        ],
+        "correctAnswer": "**D. Recall** (or **C. Precision** depending on the context, but Recall is typically the primary concern for rare disease detection).",
+        "explanation": "* In highly imbalanced datasets (e.g., only 1% positive cases), **Accuracy** is highly misleading. A dummy classifier that predicts \"no disease\" for every patient would achieve 99% accuracy but would fail to detect any sick patients.\n  * **Mean Squared Error (MSE)** and **$R^2$ Score** are metrics used for regression problems, not binary classification.\n  * **Recall** (also called sensitivity) measures the proportion of actual positive cases (patients with the disease) that were correctly identified. In medical screening, missing a disease case (a False Negative) is extremely dangerous, making Recall the most critical metric.\n  * **Precision** measures the proportion of positive identifications that were actually correct. While important to avoid unnecessary treatments, it is secondary to finding all actual cases (Recall).\n\n---"
+      },
+      {
+        "id": "exam_1_q2",
+        "number": 2,
+        "points": 2,
+        "text": "Which of the following correctly describes the cost function that linear regression minimizes during training using ordinary least squares?\n\nLet:\n* $m$ = number of training examples\n* $y_i$ = true value for the $i$-th example\n* $\\hat{y}_i$ = predicted value for the $i$-th example\n* $\\theta$ = model parameters",
+        "type": "multiple-choice",
+        "options": [
+          "**Option 1:**\n  $$J(\\theta) = \\sum_{i=1}^{m} |\\hat{y}_i - y_i|$$",
+          "**Option 2:**\n  $$J(\\theta) = \\frac{1}{m} \\sum_{i=1}^{m} (\\hat{y}_i - y_i)^2$$",
+          "**Option 3:**\n  $$J(\\theta) = \\frac{1}{2m} \\sum_{i=1}^{m} (\\hat{y}_i - y_i)^2$$",
+          "**Option 4:**\n  $$J(\\theta) = \\sum_{i=1}^{m} (\\theta^T X_i - y_i)$$",
+          "**Option 5:**\n  $$J(\\theta) = \\frac{1}{2} \\sum_{i=1}^{m} (y_i - \\hat{y}_i)^4$$"
+        ],
+        "correctAnswer": "**Option 3** (or **Option 2**; both are valid formulations of Mean Squared Error, but Option 3 with the $\\frac{1}{2m}$ factor is the standard machine learning cost function for OLS gradient descent because the $2$ cancels out during differentiation).",
+        "explanation": "* Ordinary Least Squares (OLS) minimizes the sum of squared residuals between the predicted values $\\hat{y}_i$ and the actual values $y_i$.\n  * Option 1 is Mean Absolute Error (MAE), which represents L1 loss.\n  * Option 4 is the sum of differences, which is not squared (residuals can cancel each other out).\n  * Option 5 uses the fourth power, which is not standard.\n  * Option 3 ($J(\\theta) = \\frac{1}{2m} \\sum_{i=1}^{m} (\\hat{y}_i - y_i)^2$) is standard as the $\\frac{1}{2}$ simplifies the derivative math (gradient) to $\\frac{1}{m} \\sum_{i=1}^{m} (\\hat{y}_i - y_i) X_i$.\n\n---"
+      },
+      {
+        "id": "exam_1_q3",
+        "number": 3,
+        "points": 5,
+        "text": "You are given the following simplified example of using TF-IDF vectorization and Word2Vec embeddings on a small text corpus. One key line is missing — fill in the blank.\n\n```python\nfrom sklearn.feature_extraction.text import TfidfVectorizer\nfrom gensim.models import Word2Vec\n\ndocuments = [\"AI is amazing\", \"AI can learn from data\", \"Data science is powerful\"]\n\n# TF-IDF Vectorization\nvectorizer = TfidfVectorizer()\nX = vectorizer.fit_transform(documents)\n\n# Tokenize for Word2Vec\ntokenized_docs = [doc.lower().split() for doc in documents]\n\n# Fill in the blank: train Word2Vec model\nmodel = Word2Vec(___________, vector_size=100, window=5, min_count=1, workers=2)\n```",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "`tokenized_docs`",
+        "explanation": "* **Completed Line:**\n  ```python\n  model = Word2Vec(tokenized_docs, vector_size=100, window=5, min_count=1, workers=2)\n  ```\n  * The `Word2Vec` constructor in Gensim requires a list of sentences (or tokenized documents) as its first argument to train the model. \n  * Here, `tokenized_docs` is a list of lists of strings (e.g., `[['ai', 'is', 'amazing'], ...]`), which matches the expected input format for training Word2Vec.\n\n---"
+      },
+      {
+        "id": "exam_1_q4",
+        "number": 4,
+        "points": 2,
+        "text": "What is the key difference between Uniform Cost Search (UCS) and Breadth-First Search (BFS)?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** UCS is faster because it uses depth information",
+          "**B.** UCS always visits the deepest node first",
+          "**C.** UCS cannot be used with weighted graphs",
+          "**D.** UCS assumes all edge costs are equal",
+          "**E.** UCS prioritizes paths by cumulative cost, not depth"
+        ],
+        "correctAnswer": "E. UCS prioritizes paths by cumulative cost, not depth",
+        "explanation": "* **Breadth-First Search (BFS)** expands nodes layer-by-layer, prioritizing nodes by their depth (number of edges from the root). It assumes path length (in terms of number of edges) represents cost.\n  * **Uniform Cost Search (UCS)** (essentially Dijkstra's algorithm for path-finding) uses path costs. It prioritizes nodes based on the cumulative path cost from the root node to the current node, finding the optimal path even if it contains more edges but has a lower total cost.\n  * BFS is a special case of UCS when all edge costs are equal.\n\n---"
+      },
+      {
+        "id": "exam_1_q5",
+        "number": 5,
+        "points": 5,
+        "text": "You are training a Support Vector Machine to classify data into two classes. The goal is to fit the model and make predictions.\n\n```python\nfrom sklearn.svm import SVC\nfrom sklearn.datasets import make_classification\nfrom sklearn.model_selection import train_test_split\n\nX, y = make_classification(n_samples=100, n_features=2, n_classes=2, random_state=42)\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n\nmodel = SVC(kernel='rbf', C=1.0)\n\n# === Missing line ===\n\naccuracy = model.score(X_test, y_test)\nprint(\"Test accuracy:\", accuracy)\n```\n\nWhich line should be inserted in place of the missing line?",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "`model.fit(X_train, y_train)`",
+        "explanation": "* In scikit-learn, the `fit` method is used to train the machine learning model on the training data (`X_train` and `y_train`).\n  * Calling `model.fit(X_train, y_train)` adjusts the internal parameters of the SVM. Without this training step, calling `model.score` on the test set will fail because the model has not been fitted yet.\n\n---"
+      },
+      {
+        "id": "exam_1_q6",
+        "number": 6,
+        "points": 2,
+        "text": "Which of the following statements about the A* search algorithm is true?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** A* guarantees the shortest path only if the heuristic is admissible and consistent",
+          "**B.** A* always expands the node with the greatest estimated cost to goal",
+          "**C.** A* ignores edge weights if a heuristic is provided",
+          "**D.** A* is faster than Dijkstra's algorithm because it ignores the actual path cost",
+          "**E.** A* does not work on graphs with cycles"
+        ],
+        "correctAnswer": "A. A* guarantees the shortest path only if the heuristic is admissible and consistent",
+        "explanation": "* For graph search (which prevents visiting already-visited states), A* requires a **consistent** (and admissible) heuristic to guarantee finding the shortest path without having to re-expand closed nodes. For tree search, **admissibility** (never overestimating the cost to the goal) is sufficient.\n  * Option B is false; A* expands the node with the *lowest* $f(n) = g(n) + h(n)$ cost.\n  * Option C is false; A* uses edge weights (accumulated in $g(n)$).\n  * Option D is false; A* does not ignore $g(n)$ (the actual path cost).\n  * Option E is false; A* works on graphs with cycles.\n\n---"
+      },
+      {
+        "id": "exam_1_q7",
+        "number": 7,
+        "points": 5,
+        "text": "Below is an implementation of the Breadth-First Search (BFS) algorithm in Python. One important line that ensures a node is not revisited has been removed. Fill in the blank to complete the code.\n\n```python\nfrom collections import deque\n\ndef bfs(graph, start):\n    visited = set()\n    queue = deque()\n    \n    # Fill in the blank: enqueue the starting node\n    ___________________________\n    visited.add(start)\n    \n    while queue:\n        node = queue.popleft()\n        print(node)\n        \n        for neighbor in graph[node]:\n            if neighbor not in visited:\n                queue.append(neighbor)\n                visited.add(neighbor)\n```\n\nFill in the blank to complete the code.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "`queue.append(start)`",
+        "explanation": "* **Completed Line:**\n  ```python\n  queue.append(start)\n  ```\n  * The queue is initialized as an empty `deque()`. To start the Breadth-First Search, the starting node must be added (enqueued) to the queue before the loop begins. In Python's `collections.deque`, this is done using the `.append()` method.\n\n---"
+      },
+      {
+        "id": "exam_1_q8",
+        "number": 8,
+        "points": 2,
+        "text": "Let two Gaussian distributions be defined as:\n* Distribution A: $\\mu = 5, \\sigma = 1$\n* Distribution B: $\\mu = 5, \\sigma = 2$\n\nLet $x = 7$. Which of the following statements is true?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** $f_A(7) = f_B(7)$, because they share the same mean.",
+          "**B.** $f_A(7) > f_B(7)$, because A has a smaller standard deviation.",
+          "**C.** $f_A(7) < f_B(7)$, because A is more peaked.",
+          "**D.** Both distributions assign the same likelihood to all $x$.",
+          "**E.** The value of $f_B(7)$ is independent of its standard deviation."
+        ],
+        "correctAnswer": "C. $f_A(7) < f_B(7)$, because A is more peaked.",
+        "explanation": "* The probability density function (PDF) of a Gaussian distribution is given by:\n    $$f(x) = \\frac{1}{\\sigma \\sqrt{2\\pi}} e^{-\\frac{1}{2} \\left(\\frac{x-\\mu}{\\sigma}\\right)^2}$$\n  * For Distribution A ($\\mu=5, \\sigma=1$), $x=7$ is 2 standard deviations away from the mean ($\\frac{7-5}{1} = 2$):\n    $$f_A(7) = \\frac{1}{\\sqrt{2\\pi}} e^{-2} \\approx 0.3989 \\times 0.1353 \\approx 0.054$$\n  * For Distribution B ($\\mu=5, \\sigma=2$), $x=7$ is 1 standard deviation away from the mean ($\\frac{7-5}{2} = 1$):\n    $$f_B(7) = \\frac{1}{2\\sqrt{2\\pi}} e^{-0.5} \\approx 0.1994 \\times 0.6065 \\approx 0.121$$\n  * Thus, $f_A(7) < f_B(7)$ ($0.054 < 0.121$). Since Distribution A is narrower and more peaked, its density drops off much more quickly than B's as you move away from the mean.\n\n---"
+      },
+      {
+        "id": "exam_1_q9",
+        "number": 9,
+        "points": 2,
+        "text": "Which of the following statements is true about how the Random Forest algorithm works?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** Random Forest always builds deeper trees than a single decision tree to reduce bias.",
+          "**B.** Random Forest uses a single decision tree trained on the entire dataset to avoid overfitting.",
+          "**C.** Random Forest discards samples with missing values before training.",
+          "**D.** Random Forest randomly selects a subset of features at each split to introduce diversity among trees.",
+          "**E.** Random Forest is more prone to overfitting than a single decision tree because it uses more trees."
+        ],
+        "correctAnswer": "D. Random Forest randomly selects a subset of features at each split to introduce diversity among trees.",
+        "explanation": "* Random Forest is an ensemble method that uses bootstrap aggregating (bagging) of decision trees. \n  * The key modification in Random Forest over standard bagging is **feature bagging**: at each split in each tree, it only considers a random subset of the features. This decorrelates the trees, making the ensemble much more robust to variance.\n  * Option A is false; bagging reduces *variance*, not bias.\n  * Option B is false; Random Forest uses multiple trees, not a single tree.\n  * Option E is false; using more trees reduces variance and makes the model less prone to overfitting compared to a single decision tree.\n\n---"
+      },
+      {
+        "id": "exam_1_q10",
+        "number": 10,
+        "points": 2,
+        "text": "Which of the following statements about anomaly detection algorithms is true?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** Anomaly detection assumes that all data points are normally distributed.",
+          "**B.** Anomaly detection algorithms are only applicable to labeled datasets.",
+          "**C.** Isolation Forest detects anomalies by measuring reconstruction error.",
+          "**D.** One-Class SVM learns a boundary that encloses the majority of the data and treats distant points as anomalies.",
+          "**E.** Anomaly detection works best when the number of anomalies is large compared to normal data."
+        ],
+        "correctAnswer": "D. One-Class SVM learns a boundary that encloses the majority of the data and treats distant points as anomalies.",
+        "explanation": "* **One-Class SVM** maps the training data into a high-dimensional space and finds the hyperplane (or hypersphere) that best separates the training data from the origin (which represents the anomaly class). In practice, it learns a boundary around the normal data, and any point falling outside is classified as an anomaly.\n  * Option A is false; while some parametric methods assume normality, non-parametric methods (like Isolation Forest or One-Class SVM) do not.\n  * Option B is false; anomaly detection is frequently unsupervised.\n  * Option C is false; Isolation Forest isolates anomalies by randomly partitioning feature space (anomalies take fewer steps to isolate). Autoencoders measure reconstruction error.\n  * Option E is false; anomalies are by definition rare, and anomaly detection algorithms are designed specifically for highly unbalanced data.\n\n---"
+      },
+      {
+        "id": "exam_1_q11",
+        "number": 11,
+        "points": 2,
+        "text": "You trained a model and found that it performs very well on the training set but poorly on the validation set. Which of the following is not an appropriate strategy to address overfitting?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** Add L2 regularization (e.g., Ridge penalty)",
+          "**B.** Use cross-validation to evaluate model performance",
+          "**C.** Collect more training data",
+          "**D.** Apply feature selection to remove irrelevant inputs",
+          "**E.** Increase model complexity by adding more features"
+        ],
+        "correctAnswer": "E. Increase model complexity by adding more features",
+        "explanation": "* Overfitting occurs when a model is too complex and learns the noise in the training data rather than the underlying pattern (high variance). \n  * To reduce overfitting, we need to simplify the model or give it more data. Adding more features increases model complexity and capacity, which will exacerbate overfitting rather than resolve it.\n  * Options A, C, and D are all valid techniques to reduce overfitting. Option B (cross-validation) is used to detect and evaluate overfitting, though it is not a direct architectural remedy on its own.\n\n---"
+      },
+      {
+        "id": "exam_1_q12",
+        "number": 12,
+        "points": 2,
+        "text": "Which of the following statements about the Naïve Bayes classifier is true?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** Naïve Bayes assumes all input features are conditionally independent given the class label.",
+          "**B.** Naïve Bayes assumes that all features are linearly correlated.",
+          "**C.** Naïve Bayes estimates conditional probabilities using logistic regression.",
+          "**D.** Naïve Bayes performs poorly when features are independent.",
+          "**E.** Naïve Bayes cannot be used for text classification problems."
+        ],
+        "correctAnswer": "A. Naïve Bayes assumes all input features are conditionally independent given the class label.",
+        "explanation": "* The \"Naïve\" assumption in Naïve Bayes is that all input features are conditionally independent of each other, given the class label. This simplifies the joint probability calculation: $P(X_1, X_2, \\dots, X_n | Y) = \\prod_{i=1}^n P(X_i | Y)$.\n  * Even though this assumption rarely holds in practice (features are often dependent), the classifier still performs surprisingly well. It performs exceptionally well when features *are* independent, making D false. It is also a classic, effective algorithm for text classification (e.g., spam detection), making E false.\n\n---"
+      },
+      {
+        "id": "exam_1_q13",
+        "number": 13,
+        "points": 2,
+        "text": "Which of the following is the correct cost function used in binary logistic regression?\n\nAssume:\n* $y \\in \\{0, 1\\}$ is the true label\n* $\\hat{y} = \\sigma(z) = \\frac{1}{1+e^{-z}}$ is the predicted probability\n* $z = \\theta^T x$",
+        "type": "multiple-choice",
+        "options": [
+          "**Option 1:**\n  $$J(\\theta) = \\frac{1}{2m} \\sum_{i=1}^{m} (\\hat{y}_i - y_i)^2$$",
+          "**Option 2:**\n  $$J(\\theta) = \\frac{1}{m} \\sum_{i=1}^{m} [y_i \\log(\\hat{y}_i) + (1 - y_i) \\log(1 - \\hat{y}_i)]$$",
+          "**Option 3:**\n  $$J(\\theta) = \\sum_{i=1}^{m} (y_i - \\hat{y}_i)^2 + \\lambda ||\\theta||_2^2$$",
+          "**Option 4:**\n  $$J(\\theta) = \\frac{1}{m} \\sum_{i=1}^{m} \\log(\\hat{y}_i - y_i)$$",
+          "**Option 5:**\n  $$J(\\theta) = -\\frac{1}{m} \\sum_{i=1}^{m} [y_i \\log(\\hat{y}_i) + (1 - y_i) \\log(1 - \\hat{y}_i)]$$"
+        ],
+        "correctAnswer": "Option 5",
+        "explanation": "* The standard cost function for binary logistic regression is the **Binary Cross-Entropy Loss** (or Log Loss). \n  * Because we want to minimize the loss, we need the negative sign prefix: $J(\\theta) = -\\frac{1}{m} \\sum_{i=1}^{m} [y_i \\log(\\hat{y}_i) + (1 - y_i) \\log(1 - \\hat{y}_i)]$. The term inside the sum is always negative or zero (since probabilities are $\\le 1$, their logs are negative), so the outer negative sign makes the overall loss positive.\n  * Option 1 is Mean Squared Error (MSE), which is non-convex when combined with the sigmoid activation, making it unsuitable for standard logistic regression optimization.\n\n---"
+      },
+      {
+        "id": "exam_1_q14",
+        "number": 14,
+        "points": 5,
+        "text": "You have trained a Gaussian Naïve Bayes classifier and now want to predict the label of a new sample.\n\n```python\nfrom sklearn.naive_bayes import GaussianNB\nimport numpy as np\n\nX_train = np.array([[1.0, 2.1], [1.3, 1.8], [5.0, 8.0], [6.0, 9.0]])\ny_train = np.array([0, 0, 1, 1])\n\nmodel = GaussianNB()\nmodel.fit(X_train, y_train)\n\nx_new = np.array([[2.0, 2.0]])\n\n# === Missing line ===\n\nprint(\"Predicted class:\", prediction)\n```\n\nWhich line should be inserted in place of the missing line?",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "`prediction = model.predict(x_new)`",
+        "explanation": "* In scikit-learn, the `predict` method is called on a trained model object to make class predictions on new data (here, `x_new`). \n  * Because the next line prints `prediction`, we must assign the return value of `model.predict(x_new)` to the variable `prediction`.\n\n---"
+      },
+      {
+        "id": "exam_1_q15",
+        "number": 15,
+        "points": 5,
+        "text": "You are clustering data using K-Means and want to view which cluster each point belongs to. What line correctly fills in the missing code?\n\n```python\nfrom sklearn.cluster import KMeans\nimport numpy as np\n\nX = np.array([[1, 2], [1, 4], [1, 0],\n              [10, 2], [10, 4], [10, 0]])\n\nkmeans = KMeans(n_clusters=2, random_state=0)\nkmeans.fit(X)\n\n# === Missing Line ===\n```\n\nWhat line should replace the missing line to print the cluster assignment for each data point?",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "`print(kmeans.labels_)` (or `print(kmeans.predict(X))`)",
+        "explanation": "* In scikit-learn clustering models, once the model has been fitted to the dataset, the cluster assignments for each training data point are stored in the `labels_` attribute. \n  * Alternatively, calling `kmeans.predict(X)` will yield the same cluster assignments. Calling `print(kmeans.labels_)` is the most common and direct way to display these values.\n\n---"
+      },
+      {
+        "id": "exam_1_q16",
+        "number": 16,
+        "points": 5,
+        "text": "You are implementing logistic regression with gradient descent in NumPy.\n\nComplete the missing line to update the parameter vector $\\theta$ based on the logistic loss:\n\n```python\nimport numpy as np\n\ndef sigmoid(z):\n    return 1 / (1 + np.exp(-z))\n\ndef logistic_gradient_descent(X, y, theta, alpha, num_iters):\n    m = len(y)\n    for i in range(num_iters):\n        z = X.dot(theta)\n        h = sigmoid(z)\n        # === Fill in the missing line below ===\n        theta = _________________________________\n    return theta\n```\n\nWhich of the following correctly completes the update step?",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "`theta = theta - (alpha / m) * X.T.dot(h - y)`",
+        "explanation": "* The gradient descent update rule is $\\theta := \\theta - \\alpha \\frac{\\partial J(\\theta)}{\\partial \\theta}$.\n  * For logistic regression with binary cross-entropy loss, the gradient vector of the loss function with respect to the weights is:\n    $$\\frac{\\partial J(\\theta)}{\\partial \\theta} = \\frac{1}{m} X^T (h - y)$$\n  * In Python using NumPy, $X^T (h - y)$ is computed as `X.T.dot(h - y)`. Therefore, the complete parameter update step is:\n    `theta = theta - (alpha / m) * X.T.dot(h - y)`\n\n---"
+      },
+      {
+        "id": "exam_1_q17",
+        "number": 17,
+        "points": 2,
+        "text": "You're given a dataset of continuous numerical features and binary class labels. Your task is to:\n1. Train a Gaussian Naïve Bayes model using scikit-learn\n2. Predict the class for a new input\n3. Return the predicted class and class probabilities\n\nComplete the function:\n\n```python\nfrom sklearn.naive_bayes import GaussianNB\n\ndef classify_with_gaussian_nb(X_train, y_train, x_new):\n    model = GaussianNB()\n    \n    # === Fill in the missing lines ===\n    __________________________________\n    prediction = ______________________\n    probability = _____________________\n    \n    return prediction, probability\n```\n\nWhich of the following fills in the blanks correctly?\n\n* **Option A:**\n  ```python\n  model.fit(X_train, y_train)\n  prediction = model.predict(x_new)\n  probability = model.predict_log_proba(x_new)\n  ```\n* **Option B:**\n  ```python\n  model.fit(X_train, y_train)\n  prediction = model.predict([x_new])\n  probability = model.predict_proba([x_new])\n  ```\n* **Option C:**\n  ```python\n  model.train(X_train, y_train)\n  prediction = model.predict(x_new)\n  probability = model.predict_proba(x_new)\n  ```\n* **Option D:**\n  ```python\n  model.fit(X_train, y_train)\n  prediction = model.predict(x_new)\n  probability = model.proba(x_new)\n  ```\n* **Option E:**\n  ```python\n  model.fit(X_train, y_train)\n  prediction = model.predict(x_new.reshape(-1))\n  probability = model.predict_proba(x_new.reshape(-1))\n  ```",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "**Option B** (if `x_new` is passed as a 1D array representing a single sample) or **Option D** (if `model.proba` were a typo in the exam paper for `model.predict_proba`, which is very common. Note: in standard scikit-learn, the correct methods are `.fit`, `.predict`, and `.predict_proba`. Since `x_new` must be a 2D array, passing a 1D array `x_new` directly to `.predict` will trigger a deprecation warning or error in newer scikit-learn versions, making wrapping it in a list `[x_new]` as shown in Option B the syntactically correct way).",
+        "explanation": "* **Training:** Scikit-learn uses `model.fit(X_train, y_train)` to train models (ruling out Option C).\n  * **Prediction:** We use `model.predict(...)` to predict classes.\n  * **Probabilities:** We use `model.predict_proba(...)` to predict probabilities (ruling out Option A which uses `predict_log_proba`, and Option D which uses the non-existent `.proba`).\n  * **Input Shape:** Scikit-learn estimators expect 2D arrays for predictions. If `x_new` is a 1D array (representing a single sample), wrapping it in a list `[x_new]` makes it a 2D array, which is correct in Option B.\n\n---"
+      },
+      {
+        "id": "exam_1_q18",
+        "number": 18,
+        "points": 2,
+        "text": "Which of the following best describes the core idea behind collaborative filtering in recommendation systems?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** It recommends items based on content similarity, such as genre, tags, or item descriptions.",
+          "**B.** It relies on demographic information to group users with similar attributes.",
+          "**C.** It only works when each user has rated every item in the dataset.",
+          "**D.** It requires labeled training data to classify user preferences.",
+          "**E.** It recommends items to a user based on the preferences of similar users or similar items."
+        ],
+        "correctAnswer": "E. It recommends items to a user based on the preferences of similar users or similar items.",
+        "explanation": "* **Collaborative Filtering** leverages the collective preferences and behaviors of users (such as ratings, purchases, or clicks) to make recommendations. It operates on the principle that if users agreed in the past, they will agree in the future.\n  * Option A describes **Content-Based Filtering**, which recommends items that are similar in content attributes (e.g., genre or text) to items the user liked before.\n  * Option B describes demographic-based recommender systems.\n  * Option C is false; collaborative filtering handles sparse data matrices (where users have rated only a small fraction of all items) using matrix factorization or neighborhood methods.\n\n---"
+      },
+      {
+        "id": "exam_1_q19",
+        "number": 19,
+        "points": 2,
+        "text": "What will be the final output of the code below?\n\n```python\nimport numpy as np\n\nA = np.arange(9).reshape(3, 3)\nB = A[:, 1]\nB[0] = 100\nprint(A)\n```",
+        "type": "multiple-choice",
+        "options": [
+          "**Option A:**\n  ```\n  [[  0 100   2]\n   [  3   4   5]\n   [  6   7   8]]\n  ```",
+          "**Option B:**\n  ```\n  [[  0   1   2]\n   [  3 100   5]\n   [  6   7   8]]\n  ```",
+          "**Option C:**\n  ```\n  [[  0   1   2]\n   [  3   4   5]\n   [  6 100   8]]\n  ```",
+          "**Option D:**\n  ```\n  [[  0   1   2]\n   [  3   4   5]\n   [  6   7   8]]\n  ```",
+          "**Option E:** Raises a `ValueError` due to illegal assignment on a view."
+        ],
+        "correctAnswer": "Option A",
+        "explanation": "* In NumPy, slicing creates a view of the original array rather than a copy. Modifying the view `B` will directly modify the original array `A`.\n  * Since `B` is `A[:, 1]`, `B[0]` refers to `A[0, 1]`.\n  * Setting `B[0] = 100` updates `A[0, 1]` to `100`, resulting in Option A.\n\n---"
+      },
+      {
+        "id": "exam_1_q20",
+        "number": 20,
+        "points": 2,
+        "text": "What is the main consequence of setting a learning rate ($\\alpha$) that is too large in gradient descent?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** Gradient descent will converge faster to the global minimum.",
+          "**B.** The model will get stuck in a local minimum.",
+          "**C.** The model may overshoot the minimum and fail to converge, possibly diverging.",
+          "**D.** The model will run slowly but eventually find the minimum.",
+          "**E.** It will cause the weights to shrink to zero."
+        ],
+        "correctAnswer": "C. The model may overshoot the minimum and fail to converge, possibly diverging.",
+        "explanation": "* A learning rate ($\\alpha$) that is too large causes gradient descent to take steps that are too large. It may overshoot the optimal parameters and bounce back and forth across the valley (cost minimum), failing to settle. If it is extremely large, the updates will grow larger and larger, causing the cost function to diverge.\n  * Option A describes a well-tuned learning rate.\n  * Option B is false; linear regression cost functions are convex, meaning there is only one global minimum and no sub-optimal local minima.\n  * Option D describes a learning rate that is too small.\n\n---"
+      },
+      {
+        "id": "exam_1_q21",
+        "number": 21,
+        "points": 5,
+        "text": "You are building a recommendation system using user-based collaborative filtering with the Surprise library. What line correctly fills in the missing code?\n\n```python\nfrom surprise import Dataset, Reader\nfrom surprise import KNNBasic\nfrom surprise.model_selection import train_test_split\n\n# Load data\ndata = Dataset.load_builtin('ml-100k')\ntrainset, testset = train_test_split(data, test_size=0.25)\n\n# Define similarity options\nsim_options = {\n    'name': 'cosine',\n    'user_based': True\n}\n\n# Initialize algorithm\nalgo = KNNBasic(sim_options=sim_options)\n\n# Train model\nalgo.fit(trainset)\n\n# === Missing Line ===\n```",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "`predictions = algo.test(testset)`",
+        "explanation": "* In the Surprise recommendation library, once a model is trained using `.fit(trainset)`, you evaluate it on the test set (which is a list of rating tuples) using the `.test(testset)` method. This returns a list of `Prediction` objects.\n  * Individual rating predictions are computed using `algo.predict(uid, iid)`, but for batch testing, `algo.test(testset)` is the correct API call.\n\n---"
+      },
+      {
+        "id": "exam_1_q22",
+        "number": 22,
+        "points": 2,
+        "text": "Which of the following best describes overfitting in the context of supervised machine learning?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** The model performs poorly on the training set but well on the test set.",
+          "**B.** The model has high bias and low variance.",
+          "**C.** The model captures noise and random fluctuations in the training data, resulting in poor generalization to new data.",
+          "**D.** The model underestimates the training labels due to insufficient training epochs.",
+          "**E.** The model achieves the lowest possible loss on both training and test data by increasing the number of features."
+        ],
+        "correctAnswer": "C. The model captures noise and random fluctuations in the training data, resulting in poor generalization to new data.",
+        "explanation": "* **Overfitting** occurs when a machine learning model fits the training data too closely, learning the noise and specific random fluctuations rather than the underlying pattern (high variance). Consequently, the model performs exceptionally well on the training data but fails to generalize, leading to poor performance on unseen/new test data.\n  * Option A describes a highly unusual scenario, not overfitting.\n  * Option B describes **underfitting** (high bias, low variance).\n  * Option D describes under-training (another form of underfitting).\n  * Option E is incorrect.\n\n---"
+      },
+      {
+        "id": "exam_1_q23",
+        "number": 23,
+        "points": 5,
+        "text": "You are training a decision tree on a dataset with 24 samples:\n* 12 labeled Yes\n* 12 labeled No\n\nYou split the data using a binary feature:\n* Left branch: 10 samples (8 Yes, 2 No)\n* Right branch: 14 samples (4 Yes, 10 No)\n\nWhat is the information gain from this split?",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "**$\\approx 0.1957$** (or $1.0 - \\frac{10}{24} H(0.8) - \\frac{14}{24} H(\\frac{4}{14})$)",
+        "explanation": "* **Detailed Calculation:**\n  1. **Entropy Formula:**\n     $$H(p) = -p \\log_2(p) - (1-p) \\log_2(1-p)$$\n  2. **Initial Entropy $H(D)$**:\n     $$p_{\\text{init}} = \\frac{12}{24} = 0.5 \\implies H(D) = H(0.5) = 1.0$$\n  3. **Left Branch Entropy $H(D_{\\text{left}})$**:\n     $$p_{\\text{left}} = \\frac{8}{10} = 0.8 \\implies H(D_{\\text{left}}) = -0.8 \\log_2(0.8) - 0.2 \\log_2(0.2) \\approx 0.7219$$\n  4. **Right Branch Entropy $H(D_{\\text{right}})$**:\n     $$p_{\\text{right}} = \\frac{4}{14} \\approx 0.2857 \\implies H(D_{\\text{right}}) = -\\frac{4}{14} \\log_2\\left(\\frac{4}{14}\\right) - \\frac{10}{14} \\log_2\\left(\\frac{10}{14}\\right) \\approx 0.8631$$\n  5. **Weighted Entropy of Split:**\n     $$H_{\\text{split}} = \\frac{10}{24} H(D_{\\text{left}}) + \\frac{14}{24} H(D_{\\text{right}}) \\approx \\frac{10}{24}(0.7219) + \\frac{14}{24}(0.8631) \\approx 0.8043$$\n  6. **Information Gain (IG):**\n     $$IG = H(D) - H_{\\text{split}} \\approx 1.0 - 0.8043 = 0.1957$$\n\n---"
+      },
+      {
+        "id": "exam_1_q24",
+        "number": 24,
+        "points": 2,
+        "text": "You are using scikit-learn to train an SVM classifier on a binary classification dataset:\n\n```python\nfrom sklearn.svm import SVC\nfrom sklearn.datasets import make_classification\nfrom sklearn.model_selection import train_test_split\n\nX, y = make_classification(n_samples=100, n_features=2, n_classes=2, random_state=0)\nX_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)\n\nclf = SVC(kernel='linear', C=1.0)\nclf.fit(X_train, y_train)\n\nprint(clf.coef_)\n```\n\nWhat does `clf.coef_` represent?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** The distances of each training sample from the hyperplane",
+          "**B.** The support vector indices",
+          "**C.** The predicted class probabilities",
+          "**D.** The learned weights (normal vector) of the linear decision boundary",
+          "**E.** The kernel matrix"
+        ],
+        "correctAnswer": "D. The learned weights (normal vector) of the linear decision boundary",
+        "explanation": "* For a linear Support Vector Machine (`kernel='linear'`), the separating hyperplane is defined by $w^T x + b = 0$, where $w$ is the normal vector to the hyperplane. \n  * The attribute `coef_` stores these weights $w$, representing the feature coefficients (normal vector) of the linear decision boundary.\n  * Option A relates to `decision_function(X)`.\n  * Option B refers to `clf.support_`.\n  * Option C refers to `clf.predict_proba(X)`.\n\n---"
+      },
+      {
+        "id": "exam_1_q25",
+        "number": 25,
+        "points": 2,
+        "text": "What will be the output of the following Python code?\n\n```python\ndef mystery(n):\n    if n == 0:\n        return 0\n    elif n % 2 == 0:\n        return mystery(n // 2)\n    else:\n        return 1 + mystery(n // 2)\n\nprint(mystery(23))\n```",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** 1",
+          "**B.** 2",
+          "**C.** 3",
+          "**D.** 4",
+          "**E.** 0"
+        ],
+        "correctAnswer": "D. 4",
+        "explanation": "* Let's trace the recursion for $n = 23$:\n    1. `mystery(23)`: $23 \\% 2 \\neq 0 \\implies 1 + \\text{mystery}(11)$\n    2. `mystery(11)`: $11 \\% 2 \\neq 0 \\implies 1 + \\text{mystery}(5)$\n    3. `mystery(5)`: $5 \\% 2 \\neq 0 \\implies 1 + \\text{mystery}(2)$\n    4. `mystery(2)`: $2 \\% 2 = 0 \\implies \\text{mystery}(1)$\n    5. `mystery(1)`: $1 \\% 2 \\neq 0 \\implies 1 + \\text{mystery}(0)$\n    6. `mystery(0)`: returns $0$.\n  * Backtracking:\n    * `mystery(1) = 1 + 0 = 1`\n    * `mystery(2) = mystery(1) = 1`\n    * `mystery(5) = 1 + mystery(2) = 2`\n    * `mystery(11) = 1 + mystery(5) = 3`\n    * `mystery(23) = 1 + mystery(11) = 4`\n  * **Underlying Logic:** This function recursively counts the number of set bits (1s) in the binary representation of $n$ (Hamming weight). The binary representation of 23 is `10111`, which contains exactly four 1s.\n\n---"
+      },
+      {
+        "id": "exam_1_q26",
+        "number": 26,
+        "points": 5,
+        "text": "You are implementing linear regression with gradient descent from scratch using NumPy.\n\nComplete the missing part of the function `gradient_descent()` so that it correctly updates the parameter vector `theta` to minimize the mean squared error (MSE):\n\n```python\nimport numpy as np\n\ndef gradient_descent(X, y, theta, alpha, num_iters):\n    m = len(y)\n    for i in range(num_iters):\n        predictions = X.dot(theta)\n        errors = predictions - y\n        # === Fill in the missing line below ===\n        theta = theta - _____________________________\n    return theta\n```\n\nWhich of the following correctly completes the update step?",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "`(alpha / m) * X.T.dot(errors)` (so the full line becomes `theta = theta - (alpha / m) * X.T.dot(errors)`)",
+        "explanation": "* For linear regression under ordinary least squares (Mean Squared Error), the gradient of the loss function $J(\\theta) = \\frac{1}{2m} \\sum_{i=1}^m (\\hat{y}_i - y_i)^2$ with respect to the parameters $\\theta$ is:\n    $$\\frac{\\partial J(\\theta)}{\\partial \\theta} = \\frac{1}{m} X^T (X\\theta - y) = \\frac{1}{m} X^T \\cdot \\text{errors}$$\n  * In gradient descent, we update the weights by subtracting the gradient scaled by the learning rate $\\alpha$:\n    $$\\theta := \\theta - \\frac{\\alpha}{m} X^T \\cdot \\text{errors}$$\n  * In NumPy, this translates to:\n    `theta = theta - (alpha / m) * X.T.dot(errors)`\n\n---"
+      },
+      {
+        "id": "exam_1_q27",
+        "number": 27,
+        "points": 2,
+        "text": "Which of the following statements about XGBoost is true?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** XGBoost trains all trees in parallel to reduce training time.",
+          "**B.** XGBoost uses L1 and L2 regularization to prevent overfitting.",
+          "**C.** XGBoost can only be used for binary classification problems.",
+          "**D.** XGBoost does not support missing value handling.",
+          "**E.** XGBoost grows trees using breadth-first search (BFS) strategy by default."
+        ],
+        "correctAnswer": "B. XGBoost uses L1 and L2 regularization to prevent overfitting.",
+        "explanation": "* XGBoost (Extreme Gradient Boosting) adds L1 ($\\alpha$) and L2 ($\\lambda$) regularization directly to its target objective function to penalize model complexity and leaf weights, which helps prevent overfitting.\n  * Option A is false; boosting is inherently sequential, so trees cannot be trained in parallel (though construction of individual tree nodes/splits is parallelized).\n  * Option C is false; it supports regression, classification, ranking, etc.\n  * Option D is false; it automatically handles missing values by learning a default direction.\n  * Option E is false; it grows trees depth-wise by default.\n\n---"
+      },
+      {
+        "id": "exam_1_q28",
+        "number": 28,
+        "points": 2,
+        "text": "Matrix Multiplication and Transpose Logic\n\nConsider the following:\n\n```python\nimport numpy as np\n\nA = np.array([[1, 2, 3]])\nB = np.array([[4], [5], [6]])\nC = np.dot(A, B)\nprint(C.shape, C)\n```\n\nWhat will be the shape and value of C?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** (3, 3) and:\n  ```\n  [[4, 5, 6],\n   [8, 10, 12],\n   [12, 15, 18]]\n  ```",
+          "**B.** (3, ) and:\n  `[32, 77, 122]`",
+          "**C.** (1, 1) and:\n  `[[32]]`",
+          "**D.** (1, 3) and:\n  `[[4, 10, 18]]`",
+          "**E.** (3, 1) and:\n  ```\n  [[4],\n   [10],\n   [18]]\n  ```"
+        ],
+        "correctAnswer": "Option C",
+        "explanation": "* `A` has shape `(1, 3)` (2D row vector).\n  * `B` has shape `(3, 1)` (2D column vector).\n  * `np.dot(A, B)` computes the matrix dot product of a `(1, 3)` matrix and a `(3, 1)` matrix, which results in a matrix of shape `(1, 1)`.\n  * The computation is:\n    $$C = (1 \\times 4) + (2 \\times 5) + (3 \\times 6) = 4 + 10 + 18 = 32$$\n  * Thus, `C.shape` is `(1, 1)` and `C` is `[[32]]`.\n\n---"
+      },
+      {
+        "id": "exam_1_q29",
+        "number": 29,
+        "points": 2,
+        "text": "You are building a linear regression model to predict house prices based on the following features:\n* area (in square feet)\n* bedrooms (number of bedrooms)\n* age (in years)\n\nYou decide to add engineered features to improve model performance, resulting in the following design matrix:\n$$X = [ \\text{area}, \\text{bedrooms}, \\text{age}, \\text{area}^2, \\text{area} \\times \\text{bedrooms}, \\log(\\text{age}+1) ]$$\n\nWhat is the most likely motivation for including these additional engineered features?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** To convert the linear model into a classification model.",
+          "**B.** To introduce interaction and nonlinear relationships between features and the target.",
+          "**C.** To reduce overfitting by shrinking the feature space.",
+          "**D.** To enforce sparsity in the learned coefficients.",
+          "**E.** To normalize the features for gradient descent."
+        ],
+        "correctAnswer": "B. To introduce interaction and nonlinear relationships between features and the target.",
+        "explanation": "* Standard linear regression can only model linear relationships. By adding polynomial features (like $\\text{area}^2$), interaction terms (like $\\text{area} \\times \\text{bedrooms}$), and non-linear transformations (like $\\log(\\text{age}+1)$), we allow the linear regression model to capture non-linear trends and feature interactions without switching to a more complex non-linear model structure.\n  * Option A is false; the target remains continuous (house prices), so it is still a regression model.\n  * Option C is false; adding engineered features increases (widens) the feature space, which generally increases the risk of overfitting rather than reducing it.\n  * Option D refers to L1 regularization (Lasso), not feature engineering.\n  * Option E is false; feature normalization (scaling/standardization) is used for gradient descent, not adding non-linear/interaction features.\n\n---"
+      },
+      {
+        "id": "exam_1_q30",
+        "number": 30,
+        "points": 5,
+        "text": "You have trained a `RandomForestClassifier` on the breast cancer dataset and now want to evaluate its prediction accuracy on a test set.\n\nWhich line correctly fills in the missing code to complete the model evaluation?\n\n```python\nfrom sklearn.datasets import load_breast_cancer\nfrom sklearn.ensemble import RandomForestClassifier\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.metrics import accuracy_score\n\nX, y = load_breast_cancer(return_X_y=True)\nX_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)\n\nmodel = RandomForestClassifier(random_state=0)\nmodel.fit(X_train, y_train)\n\n# === Missing Line ===\nprint(\"Accuracy:\", accuracy_score(y_test, predictions))\n```",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "`predictions = model.predict(X_test)`",
+        "explanation": "* To evaluate a classifier's accuracy on the test set using `accuracy_score(y_test, predictions)`, we first need to generate the predicted class labels for `X_test` using the trained model.\n  * In scikit-learn, this is done by calling `model.predict(X_test)` and storing the result in the variable `predictions`.\n\n---"
+      },
+      {
+        "id": "exam_1_q31",
+        "number": 31,
+        "points": 2,
+        "text": "Which of the following statements about Support Vector Machines is true?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** SVM always outputs probabilities for classification tasks.",
+          "**B.** The decision boundary of a linear SVM is defined by all training points.",
+          "**C.** The SVM cost function penalizes all misclassified points equally, regardless of their distance from the boundary.",
+          "**D.** Support vectors are the only training samples that influence the decision boundary.",
+          "**E.** The kernel trick is used to reduce the number of features in the dataset."
+        ],
+        "correctAnswer": "D. Support vectors are the only training samples that influence the decision boundary.",
+        "explanation": "* Support Vector Machines (SVMs) find the separating hyperplane that maximizes the margin between classes. The position of this hyperplane is completely determined by the **support vectors**—the data points that lie directly on the margins or are misclassified. Removing any other training points from the dataset would result in the exact same decision boundary.\n  * Option A is false; standard SVMs output decision values (signed distance to the hyperplane), not probabilities. Outputting probabilities requires Platt scaling (e.g., setting `probability=True` in scikit-learn).\n  * Option B is false; as mentioned, only support vectors define the boundary, not all training points.\n  * Option C is false; SVM uses hinge loss ($L = \\max(0, 1 - y(w^T x + b))$), which penalizes misclassified points proportionally to their distance from the decision margin.\n  * Option E is false; the kernel trick maps features to a *higher* dimensional space to make them linearly separable, not a lower one.\n\n---"
+      },
+      {
+        "id": "exam_1_q32",
+        "number": 32,
+        "points": 2,
+        "text": "Which of the following best describes the purpose of cross-validation in machine learning?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** To increase the number of training samples by duplicating the dataset.",
+          "**B.** To reduce the time needed for training and evaluation.",
+          "**C.** To assess how well a model generalizes to unseen data by testing it on multiple train-test splits.",
+          "**D.** To improve training accuracy by exposing the model to more labels.",
+          "**E.** To tune the model by randomly removing features in each fold."
+        ],
+        "correctAnswer": "C. To assess how well a model generalizes to unseen data by testing it on multiple train-test splits.",
+        "explanation": "* **Cross-validation** (such as $k$-fold cross-validation) is a validation technique used to estimate how well a machine learning model will perform on an independent dataset. By partitioning the dataset into $k$ subsets, training on $k-1$, and validating on the remaining subset (repeating $k$ times), it provides a robust estimate of generalization performance and reduces the variance associated with a single train-test split.\n  * Option A describes data duplication.\n  * Option B is false; cross-validation increases computation time because the model must be trained $k$ times.\n  * Option D is false; cross-validation is an evaluation tool, not a method to improve training accuracy.\n  * Option E describes feature selection or dropout-like concepts, not cross-validation.\n\n---"
+      },
+      {
+        "id": "exam_1_q33",
+        "number": 33,
+        "points": 2,
+        "text": "You are building a binary classification model to predict whether users will \"like\" an item (label = 1) or not (label = 0), based on historical data of favorites, likes, and clicks.\n\nWhich of the following strategies is most appropriate for dealing with these labels?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** Combine all actions into a single label by treating favs, likes, and clicks equally as class 1.",
+          "**B.** Use regression instead of classification since the actions have different strengths.",
+          "**C.** Ignore the clicks since they do not indicate positive engagement.",
+          "**D.** Assign different weights to each action and train a model using weighted binary labels.",
+          "**E.** Convert the task into a multi-class classification problem with 3 classes: fav, like, click."
+        ],
+        "correctAnswer": "D. Assign different weights to each action and train a model using weighted binary labels.",
+        "explanation": "* In user behavior modeling, different actions indicate different strengths of user preference (e.g., a \"favorite\" is a stronger positive signal than a \"like\", which is stronger than a \"click\").\n  * To predict a binary target (like/engagement) while incorporating these multi-strength signals, we can assign different weights to each action in the loss function (e.g., giving higher weight to favorite events and lower weight to clicks). This allows the model to learn more from high-confidence actions.\n  * Option A is poor because it treats a weak signal (click) the same as a very strong one (favorite).\n  * Option B changes the binary classification task to regression.\n  * Option C discards clicks entirely, losing valuable implicit feedback.\n  * Option E turns it into multi-class classification, which is incorrect because these actions are not mutually exclusive and are ordinal in nature.\n\n---"
+      },
+      {
+        "id": "exam_1_q34",
+        "number": 34,
+        "points": 2,
+        "text": "Which of the following best describes how the Elbow Method helps determine the number of clusters in K-Means?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** It finds the number of clusters where inertia (within-cluster sum of squares) is maximum.",
+          "**B.** It minimizes the distance between each point and its closest cluster center.",
+          "**C.** It looks for the point where adding more clusters yields diminishing returns in reducing inertia.",
+          "**D.** It chooses the number of clusters with the highest accuracy.",
+          "**E.** It uses a decision tree to select the best number of clusters."
+        ],
+        "correctAnswer": "C. It looks for the point where adding more clusters yields diminishing returns in reducing inertia.",
+        "explanation": "* In K-Means, as the number of clusters $k$ increases, the inertia (sum of squared distances of samples to their closest cluster center) always decreases because the clusters become smaller and tighter.\n  * The Elbow Method plots the inertia against different values of $k$. The \"elbow\" is the point on the curve where the rate of decrease in inertia slows down significantly (diminishing returns). This point represents a good trade-off between cluster tightness (low inertia) and model simplicity (low $k$).\n  * Option A is false; inertia is maximized when $k=1$.\n  * Option B describes the objective of K-Means optimization itself for a fixed $k$.\n  * Option D is false; K-Means is unsupervised, so classification accuracy is not directly measured during clustering.\n\n---"
+      },
+      {
+        "id": "exam_1_q35",
+        "number": 35,
+        "points": 2,
+        "text": "What will be the output of the following code?\n\n```python\nimport pandas as pd\n\ndf = pd.DataFrame({\n    'group': ['A', 'A', 'B', 'B'],\n    'value': [10, 20, 30, 40]\n})\n\ndef f(x):\n    return pd.Series({'mean': x.mean(), 'sum': x.sum()})\n\nresult = df.groupby('group')['value'].apply(f)\nprint(result)\n```",
+        "type": "multiple-choice",
+        "options": [
+          "**Option A:** A DataFrame with columns `['group', 'mean', 'sum']`",
+          "**Option B:** A Series with MultiIndex `(group, statistic)`",
+          "**Option C:** A DataFrame with MultiIndex and columns `value_mean`, `value_sum`",
+          "**Option D:** Raises a `ValueError` because `apply` returns inconsistent shapes",
+          "**Option E:** A flat Series indexed by group"
+        ],
+        "correctAnswer": "Option B",
+        "explanation": "* Grouping the column `'value'` by `'group'` creates two sub-Series: `'A'` (containing `[10, 20]`) and `'B'` (containing `[30, 40]`).\n  * The function `f(x)` is applied to each of these sub-Series and returns a new `pd.Series` with keys `['mean', 'sum']`.\n  * When `groupby(...).apply()` receives a Series back from the applied function for each group, it aggregates them into a single Series with a **MultiIndex** (hierarchical index). The outer index level corresponds to the groupby key (`group`: `'A'`, `'B'`), and the inner index level corresponds to the index of the returned Series (`mean`, `sum`):\n    ```text\n    group      \n    A      mean    15.0\n           sum     30.0\n    B      mean    35.0\n           sum     70.0\n    Name: value, dtype: float64\n    ```\n  * Therefore, the output is a `pd.Series` with a `MultiIndex`, matching Option B."
+      }
+    ]
+  },
+  {
+    "id": "exam_2",
+    "name": "Past Exam 2 (Questions 1-35 of 35)",
+    "questions": [
+      {
+        "id": "exam_2_q1",
+        "number": 1,
+        "points": 2,
+        "text": "Why does gradient descent move parameters in the opposite direction of the gradient?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** To maximize the cost function",
+          "**B.** To reduce variance",
+          "**C.** Because the gradient points to the direction of steepest increase",
+          "**D.** To normalize weights",
+          "**E.** To minimize learning rate"
+        ],
+        "correctAnswer": "C. Because the gradient points to the direction of steepest increase",
+        "explanation": "* By definition, the gradient of a function ($\\nabla J(\\theta)$) points in the direction of the steepest **increase** (ascent) of that function at a given point.\n  * Since our goal in training machine learning models is to **minimize** the cost function $J(\\theta)$, we want to move in the direction of the steepest **decrease** (descent).\n  * Therefore, we must update the parameter vector $\\theta$ by moving in the direction opposite to the gradient: $\\theta := \\theta - \\alpha \\nabla J(\\theta)$.\n  * Option A is incorrect because going in the direction of the gradient would maximize the cost function (gradient ascent).\n\n---"
+      },
+      {
+        "id": "exam_2_q2",
+        "number": 2,
+        "points": 5,
+        "text": "You are training a Multinomial Naïve Bayes classifier for spam detection.\n\n```python\nfrom sklearn.feature_extraction.text import CountVectorizer\nfrom sklearn.naive_bayes import MultinomialNB\n\nvectorizer = CountVectorizer()\nX_train_counts = vectorizer.fit_transform(texts_train)\n\nclf = MultinomialNB()\n# === Missing line ===\n___________________________\n```\n\nWhat line should be inserted in place of the missing line?",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "`clf.fit(X_train_counts, y_train)` (assuming the training labels are stored in `y_train`)",
+        "explanation": "* In scikit-learn, the `fit` method trains/fits the model to the training data.\n  * We pass the feature count matrix (`X_train_counts`) and the target labels (`y_train`) to the classifier.\n\n---"
+      },
+      {
+        "id": "exam_2_q3",
+        "number": 3,
+        "points": 5,
+        "text": "You train a Random Forest classifier and want to evaluate it on test data.\n\n```python\nfrom sklearn.ensemble import RandomForestClassifier\nfrom sklearn.metrics import accuracy_score\n\nrf = RandomForestClassifier(n_estimators=50, random_state=42)\n# === Missing lines ===\n_______________________________\ny_pred = ______________________\nacc = accuracy_score(y_test, y_pred)\nprint(\"Accuracy:\", acc)\n```\n\nWhich statements correctly fill in the blanks? (Separate the two statements with a semicolon `;`).",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "`rf.fit(X_train, y_train); rf.predict(X_test)`",
+        "explanation": "* The first blank (training step) requires fitting the classifier to the training data:\n    `rf.fit(X_train, y_train)`\n  * The second blank (prediction step) requires predicting class labels for the test features `X_test` to assign them to `y_pred`:\n    `rf.predict(X_test)`\n  * Combining them separated by a semicolon yields: `rf.fit(X_train, y_train); rf.predict(X_test)`.\n\n---"
+      },
+      {
+        "id": "exam_2_q4",
+        "number": 4,
+        "points": 2,
+        "text": "You trained a MultinomialNB model with $\\alpha=1.0$ (Laplace smoothing). What happens if you set $\\alpha=0$?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** Smoothing increases, and rare words have higher probability",
+          "**B.** Model becomes unstable when unseen words appear in test data",
+          "**C.** All probabilities become uniform",
+          "**D.** The model becomes equivalent to GaussianNB",
+          "**E.** It normalizes the data"
+        ],
+        "correctAnswer": "B. Model becomes unstable when unseen words appear in test data",
+        "explanation": "* Multinomial Naïve Bayes calculates probabilities by counting occurrences. Laplace smoothing ($\\alpha=1.0$) adds 1 to the numerator of feature probabilities:\n    $$P(x_i | c) = \\frac{N_{ci} + \\alpha}{N_c + \\alpha D}$$\n  * If $\\alpha = 0$, smoothing is disabled. If any word in the test set was not present in the training set for class $c$, its probability $P(x_i | c)$ becomes exactly $0$.\n  * Since Naïve Bayes multiplies these probabilities together to compute the class likelihood ($P(c) \\prod P(x_i | c)$), a single probability of $0$ forces the entire product to $0$, making the model unable to make valid predictions for samples with unseen words.\n\n---"
+      },
+      {
+        "id": "exam_2_q5",
+        "number": 5,
+        "points": 2,
+        "text": "Which of the following situations most likely indicates underfitting, not overfitting?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** Training accuracy: 99%, Validation accuracy: 60%",
+          "**B.** Training accuracy: 75%, Validation accuracy: 74%",
+          "**C.** Training accuracy: 100%, Validation accuracy: 50%",
+          "**D.** Training accuracy: 95%, Validation accuracy: 55%",
+          "**E.** Training accuracy: 80%, Validation accuracy: 40%"
+        ],
+        "correctAnswer": "B. Training accuracy: 75%, Validation accuracy: 74%",
+        "explanation": "* **Underfitting** occurs when a model is too simple to capture the underlying pattern of the training data (high bias). This leads to poor performance on the training set. Because it generalizes simple patterns, the gap between training and validation accuracy is typically very small. Option B represents this (poor overall performance, but minimal generalization gap).\n  * Options A, C, D, and E all show high training performance but significantly lower validation performance, which is the hallmark of **overfitting** (high variance).\n\n---"
+      },
+      {
+        "id": "exam_2_q6",
+        "number": 6,
+        "points": 2,
+        "text": "Given this code:\n```python\nfrom sklearn.ensemble import GradientBoostingRegressor\nmodel = GradientBoostingRegressor(n_estimators=100, learning_rate=0.05, max_depth=3)\nmodel.fit(X_train, y_train)\n```\n\nWhat does increasing `learning_rate` while keeping `n_estimators` fixed usually do?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** Increases bias only",
+          "**B.** Decreases variance and bias simultaneously",
+          "**C.** Increases variance and decreases bias (or **D. Decreases bias but increases overfitting risk**)",
+          "**D.** Decreases bias but increases overfitting risk",
+          "**E.** Increases variance and bias simultaneously"
+        ],
+        "correctAnswer": "**C** or **D** (both are correct representations of the same trade-off).",
+        "explanation": "* In gradient boosting, `learning_rate` scales the contribution of each subsequent tree.\n  * If we increase the `learning_rate` while keeping the number of estimators (`n_estimators`) fixed, each tree has a stronger impact on fitting the residuals. This allows the model to fit the training data more aggressively (which **decreases bias**).\n  * However, doing so makes the model more complex and sensitive to noise, which increases generalization error / variance (which **increases variance** and **increases overfitting risk**).\n  * Option A and E are incorrect. Option B describes the ideal scenario but is not what happens when you turn up complexity without shrinking the tree count.\n\n---"
+      },
+      {
+        "id": "exam_2_q7",
+        "number": 7,
+        "points": 2,
+        "text": "Suppose you use `GaussianNB` in scikit-learn. What type of data is it most suitable for?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** Continuous numerical features",
+          "**B.** Categorical features",
+          "**C.** Text data (bag-of-words)",
+          "**D.** Binary features only",
+          "**E.** Image pixels (discrete counts)"
+        ],
+        "correctAnswer": "A. Continuous numerical features",
+        "explanation": "* **Gaussian Naïve Bayes** assumes that the continuous values associated with each class are distributed according to a normal (Gaussian) distribution:\n    $$P(x_i | y) = \\frac{1}{\\sqrt{2\\pi\\sigma_y^2}} \\exp\\left(-\\frac{(x_i - \\mu_y)^2}{2\\sigma_y^2}\\right)$$\n  * Because it fits mean and variance parameter metrics for continuous distributions, it is designed for continuous numerical features.\n  * Multinomial Naïve Bayes is suited for discrete feature counts (text counts, Option C and E).\n  * Bernoulli Naïve Bayes is suited for binary features (Option D).\n  * Categorical Naïve Bayes is suited for categorical categories (Option B).\n\n---"
+      },
+      {
+        "id": "exam_2_q8",
+        "number": 8,
+        "points": 2,
+        "text": "`df = pd.DataFrame({\"A\": [1, 2, None], \"B\": [4, None, 6]})`\n\nWhat will `df.mean()` return by default?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** Mean of each row",
+          "**B.** Mean of each column, ignoring NaN",
+          "**C.** Mean of each column, treating NaN as 0",
+          "**D.** Raises an error",
+          "**E.** Single overall mean"
+        ],
+        "correctAnswer": "B. Mean of each column, ignoring NaN",
+        "explanation": "* In pandas, `DataFrame.mean()` computes column-wise means by default (`axis=0`).\n  * Additionally, it automatically skips missing values (`NaN`/`None`) by default due to `skipna=True`.\n  * For Column A: the mean is $(1 + 2) / 2 = 1.5$.\n  * For Column B: the mean is $(4 + 6) / 2 = 5.0$.\n  * If we wanted row-wise means, we would have to specify `axis=1` (Option A).\n\n---"
+      },
+      {
+        "id": "exam_2_q9",
+        "number": 9,
+        "points": 2,
+        "text": "Suppose you apply multiple linear regression to predict house prices. You add polynomial features like $x_1^2$, $x_2^2$, $x_1$, $x_2$. What effect does this have?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** The model becomes nonlinear in the parameters $\\theta$",
+          "**B.** The hypothesis becomes nonlinear in the features, but still linear in parameters $\\theta$",
+          "**C.** The cost function becomes non-convex",
+          "**D.** Gradient descent no longer works",
+          "**E.** The intercept term is removed"
+        ],
+        "correctAnswer": "B. The hypothesis becomes nonlinear in the features, but still linear in parameters $\\theta$",
+        "explanation": "* A linear model with polynomial features is written as:\n    $$h_\\theta(x) = \\theta_0 + \\theta_1 x_1 + \\theta_2 x_2 + \\theta_3 x_1^2 + \\theta_4 x_2^2$$\n  * While this model describes a curved (non-linear) relationship relative to the input features $x$, it is still a **linear combination of the parameter weights $\\theta$**.\n  * Because it remains linear in its parameters $\\theta$, the optimization problem is still convex and can be solved using standard linear regression closed-form equations (normal equation) or standard gradient descent (making C and D incorrect).\n\n---"
+      },
+      {
+        "id": "exam_2_q10",
+        "number": 10,
+        "points": 2,
+        "text": "Which Python snippet correctly applies a log transform to reduce skewness in a Pandas DataFrame column \"income\"?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** `df['income'] = np.exp(df['income'])`",
+          "**B.** `df['income'] = np.sqrt(df['income'])`",
+          "**C.** `df['income'] = df['income']**2`",
+          "**D.** `df['income'] = df['income'] / df['income'].mean()`",
+          "**E.** `df['income'] = np.log(df['income'] + 1)`"
+        ],
+        "correctAnswer": "E. `df['income'] = np.log(df['income'] + 1)`",
+        "explanation": "* To apply a log transformation to a column, we use `np.log()` or `np.log1p()`.\n  * Because income data can sometimes contain zero values, taking a raw log ($\\log(0)$) results in negative infinity (`-inf`). Adding 1 before taking the logarithm ($\\log(x+1)$) avoids this mathematical issue since $\\log(0+1) = \\log(1) = 0$. This is implemented in Option E.\n  * Option A applies an exponential transform.\n  * Option B applies a square root transform.\n  * Option C squares the values.\n  * Option D performs mean division normalization.\n\n---"
+      },
+      {
+        "id": "exam_2_q11",
+        "number": 11,
+        "points": 5,
+        "text": "You are implementing A* for a weighted graph where each node has neighbors stored as `graph[u] = [(v, cost), ...]`.\n\nFill in the missing lines.\n\n```python\nimport heapq\n\ndef astar(graph, start, goal, h):\n    pq = []\n    heapq.heappush(pq, (h(start), 0, start))\n    gbest = {start: 0}\n    parent = {start: None}\n    closed = set()\n    \n    while pq:\n        f, g, u = heapq.heappop(pq)\n        if u in closed:\n            continue\n        if u == goal:\n            break\n        closed.add(u)\n        \n        for v, w in graph[u]:\n            new_g = g + w\n            if v not in gbest or new_g < gbest[v]:\n                gbest[v] = ______\n                parent[v] = ______\n                new_f = ______\n                heapq.heappush(______)\n```\n\nWhich statements correctly fill in the blanks? (Separate the statements with a semicolon `;`).",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "* **Option 1 (Direct statement replacement):**",
+        "explanation": "* **Option 1 (Direct statement replacement):**\n    `gbest[v] = new_g; parent[v] = u; new_f = new_g + h(v); heapq.heappush(pq, (new_f, new_g, v))`\n  * **Option 2 (Values only, corresponding to the blanks):**\n    `new_g; u; new_g + h(v); pq, (new_f, new_g, v)`\n  * **First blank:** Update the best known cost to reach neighbor $v$: `gbest[v] = new_g`.\n  * **Second blank:** Set the parent of neighbor $v$ to $u$: `parent[v] = u`.\n  * **Third blank:** Calculate the estimated total cost $f(v) = g(v) + h(v)$: `new_f = new_g + h(v)`.\n  * **Fourth blank:** Push the neighbor node and its cost values onto the priority queue: `heapq.heappush(pq, (new_f, new_g, v))`. (Since the heap is unpacked as `f, g, u = heapq.heappop(pq)`, we must push a tuple of size 3 matching this order).\n\n---"
+      },
+      {
+        "id": "exam_2_q12",
+        "number": 12,
+        "points": 2,
+        "text": "What is the mathematical form of the kernel trick used in non-linear SVMs?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** $K(x_i, x_j) = x_i^T x_j$",
+          "**B.** $K(x_i, x_j) = \\phi(x_i)^T \\phi(x_j)$",
+          "**C.** $K(x_i, x_j) = x_i + x_j$",
+          "**D.** $K(x_i, x_j) = ||x_i - x_j||^2$",
+          "**E.** $K(x_i, x_j) = e^{-|x_i - x_j|}$"
+        ],
+        "correctAnswer": "B. $K(x_i, x_j) = \\phi(x_i)^T \\phi(x_j)$",
+        "explanation": "* The **kernel trick** allows SVMs to perform calculations in a high-dimensional feature space without explicitly computing the coordinates of the data in that space. It does this by defining a kernel function $K(x_i, x_j)$ that is mathematically equivalent to the inner product of mapped feature vectors: $\\phi(x_i)^T \\phi(x_j)$.\n  * Option A represents the linear kernel (which operates directly in input space).\n  * Options C, D, E do not represent the general inner product definition of the kernel trick.\n\n---"
+      },
+      {
+        "id": "exam_2_q13",
+        "number": 13,
+        "points": 5,
+        "text": "You train a Naïve Bayes classifier with independent features $x_1, x_2, x_3$.\n\n$$P(y | x_1, x_2, x_3) \\propto P(y) \\prod_{i=1}^3 P(x_i | y)$$\n\nIf:\n* $P(y = 1) = 0.3, P(x_1 | 1) = 0.9, P(x_2 | 1) = 0.4, P(x_3 | 1) = 0.5$\n* $P(y = 0) = 0.7, P(x_1 | 0) = 0.2, P(x_2 | 0) = 0.3, P(x_3 | 0) = 0.4$\n\nthen what is the result of $P(y = 1 | x) / P(y = 0 | x)$? (Note: round the result to two decimal places)",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "3.21",
+        "explanation": "* **Detailed Calculation:**\n  1. Calculate the numerator (proportional to the posterior $P(y=1|x)$):\n     $$\\text{Numerator} = P(y=1) \\cdot P(x_1|1) \\cdot P(x_2|1) \\cdot P(x_3|1)$$\n     $$\\text{Numerator} = 0.3 \\times 0.9 \\times 0.4 \\times 0.5 = 0.054$$\n  2. Calculate the denominator (proportional to the posterior $P(y=0|x)$):\n     $$\\text{Denominator} = P(y=0) \\cdot P(x_1|0) \\cdot P(x_2|0) \\cdot P(x_3|0)$$\n     $$\\text{Denominator} = 0.7 \\times 0.2 \\times 0.3 \\times 0.4 = 0.0168$$\n  3. Compute the ratio:\n     $$\\text{Ratio} = \\frac{0.054}{0.0168} = \\frac{45}{14} \\approx 3.214285...$$\n  4. Rounding to two decimal places gives **3.21**.\n\n---"
+      },
+      {
+        "id": "exam_2_q14",
+        "number": 14,
+        "points": 2,
+        "text": "Which of the following statements best distinguishes overfitting from underfitting?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** Overfitting means the model is too simple; underfitting means it is too complex",
+          "**B.** Overfitting means the model memorizes noise; underfitting means it ignores patterns",
+          "**C.** Overfitting always leads to higher bias; underfitting leads to higher variance",
+          "**D.** Overfitting occurs when validation loss decreases; underfitting occurs when it increases",
+          "**E.** Overfitting occurs when the learning rate is too high"
+        ],
+        "correctAnswer": "B. Overfitting means the model memorizes noise; underfitting means it ignores patterns",
+        "explanation": "* **Overfitting** occurs when a model is excessively complex, causing it to fit random noise and sample-specific fluctuations in the training set (resulting in high variance and poor generalisation).\n  * **Underfitting** occurs when a model is too simple and ignores key trends and patterns in the data (resulting in high bias and poor training performance).\n  * Option A is the opposite of the truth.\n  * Option C is the opposite of the truth (overfitting is high variance; underfitting is high bias).\n  * Option D is incorrect.\n\n---"
+      },
+      {
+        "id": "exam_2_q15",
+        "number": 15,
+        "points": 2,
+        "text": "Feature scaling is commonly applied before using gradient descent. Which of the following is NOT a typical method of feature scaling?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** Min-max normalization",
+          "**B.** Standardization (Z-score scaling)",
+          "**C.** Dividing each feature by its maximum absolute value",
+          "**D.** Adding polynomial features",
+          "**E.** Rescaling to a fixed range (e.g., 0 to 1)"
+        ],
+        "correctAnswer": "D. Adding polynomial features",
+        "explanation": "* **Adding polynomial features** (like $x^2$) is a feature engineering technique used to introduce non-linear parameters into a linear model. It increases feature count and complexity rather than scaling feature magnitudes.\n  * Options A, B, C, and E are all standard feature scaling techniques:\n    * Min-max normalization / rescaling (Options A & E) maps features to $[0, 1]$ or $[-1, 1]$.\n    * Standardization (Option B) scales features to have $\\mu=0$ and $\\sigma=1$.\n    * Max-absolute scaling (Option C) divides features by their maximum absolute value, mapping them to $[-1, 1]$ (extremely useful for sparse data matrices).\n\n---"
+      },
+      {
+        "id": "exam_2_q16",
+        "number": 16,
+        "points": 2,
+        "text": "The loss function for a single training example $(x,y)$ in logistic regression is:\n$$l(\\theta) = - [y \\log(h_\\theta(x)) + (1 - y) \\log(1 - h_\\theta(x))]$$\n\nWhich of the following best describes its property?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** It is convex, ensuring a unique global minimum",
+          "**B.** It is non-convex, so multiple minima exist",
+          "**C.** It cannot be optimized with gradient descent",
+          "**D.** It is piecewise constant",
+          "**E.** It does not penalize confident wrong predictions"
+        ],
+        "correctAnswer": "A. It is convex, ensuring a unique global minimum",
+        "explanation": "* The binary cross-entropy loss function used in logistic regression is **convex** with respect to the parameters $\\theta$.\n  * For a convex function, any local minimum is guaranteed to be a global minimum. Under standard conditions (e.g. no perfect multicollinearity in features), it has a unique global minimum, which makes optimization via gradient descent robust and reliable (making B and C incorrect).\n  * Option D is false; it is a smooth, continuous curve.\n  * Option E is false; cross-entropy heavily penalizes confident wrong predictions (the loss approaches infinity as the predicted probability of the correct class approaches 0).\n\n---"
+      },
+      {
+        "id": "exam_2_q17",
+        "number": 17,
+        "points": 2,
+        "text": "You train a Multinomial Naïve Bayes text classifier with vocabulary `{win, game, election, vote}`.\n\nClass token counts and priors:\n* **Sports (S)**: total tokens $N_S = 50$; counts: win = 10, game = 15, election = 1, vote = 0\n* **Politics (P)**: total tokens $N_P = 40$; counts: win = 2, game = 1, election = 12, vote = 8\n* Laplace smoothing $\\alpha = 1$, priors $P(S) = 0.5, P(P) = 0.5$.\n\nA new document is: **\"win game vote\"** (three tokens).\n\nUsing Multinomial NB with smoothing, what is the **normalized** posterior $P(S | \\text{doc})$?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** 0.36",
+          "**B.** 0.50",
+          "**C.** 0.64",
+          "**D.** 0.75",
+          "**E.** 0.25"
+        ],
+        "correctAnswer": "C. 0.64",
+        "explanation": "* **Detailed Calculation:**\n  1. Determine vocabulary size $D$: The vocabulary `{win, game, election, vote}` has $D = 4$ unique terms.\n  2. Compute smoothed feature conditional probabilities:\n     $$P(w | C) = \\frac{\\text{count}(w, C) + \\alpha}{N_C + \\alpha D} = \\frac{\\text{count}(w, C) + 1}{N_C + 4}$$\n     * **For Sports (S):** (Denominator $N_S + 4 = 50 + 4 = 54$)\n       * $P(\\text{\"win\"} | S) = \\frac{10 + 1}{54} = \\frac{11}{54}$\n       * $P(\\text{\"game\"} | S) = \\frac{15 + 1}{54} = \\frac{16}{54}$\n       * $P(\\text{\"vote\"} | S) = \\frac{0 + 1}{54} = \\frac{1}{54}$\n     * **For Politics (P):** (Denominator $N_P + 4 = 40 + 4 = 44$)\n       * $P(\\text{\"win\"} | P) = \\frac{2 + 1}{44} = \\frac{3}{44}$\n       * $P(\\text{\"game\"} | P) = \\frac{1 + 1}{44} = \\frac{2}{44}$\n       * $P(\\text{\"vote\"} | P) = \\frac{8 + 1}{44} = \\frac{9}{44}$\n  3. Calculate unnormalized posteriors (joint probabilities):\n     * $P(S, \\text{doc}) = P(S) \\cdot P(\\text{\"win\"}|S) \\cdot P(\\text{\"game\"}|S) \\cdot P(\\text{\"vote\"}|S)$\n       $$P(S, \\text{doc}) = 0.5 \\times \\frac{11}{54} \\times \\frac{16}{54} \\times \\frac{1}{54} \\approx 0.00055886$$\n     * $P(P, \\text{doc}) = P(P) \\cdot P(\\text{\"win\"}|P) \\cdot P(\\text{\"game\"}|P) \\cdot P(\\text{\"vote\"}|P)$\n       $$P(P, \\text{doc}) = 0.5 \\times \\frac{3}{44} \\times \\frac{2}{44} \\times \\frac{9}{44} \\approx 0.00031696$$\n  4. Calculate the normalized posterior $P(S | \\text{doc})$:\n     $$P(S | \\text{doc}) = \\frac{P(S, \\text{doc})}{P(S, \\text{doc}) + P(P, \\text{doc})} = \\frac{0.00055886}{0.00055886 + 0.00031696} \\approx 0.6381$$\n     * Rounding to two decimal places yields **0.64**.\n     * *(Note: $P(P | \\text{doc}) \\approx 0.36$, which corresponds to Option A).*\n\n---"
+      },
+      {
+        "id": "exam_2_q18",
+        "number": 18,
+        "points": 2,
+        "text": "Why is vectorization preferred in gradient descent?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** Easier to read",
+          "**B.** Avoids explicit loops",
+          "**C.** Uses larger memory",
+          "**D.** Improves accuracy automatically",
+          "**E.** Makes cost function smaller"
+        ],
+        "correctAnswer": "B. Avoids explicit loops",
+        "explanation": "* **Vectorization** allows computations to be performed on entire arrays or matrices at once rather than processing elements one by one.\n  * In languages like Python, executing explicit `for` loops is very slow due to interpreter overhead. Vectorization delegates operations to highly optimized compiled libraries (like NumPy/BLAS) which execute parallel instructions (SIMD) on the CPU or GPU, bypassing explicit python loops.\n  * Option A is subjective and not a primary engineering reason.\n  * Option C is a drawback, not a reason to prefer it.\n  * Option D is false; vectorization changes computational speed and efficiency, not mathematical prediction accuracy.\n  * Option E is false; it does not change the cost function value.\n\n---"
+      },
+      {
+        "id": "exam_2_q19",
+        "number": 19,
+        "points": 2,
+        "text": "You apply K-Means clustering with $k=3$ on a dataset of 2D points.\nAfter convergence, the centroids are:\n* $C_1 = (2,2)$\n* $C_2 = (8,3)$\n* $C_3 = (3,10)$\n\nA new data point $x = (20,4)$ arrives.\nYou decide to use distance-based anomaly detection:\nA point is considered an anomaly if its distance from the nearest centroid is more than twice the average within-cluster distance, and the average within-cluster distance (across all clusters) is 4.5.\n\nShould $x$ be classified as an anomaly?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** No, because its distance is less than 9.0",
+          "**B.** No, because its distance is less than 4.5",
+          "**C.** Yes, because its distance exceeds 9.0",
+          "**D.** Yes, because its distance exceeds 4.5",
+          "**E.** Yes, because its distance equals 4.5"
+        ],
+        "correctAnswer": "C. Yes, because its distance exceeds 9.0",
+        "explanation": "* **Detailed Calculation:**\n  1. Calculate the Euclidean distance from $x(20,4)$ to each of the three centroids:\n     * $d(x, C_1) = \\sqrt{(20-2)^2 + (4-2)^2} = \\sqrt{18^2 + 2^2} = \\sqrt{328} \\approx 18.11$\n     * $d(x, C_2) = \\sqrt{(20-8)^2 + (4-3)^2} = \\sqrt{12^2 + 1^2} = \\sqrt{145} \\approx 12.04$\n     * $d(x, C_3) = \\sqrt{(20-3)^2 + (4-10)^2} = \\sqrt{17^2 + (-6)^2} = \\sqrt{325} \\approx 18.03$\n  2. The distance to the nearest centroid is $12.04$ (nearest to $C_2$).\n  3. Determine the anomaly threshold:\n     $$\\text{Threshold} = 2 \\times \\text{average within-cluster distance} = 2 \\times 4.5 = 9.0$$\n  4. Compare the nearest distance to the threshold:\n     $$12.04 > 9.0$$\n     Since the distance to the nearest centroid ($12.04$) exceeds the threshold ($9.0$), the point is classified as an anomaly.\n\n---"
+      },
+      {
+        "id": "exam_2_q20",
+        "number": 20,
+        "points": 2,
+        "text": "In A*, the evaluation function is defined as:",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** $f(n) = g(n) + h(n)$",
+          "**B.** $f(n) = g(n) - h(n)$",
+          "**C.** $f(n) = h(n) \\times g(n)$",
+          "**D.** $f(n) = h(n) / g(n)$",
+          "**E.** $f(n) = \\max(g(n), h(n))$"
+        ],
+        "correctAnswer": "A. $f(n) = g(n) + h(n)$",
+        "explanation": "* In the A* search algorithm, the total evaluation cost of a node $n$, denoted as $f(n)$, is the sum of:\n    * $g(n)$: the exact cost to reach node $n$ from the start node.\n    * $h(n)$: the heuristic estimated cost to get from node $n$ to the goal node.\n  * Therefore, the evaluation function is $f(n) = g(n) + h(n)$.\n\n---"
+      },
+      {
+        "id": "exam_2_q21",
+        "number": 21,
+        "points": 2,
+        "text": "If the learning rate $\\alpha$ is too large, what may happen?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** Faster convergence",
+          "**B.** Divergence of cost function",
+          "**C.** More accurate minimum",
+          "**D.** Gradient becomes smaller",
+          "**E.** Weights stay unchanged"
+        ],
+        "correctAnswer": "B. Divergence of cost function",
+        "explanation": "* The learning rate $\\alpha$ controls the step size taken during gradient descent updates.\n  * If $\\alpha$ is set too large, the algorithm will overshoot the optimal local or global minimum. Instead of descending toward the minimum, the parameters can jump back and forth across the valley, moving further away with each step. This causes the cost function to **diverge** (increase) rather than converge (decrease).\n  * Option A is false; too large of a learning rate hinders convergence entirely.\n  * Option C is false; it prevents finding a minimum.\n  * Option D and E are incorrect.\n\n---"
+      },
+      {
+        "id": "exam_2_q22",
+        "number": 22,
+        "points": 2,
+        "text": "Given the Python code:\n```python\nmodel = SVC(kernel='rbf', C=1, gamma=0.5)\nmodel.fit(X_train, y_train)\ny_pred = model.predict(X_test)\n```\n\nWhat does `gamma=0.5` mean?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** It controls the penalty for misclassification",
+          "**B.** It defines the number of features used",
+          "**C.** It controls the penalty for misclassification",
+          "**D.** Each training example's influence decays slower with distance",
+          "**E.** Each training example's influence decays faster with distance"
+        ],
+        "correctAnswer": "E. Each training example's influence decays faster with distance",
+        "explanation": "* In the Radial Basis Function (RBF) kernel:\n    $$K(x_i, x_j) = \\exp(-\\gamma ||x_i - x_j||^2)$$\n  * The parameter $\\gamma$ governs the width of the RBF kernel. A larger value of $\\gamma$ means a larger negative number inside the exponent for any non-zero distance. Consequently, the similarity value (influence) decays to zero **faster** as the distance from the point increases, resulting in a more localized (and potentially more complex) decision boundary.\n  * Conversely, a smaller value of $\\gamma$ means the influence decays **slower** with distance, meaning training points have a broader, wider-reaching influence.\n  * Options A and C describe the role of the regularization parameter $C$, not `gamma`.\n  * Option B is false.\n\n---"
+      },
+      {
+        "id": "exam_2_q23",
+        "number": 23,
+        "points": 2,
+        "text": "For linear regression with cost function:\n$$J(w, b) = \\frac{1}{2m} \\sum_{i=1}^m (f_{w,b}(x^{(i)}) - y^{(i)})^2$$\n\nWhat is the update rule for $w$ in gradient descent?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** $w := w - \\alpha \\cdot \\frac{1}{m} \\sum (f(x) - y)$",
+          "**B.** $w := w - \\alpha \\cdot \\frac{1}{m} \\sum (f(x) - y) \\cdot x$",
+          "**C.** $w := w - \\alpha \\cdot (f(x) - y)$",
+          "**D.** $w := w + \\alpha \\cdot \\frac{1}{m} \\sum (f(x) - y) \\cdot x$",
+          "**E.** $w := w + \\alpha$"
+        ],
+        "correctAnswer": "B. $w := w - \\alpha \\cdot \\frac{1}{m} \\sum (f(x) - y) \\cdot x$",
+        "explanation": "* The gradient of the mean squared error cost function $J(w, b)$ with respect to the weight parameter $w$ is:\n    $$\\frac{\\partial J}{\\partial w} = \\frac{1}{m} \\sum_{i=1}^m (f_{w,b}(x^{(i)}) - y^{(i)}) \\cdot x^{(i)}$$\n  * The gradient descent rule states we subtract the gradient scaled by the learning rate $\\alpha$:\n    $$w := w - \\alpha \\frac{\\partial J}{\\partial w} = w - \\alpha \\cdot \\frac{1}{m} \\sum_{i=1}^m (f_{w,b}(x^{(i)}) - y^{(i)}) \\cdot x^{(i)}$$\n  * This matches Option B.\n  * Option A represents the update rule for the bias/intercept term $b$, not $w$ (as it lacks the feature multiplier $x$).\n  * Options C, D, and E are mathematically incorrect.\n\n---"
+      },
+      {
+        "id": "exam_2_q24",
+        "number": 24,
+        "points": 5,
+        "text": "You are training a Decision Tree classifier on labeled data to predict customer churn.\n\n```python\nfrom sklearn.tree import DecisionTreeClassifier\n\ndef train_tree(X_train, y_train, X_test):\n    tree = DecisionTreeClassifier(max_depth=4, random_state=42)\n    # === Fill in the missing lines ===\n    __________________________________\n    prediction = _____________________\n    return prediction\n```\n\nWhich statements correctly fill in the blanks? (Separate the two statements with a semicolon `;`).",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "`tree.fit(X_train, y_train); tree.predict(X_test)`",
+        "explanation": "* The first blank trains the Decision Tree on the training features and labels:\n    `tree.fit(X_train, y_train)`\n  * The second blank uses the trained model to generate predictions for the test features `X_test`:\n    `tree.predict(X_test)`\n  * Linking them together with a semicolon gives: `tree.fit(X_train, y_train); tree.predict(X_test)`.\n\n---"
+      },
+      {
+        "id": "exam_2_q25",
+        "number": 25,
+        "points": 2,
+        "text": "Suppose we are training a logistic regression model with one feature. The cost function's gradient for parameter $\\theta$ is:\n$$\\frac{\\partial}{\\partial \\theta} J(\\theta) = \\frac{1}{m} \\sum_{i=1}^m (h_\\theta(x^{(i)}) - y^{(i)}) x^{(i)}$$\nwhere $h_\\theta = \\frac{1}{1 + e^{-\\theta x}}$\n\nIf we have one training example with $x = 2, y = 1, \\theta = 0$, and learning rate $\\alpha = 0.5$, what will be the updated value of $\\theta$ after one gradient descent step?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** 0.25",
+          "**B.** 0.5",
+          "**C.** 0.75",
+          "**D.** 1",
+          "**E.** -0.25"
+        ],
+        "correctAnswer": "B. 0.5",
+        "explanation": "* **Detailed Calculation:**\n  1. Calculate the hypothesis prediction $h_\\theta(x)$ at $\\theta = 0, x = 2$:\n     $$h_0(2) = \\frac{1}{1 + e^{-(0 \\cdot 2)}} = \\frac{1}{1 + 1} = 0.5$$\n  2. Compute the gradient of the loss function $\\frac{\\partial J}{\\partial \\theta}$ (with $m = 1$ sample):\n     $$\\frac{\\partial J}{\\partial \\theta} = (h_\\theta(x) - y) \\cdot x = (0.5 - 1) \\cdot 2 = -0.5 \\cdot 2 = -1.0$$\n  3. Apply the gradient descent parameter update rule:\n     $$\\theta_{\\text{new}} = \\theta_{\\text{old}} - \\alpha \\frac{\\partial J}{\\partial \\theta}$$\n     $$\\theta_{\\text{new}} = 0 - 0.5 \\cdot (-1.0) = +0.5$$\n  4. The updated value is therefore **0.5**, matching Option B.\n\n---"
+      },
+      {
+        "id": "exam_2_q26",
+        "number": 26,
+        "points": 5,
+        "text": "You are optimizing Minimax using Alpha–Beta pruning to avoid exploring branches that cannot influence the final decision.\n\nFill in the missing lines.\n\n```python\ndef alphabeta(node, depth, alpha, beta, maximizing, eval_fn):\n    if depth == 0 or node.is_terminal():\n        return eval_fn(node)\n        \n    if maximizing:\n        value = float('-inf')\n        for child in node.generate_moves():\n            value = max(value, alphabeta(child, depth - 1, alpha, beta, ______, eval_fn))\n            alpha = max(alpha, value)\n            if alpha ______ beta:\n                break                # prune branch\n        return value\n    else:\n        value = float('inf')\n        for child in node.generate_moves():\n            value = min(value, alphabeta(child, depth - 1, alpha, beta, ______, eval_fn))\n            beta = min(beta, value)\n            if beta ______ alpha:\n                break                # prune branch\n        return value\n```\n\nWhich values/operators correctly fill in the blanks? (Separate the four statements with a semicolon `;`).",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "`False; >=; True; <=` (or `False; >; True; <` depending on standard strict pruning vs. early pruning).",
+        "explanation": "* **First blank:** For the maximizing player, when recursively calling `alphabeta` on a child node, we switch to the minimizing player's turn. Hence, the `maximizing` boolean parameter should be set to `False`.\n  * **Second blank:** The maximizing player prunes when the lower bound ($\\alpha$) becomes greater than or equal to the upper bound ($\\beta$) set by the parent minimizing player: `alpha >= beta` (or `alpha > beta`).\n  * **Third blank:** For the minimizing player, when recursively calling `alphabeta` on a child node, we switch to the maximizing player's turn. Hence, the parameter should be set to `True`.\n  * **Fourth blank:** The minimizing player prunes when the upper bound ($\\beta$) becomes less than or equal to the lower bound ($\\alpha$) set by the parent maximizing player: `beta <= alpha` (or `beta < alpha`).\n\n---"
+      },
+      {
+        "id": "exam_2_q27",
+        "number": 27,
+        "points": 5,
+        "text": "Compute eps using k-distance and run DBSCAN to discover clusters of varying density.\n\nFill in the missing lines.\n\n```python\nimport numpy as np\nfrom sklearn.neighbors import NearestNeighbors\nfrom sklearn.cluster import DBSCAN\n\nk = 4\nnbrs = NearestNeighbors(n_neighbors=k).fit(X)\ndist, _ = nbrs.kneighbors(X)\nkdist = np.sort(dist[:, -1])\neps = np.percentile(kdist, _____)\ndb = DBSCAN(eps=_____, min_samples=_____).fit(X)\nlabels = db.labels_\n```\n\nWhich values correctly fill in the blanks? (Separate the three statements with a semicolon `;`).",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "`90; eps; k` or `95; eps; k` (or using the literal `4` instead of the variable `k`).",
+        "explanation": "* **First blank:** The k-distance percentile heuristic automatically selects an epsilon (`eps`) threshold based on a high percentile of the sorted $k$-distances to locate the \"elbow\" point. Common values are `90` or `95` (or `98`/`99` depending on the noise level of the dataset).\n  * **Second blank:** The `DBSCAN` class receives the calculated epsilon variable: `eps`.\n  * **Third blank:** The minimum neighborhood sample size parameter for DBSCAN should match the $k$ neighbors calculated above: `k` (or the literal integer `4`).\n\n---"
+      },
+      {
+        "id": "exam_2_q28",
+        "number": 28,
+        "points": 2,
+        "text": "The gradient of the logistic regression cost function w.r.t. $\\theta$ is:\n$$\\frac{\\partial}{\\partial \\theta} J(\\theta) = \\frac{1}{m} \\sum_{i=1}^m (h_\\theta(x^{(i)}) - y^{(i)}) x^{(i)}$$\n\nWhat does this expression imply?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** Updates depend only on true labels $y^{(i)}$",
+          "**B.** The update rule is identical in form to linear regression, except $h_\\theta(x)$ is sigmoid",
+          "**C.** Gradient descent cannot converge due to the nonlinearity of sigmoid",
+          "**D.** The gradient is independent of the features $x^{(i)}$",
+          "**E.** The gradient is always negative"
+        ],
+        "correctAnswer": "B. The update rule is identical in form to linear regression, except $h_\\theta(x)$ is sigmoid",
+        "explanation": "* The gradient of the Ordinary Least Squares (OLS) cost function in linear regression is mathematically written as $\\frac{1}{m} \\sum (h_\\theta(x^{(i)}) - y^{(i)}) x^{(i)}$, where the hypothesis is linear: $h_\\theta(x) = \\theta^T x$.\n  * The gradient of the cross-entropy loss function in logistic regression is written in the exact same format, except the hypothesis uses the sigmoid function: $h_\\theta(x) = \\frac{1}{1 + e^{-\\theta^T x}}$.\n  * Thus, the parameter update formula is identical in mathematical form (Option B).\n  * Option A is incorrect because updates depend on both predictions and inputs.\n  * Option C is false; logistic regression cost function is convex, so gradient descent is guaranteed to converge to a global minimum.\n  * Option D is false (the feature $x^{(i)}$ is inside the summation).\n  * Option E is false.\n\n---"
+      },
+      {
+        "id": "exam_2_q29",
+        "number": 29,
+        "points": 2,
+        "text": "What will this code output?\n\n```python\nimport pandas as pd\n\ndf = pd.DataFrame({\"A\": [1,2,3], \"B\": [4,5,6]})\ndf[\"C\"] = df[\"A\"] + df[\"B\"]\n\nprint(df[\"C\"].iloc[1])\n```",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** 3",
+          "**B.** 5",
+          "**C.** 6",
+          "**D.** 7",
+          "**E.** 9"
+        ],
+        "correctAnswer": "D. 7",
+        "explanation": "* The operation `df[\"A\"] + df[\"B\"]` performs element-wise addition on the two columns of the DataFrame:\n    * Index 0: $1 + 4 = 5$\n    * Index 1: $2 + 5 = 7$\n    * Index 2: $3 + 6 = 9$\n  * Column `df[\"C\"]` therefore contains the Series `[5, 7, 9]`.\n  * The method `.iloc[1]` retrieves the element at index position 1 (which is 0-indexed), yielding **7**.\n\n---"
+      },
+      {
+        "id": "exam_2_q30",
+        "number": 30,
+        "points": 5,
+        "text": "You are implementing logistic regression from scratch using NumPy. Complete the missing line that updates the weight vector theta.\n\n```python\nimport numpy as np\n\ndef sigmoid(z):\n    return 1 / (1 + np.exp(-z))\n    \ndef logistic_regression(X, y, theta, alpha, num_iters):\n    m = len(y)\n    for i in range(num_iters):\n        z = X.dot(theta)\n        h = sigmoid(z)\n        # === Missing update line ===\n        theta = _________________________\n    return theta\n```\n\nWhich statement correctly completes the update line?",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "`theta - (alpha / m) * X.T.dot(h - y)` (or `theta - alpha / m * np.dot(X.T, h - y)`)",
+        "explanation": "* The gradient descent update rule for the parameter vector $\\theta$ is:\n    $$\\theta := \\theta - \\alpha \\nabla_\\theta J(\\theta)$$\n  * In vectorized notation, the gradient of the binary cross-entropy loss function is:\n    $$\\nabla_\\theta J(\\theta) = \\frac{1}{m} X^T (h - y)$$\n  * In NumPy:\n    * The matrix transpose of $X$ is represented by `X.T`.\n    * The matrix multiplication is calculated using `.dot()` or `@` operator: `X.T.dot(h - y)`.\n    * Multiplying by the scalar learning rate divided by $m$ gives the update line: `theta = theta - (alpha / m) * X.T.dot(h - y)`.\n\n---"
+      },
+      {
+        "id": "exam_2_q31",
+        "number": 31,
+        "points": 2,
+        "text": "What is the output shape of the following code?\n\n```python\nimport numpy as np\n\na = np.ones((3,1))\nb = np.ones((1,4))\nc = a + b\n\nprint(c.shape)\n```",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** (3,)",
+          "**B.** (1,4)",
+          "**C.** (3,4)",
+          "**D.** (4,3)",
+          "**E.** (4,5)"
+        ],
+        "correctAnswer": "C. (3,4)",
+        "explanation": "* This is an example of NumPy **broadcasting**.\n  * Array `a` has shape `(3, 1)`. Array `b` has shape `(1, 4)`.\n  * When executing `a + b`, NumPy aligns the shapes at the trailing dimensions and stretches them to match:\n    * Dimension 0: `3` (from `a`) and `1` (from `b`) are broadcasted to `3`.\n    * Dimension 1: `1` (from `a`) and `4` (from `b`) are broadcasted to `4`.\n  * The resulting array `c` has the broadcasted shape of `(3, 4)`.\n\n---"
+      },
+      {
+        "id": "exam_2_q32",
+        "number": 32,
+        "points": 2,
+        "text": "Given the Python code:\n\n```python\nfrom sklearn.ensemble import RandomForestClassifier\n\nrf = RandomForestClassifier(n_estimators=100, max_features='sqrt', random_state=0)\nrf.fit(X_train, y_train)\nimportances = rf.feature_importances_\n```\n\nWhat does `importances[i]` represent?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** The information gain of feature i",
+          "**B.** The average Gini impurity reduction from splits using feature i",
+          "**C.** The correlation of feature i with the target",
+          "**D.** The total number of times feature i was used for splitting",
+          "**E.** The standardized coefficient of feature i"
+        ],
+        "correctAnswer": "B. The average Gini impurity reduction from splits using feature i",
+        "explanation": "* In scikit-learn, `RandomForestClassifier.feature_importances_` measures the **Mean Decrease in Impurity (MDI)** (also known as Gini Importance). \n  * It represents the normalized total reduction of the splitting criterion (Gini impurity by default) brought by that feature. Features that are chosen often for splits and result in high impurity reduction at those splits receive a higher importance score.\n  * Option A is incorrect; scikit-learn uses Gini impurity by default, not information gain.\n  * Option C is incorrect; it is a tree-based impurity metric, not a correlation coefficient.\n  * Option D is incorrect; it measures the quality of the splits (impurity reduction), not just the count.\n  * Option E is incorrect; tree models do not have coefficients.\n\n---"
+      },
+      {
+        "id": "exam_2_q33",
+        "number": 33,
+        "points": 5,
+        "text": "You have trained a Random Forest and now want to evaluate its accuracy on test data.\n\n```python\nfrom sklearn.ensemble import RandomForestClassifier\nfrom sklearn.metrics import accuracy_score\n\nrf = RandomForestClassifier(n_estimators=100, random_state=0)\nrf.fit(X_train, y_train)\n\ny_pred = rf._______________________\nacc = _____________________________\n\nprint(\"Accuracy:\", acc)\n```\n\nWhich statements correctly fill in the blanks? (Separate the two statements with a semicolon `;`).",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "`predict(X_test); accuracy_score(y_test, y_pred)`",
+        "explanation": "* **First blank:** To get the predictions on the test set, we call the `predict` method of the fitted Random Forest classifier `rf`:\n    `predict(X_test)` (which makes the full line: `y_pred = rf.predict(X_test)`).\n  * **Second blank:** To calculate the accuracy, we pass the true test labels `y_test` and our predicted labels `y_pred` to `accuracy_score`:\n    `accuracy_score(y_test, y_pred)` (which makes the full line: `acc = accuracy_score(y_test, y_pred)`).\n  * Separating them with a semicolon yields: `predict(X_test); accuracy_score(y_test, y_pred)`.\n\n---"
+      },
+      {
+        "id": "exam_2_q34",
+        "number": 34,
+        "points": 5,
+        "text": "You are testing different Ridge penalties using built-in cross-validation. Complete the code to compute the mean R² score and identify the best alpha. Fill in the missing lines.\n\n```python\nimport numpy as np\nfrom sklearn.linear_model import RidgeCV\n\nalphas = np.logspace(-3, 3, 7)\nridge_cv = RidgeCV(alphas=alphas, scoring='r2', cv=5)\n_____________________________________\nbest_alpha = ________________________\nprint(\"Best alpha:\", best_alpha)\nprint(\"Test R²:\", ridge_cv.score(X_test, y_test))\n```\n\nWhich statements correctly fill in the blanks? (Separate the two statements with a semicolon `;`).",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "`ridge_cv.fit(X_train, y_train); ridge_cv.alpha_`",
+        "explanation": "* **First blank:** To run the built-in cross-validation and fit the model on the training data, we call the `fit` method of the `RidgeCV` object:\n    `ridge_cv.fit(X_train, y_train)`.\n  * **Second blank:** After fitting, the selected best regularization strength parameter ($\\alpha$) is stored in the `.alpha_` attribute of the fitted `RidgeCV` object:\n    `ridge_cv.alpha_` (which makes the full line: `best_alpha = ridge_cv.alpha_`).\n  * Combined with a semicolon: `ridge_cv.fit(X_train, y_train); ridge_cv.alpha_`.\n\n---"
+      },
+      {
+        "id": "exam_2_q35",
+        "number": 35,
+        "points": 2,
+        "text": "We are fitting a linear regression model:\n$$f_{w,b}(x) = w \\cdot x + b$$\nwith parameters $w=8, b=-3$.\n\nThe training data consists of 5 points:\n$$(1,5), (2,12), (3,20), (4,33), (5,40)$$\n\nCompute the cost function:\n$$J(w, b) = \\frac{1}{2m} \\sum_{i=1}^m (f_{w,b}(x^{(i)}) - y^{(i)})^2$$",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** 1.5",
+          "**B.** 2.0",
+          "**C.** 1.8",
+          "**D.** 2.2",
+          "**E.** 2.7"
+        ],
+        "correctAnswer": "E. 2.7",
+        "explanation": "* **Detailed Calculation:**\n  1. Determine the sample size $m = 5$.\n  2. Compute the predictions ($f_{w,b}(x^{(i)}) = 8x^{(i)} - 3$), errors, and squared errors for all 5 points:\n     * **Point 1 $(1,5)$**:\n       * Prediction: $8(1) - 3 = 5$\n       * Error: $5 - 5 = 0$\n       * Squared Error: $0^2 = 0$\n     * **Point 2 $(2,12)$**:\n       * Prediction: $8(2) - 3 = 13$\n       * Error: $13 - 12 = 1$\n       * Squared Error: $1^2 = 1$\n     * **Point 3 $(3,20)$**:\n       * Prediction: $8(3) - 3 = 21$\n       * Error: $21 - 20 = 1$\n       * Squared Error: $1^2 = 1$\n     * **Point 4 $(4,33)$**:\n       * Prediction: $8(4) - 3 = 29$\n       * Error: $29 - 33 = -4$\n       * Squared Error: $(-4)^2 = 16$\n     * **Point 5 $(5,40)$**:\n       * Prediction: $8(5) - 3 = 37$\n       * Error: $37 - 40 = -3$\n       * Squared Error: $(-3)^2 = 9$\n  3. Sum the squared errors:\n     $$\\sum = 0 + 1 + 1 + 16 + 9 = 27$$\n  4. Calculate the total cost $J(w,b)$ by dividing by $2m = 2 \\times 5 = 10$:\n     $$J(w, b) = \\frac{27}{10} = 2.7$$\n  5. The resulting cost value matches Option E."
+      }
+    ]
+  }
+]
