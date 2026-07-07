@@ -53,8 +53,8 @@ export function Auth() {
       <div className="auth-card glass-card">
         <div className="auth-header">
           <div className="logo-icon">AI</div>
-          <h2>CAIO Credentials Simulator</h2>
-          <p>Secure cloud portal for Chief AI Officer mock testing</p>
+          <h2>Olympiad AI Mock Exam</h2>
+          <p>Secure cloud portal for FastTrack Academy Scholars</p>
         </div>
 
         {!configured ? (
