@@ -12,6 +12,7 @@ export interface Question {
 export interface Exam {
   id: string;
   name: string;
+  difficulty?: string;
   questions: Question[];
 }
 

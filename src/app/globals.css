@@ -169,6 +169,13 @@ h1, h2, h3, h4, h5, h6 {
   background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
   color: white;
   border: none;
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.5rem;
   font-weight: 600;
   cursor: pointer;
   box-shadow: var(--shadow-sm);
@@ -188,6 +195,13 @@ h1, h2, h3, h4, h5, h6 {
   background: rgba(255, 255, 255, 0.05);
   color: var(--text-primary);
   border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.5rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -215,4 +229,15 @@ h1, h2, h3, h4, h5, h6 {
 
 .pulse-glow {
   animation: pulse-glow 2s infinite ease-in-out;
+}
+
+/* Score colors based on grade threshold */
+.score-pass {
+  color: var(--color-success) !important;
+}
+.score-borderline {
+  color: var(--color-warning) !important;
+}
+.score-fail {
+  color: var(--color-error) !important;
 }

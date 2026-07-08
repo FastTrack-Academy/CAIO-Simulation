@@ -11,6 +11,12 @@ export default function HomePage() {
   const router = useRouter();
   const { activeStudent, getStudentAttempts, saveAttempt, isLoaded } = useStudent();
 
+  const getScoreColorClass = (score: number) => {
+    if (score >= 50) return 'score-pass';
+    if (score >= 35) return 'score-borderline';
+    return 'score-fail';
+  };
+
   if (!isLoaded || !activeStudent) return null;
 
   const studentAttempts = getStudentAttempts(activeStudent.id);
@@ -105,7 +111,14 @@ export default function HomePage() {
             {examStatus.map(exam => (
               <div key={exam.id} className="exam-card glass-card">
                 <div className="exam-card-header">
-                  <div className="exam-tag">Official Format</div>
+                  <div className="exam-header-left">
+                    <span className="exam-tag">Official Format</span>
+                    {exam.difficulty && (
+                      <span className={`difficulty-badge ${exam.difficulty.toLowerCase().includes('harder') ? 'harder' : 'equivalent'}`}>
+                        {exam.difficulty.toLowerCase().includes('harder') ? 'Harder' : 'Equivalent'}
+                      </span>
+                    )}
+                  </div>
                   {exam.status === 'completed' && (
                     <div className="exam-status completed">Completed</div>
                   )}
@@ -138,7 +151,7 @@ export default function HomePage() {
                     </div>
                     <div className="meta-item">
                       <span className="meta-label">Best Score</span>
-                      <span className="meta-value">
+                      <span className={`meta-value ${exam.bestScore !== null ? getScoreColorClass(exam.bestScore) : ''}`}>
                         {exam.bestScore !== null ? `${exam.bestScore}%` : '—'}
                       </span>
                     </div>
@@ -199,7 +212,7 @@ export default function HomePage() {
               </div>
               <div className="sidebar-stat-item">
                 <span className="side-label">Avg Grade</span>
-                <span className="side-val">
+                <span className={`side-val ${studentAttempts.filter(a => a.isCompleted).length > 0 ? getScoreColorClass(Math.round(studentAttempts.filter(a => a.isCompleted).reduce((acc, curr) => acc + (curr.score / curr.totalPoints) * 100, 0) / studentAttempts.filter(a => a.isCompleted).length)) : ''}`}>
                   {studentAttempts.filter(a => a.isCompleted).length > 0
                     ? `${Math.round(studentAttempts.filter(a => a.isCompleted).reduce((acc, curr) => acc + (curr.score / curr.totalPoints) * 100, 0) / studentAttempts.filter(a => a.isCompleted).length)}%`
                     : '—'}
@@ -349,12 +362,36 @@ export default function HomePage() {
           justify-content: space-between;
           align-items: center;
         }
+        .exam-header-left {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+        }
         .exam-tag {
           font-size: 0.7rem;
           font-weight: 700;
           color: var(--text-muted);
           text-transform: uppercase;
           letter-spacing: 0.05em;
+        }
+        .difficulty-badge {
+          font-size: 0.65rem;
+          font-weight: 800;
+          padding: 0.15rem 0.45rem;
+          border-radius: var(--radius-sm);
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          line-height: 1;
+        }
+        .difficulty-badge.harder {
+          background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(239, 68, 68, 0.2) 100%);
+          border: 1px solid rgba(239, 68, 68, 0.3);
+          color: #f87171;
+        }
+        .difficulty-badge.equivalent {
+          background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.2) 100%);
+          border: 1px solid rgba(16, 185, 129, 0.3);
+          color: #34d399;
         }
         .exam-status {
           font-size: 0.75rem;

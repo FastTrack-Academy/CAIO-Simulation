@@ -9,6 +9,12 @@ import examsData from '@/data/exams.json';
 export default function DashboardPage() {
   const { activeStudent, getStudentAttempts, deleteAttempt, stats, isLoaded } = useStudent();
 
+  const getScoreColorClass = (score: number) => {
+    if (score >= 50) return 'score-pass';
+    if (score >= 35) return 'score-borderline';
+    return 'score-fail';
+  };
+
   if (!isLoaded || !activeStudent) return null;
 
   const studentAttempts = getStudentAttempts(activeStudent.id).filter(a => a.isCompleted);
@@ -88,7 +94,7 @@ export default function DashboardPage() {
         <div className="stat-card glass-card">
           <Award className="stat-icon purple" size={24} />
           <div className="stat-details">
-            <span className="stat-value">{stats.averageScore}%</span>
+            <span className={`stat-value ${getScoreColorClass(stats.averageScore)}`}>{stats.averageScore}%</span>
             <span className="stat-label">Average Score</span>
           </div>
         </div>
@@ -151,7 +157,7 @@ export default function DashboardPage() {
                       <div className="attempt-stats-mini">
                         <div className="attempt-stat-mini">
                           <span className="mini-lbl">Grade</span>
-                          <span className={`mini-val ${isPassed ? 'pass' : 'fail'}`}>
+                          <span className={`mini-val ${getScoreColorClass(percentage)}`}>
                             {percentage}%
                           </span>
                         </div>

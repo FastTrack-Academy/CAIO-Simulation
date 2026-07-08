@@ -2,6 +2,7 @@
   {
     "id": "exam_1",
     "name": "Past Exam 1 (Questions 1-35 of 35)",
+    "difficulty": "Harder than actual exam",
     "questions": [
       {
         "id": "exam_1_q1",
@@ -502,6 +503,7 @@
   {
     "id": "exam_2",
     "name": "Past Exam 2 (Questions 1-35 of 35)",
+    "difficulty": "Equivalent to actual exam",
     "questions": [
       {
         "id": "exam_2_q1",
@@ -1002,6 +1004,1496 @@
         ],
         "correctAnswer": "E. 2.7",
         "explanation": "* **Detailed Calculation:**\n  1. Determine the sample size $m = 5$.\n  2. Compute the predictions ($f_{w,b}(x^{(i)}) = 8x^{(i)} - 3$), errors, and squared errors for all 5 points:\n     * **Point 1 $(1,5)$**:\n       * Prediction: $8(1) - 3 = 5$\n       * Error: $5 - 5 = 0$\n       * Squared Error: $0^2 = 0$\n     * **Point 2 $(2,12)$**:\n       * Prediction: $8(2) - 3 = 13$\n       * Error: $13 - 12 = 1$\n       * Squared Error: $1^2 = 1$\n     * **Point 3 $(3,20)$**:\n       * Prediction: $8(3) - 3 = 21$\n       * Error: $21 - 20 = 1$\n       * Squared Error: $1^2 = 1$\n     * **Point 4 $(4,33)$**:\n       * Prediction: $8(4) - 3 = 29$\n       * Error: $29 - 33 = -4$\n       * Squared Error: $(-4)^2 = 16$\n     * **Point 5 $(5,40)$**:\n       * Prediction: $8(5) - 3 = 37$\n       * Error: $37 - 40 = -3$\n       * Squared Error: $(-3)^2 = 9$\n  3. Sum the squared errors:\n     $$\\sum = 0 + 1 + 1 + 16 + 9 = 27$$\n  4. Calculate the total cost $J(w,b)$ by dividing by $2m = 2 \\times 5 = 10$:\n     $$J(w, b) = \\frac{27}{10} = 2.7$$\n  5. The resulting cost value matches Option E."
+      }
+    ]
+  },
+  {
+    "id": "exam_3",
+    "name": "Past Exam 3 (Questions 1-35 of 35)",
+    "difficulty": "Harder than actual exam",
+    "questions": [
+      {
+        "id": "exam_3_q1",
+        "number": 1,
+        "points": 2,
+        "text": "Consider the following Python code:\n\n```python\nimport numpy as np\nA = np.array([[1, 2, 3],\n              [0, 1, 4],\n              [5, 6, 0]])\nB = np.array([[1, 0, 5],\n              [2, 1, 6],\n              [3, 4, 0]])\nC = np.dot(A, B.T)\n```\n\nWhat is the result of `print(C[:2, :2])`?",
+        "type": "multiple-choice",
+        "options": [
+          "Option 1:\n  ```\n  [[16 20]\n   [22 25]]\n  ```",
+          "Option 2:\n  ```\n  [[14 14]\n   [14 17]]\n  ```",
+          "Option 3:\n  ```\n  [[14 14 17]\n   [14 17 6]\n   [17 6 61]]\n  ```",
+          "Option 4:\n  ```\n  [[16 22]\n   [14 17]]\n  ```",
+          "Option 5:\n  ```\n  [[16 22]\n   [20 25]]\n  ```"
+        ],
+        "correctAnswer": "Option 5",
+        "explanation": "* We have matrix $A$:\n    $$A = \\begin{pmatrix} 1 & 2 & 3 \\\\ 0 & 1 & 4 \\\\ 5 & 6 & 0 \\end{pmatrix}$$\n  * And matrix $B$:\n    $$B = \\begin{pmatrix} 1 & 0 & 5 \\\\ 2 & 1 & 6 \\\\ 3 & 4 & 0 \\end{pmatrix}$$\n  * The transpose of $B$, $B^T$, is:\n    $$B^T = \\begin{pmatrix} 1 & 2 & 3 \\\\ 0 & 1 & 4 \\\\ 5 & 6 & 0 \\end{pmatrix}$$\n  * Notice that $B^T = A$. Thus, $C = A \\cdot B^T = A \\cdot A = A^2$:\n    $$C = \\begin{pmatrix} 1 & 2 & 3 \\\\ 0 & 1 & 4 \\\\ 5 & 6 & 0 \\end{pmatrix} \\begin{pmatrix} 1 & 2 & 3 \\\\ 0 & 1 & 4 \\\\ 5 & 6 & 0 \\end{pmatrix}$$\n  * We only need to find the top-left $2 \\times 2$ block of $C$, which corresponds to indices `C[:2, :2]`:\n    * $C_{0,0} = 1(1) + 2(0) + 3(5) = 1 + 15 = 16$\n    * $C_{0,1} = 1(2) + 2(1) + 3(6) = 2 + 2 + 18 = 22$\n    * $C_{1,0} = 0(1) + 1(0) + 4(5) = 20$\n    * $C_{1,1} = 0(2) + 1(1) + 4(6) = 1 + 24 = 25$\n  * So, `C[:2, :2]` is:\n    $$\\begin{pmatrix} 16 & 22 \\\\ 20 & 25 \\end{pmatrix}$$\n  * In NumPy, this is printed as:\n    ```\n    [[16 22]\n     [20 25]]\n    ```\n\n---"
+      },
+      {
+        "id": "exam_3_q2",
+        "number": 2,
+        "points": 2,
+        "text": "Consider the following Python code:\n\n```python\nimport pandas as pd\ndf = pd.DataFrame({\n    'A':[1,2,3,4,5],\n    'B':[10,20,30,40,50],\n    'C':[5,4,3,2,1]\n})\nprint(df.loc[df['B']>20, ['A','C']].iloc[1,1])\n```\n\nWhat is the output?",
+        "type": "multiple-choice",
+        "options": [
+          "4",
+          "2",
+          "40",
+          "3",
+          "30"
+        ],
+        "correctAnswer": "2",
+        "explanation": "* First, `df['B'] > 20` filters the rows of the DataFrame. The rows where column `B` is greater than `20` are those with values `30`, `40`, and `50` (index labels `2`, `3`, and `4`).\n  * `df.loc[df['B']>20, ['A','C']]` selects these filtered rows and only columns `A` and `C`. The resulting DataFrame is:\n    ```\n       A  C\n    2  3  3\n    3  4  2\n    4  5  1\n    ```\n  * Next, `.iloc[1, 1]` accesses the element at integer position (row 1, column 1) using 0-based indexing:\n    * Row index `1` corresponds to the row labeled `3` (which contains `[4, 2]`).\n    * Column index `1` corresponds to column `C` (the second column).\n    * The element at row 1, column 1 is `2`.\n\n---"
+      },
+      {
+        "id": "exam_3_q3",
+        "number": 3,
+        "points": 2,
+        "text": "For one-dimensional linear regression, the gradient of the loss\n\n$$L(w,b) = \\frac{1}{n} \\sum_{i} (y_i - (wx_i + b))^2$$\n\nwith respect to $w$ is:",
+        "type": "multiple-choice",
+        "options": [
+          "$\\frac{2}{n} \\sum_i y_i$",
+          "$\\frac{2}{n} \\sum_i (y_i - (wx_i + b))$",
+          "$\\frac{2}{n} \\sum_i x_i(y_i - (wx_i + b))$",
+          "$-\\frac{2}{n} \\sum_i (y_i - (wx_i + b))$",
+          "$-\\frac{2}{n} \\sum_i x_i(y_i - (wx_i + b))$"
+        ],
+        "correctAnswer": "$-\\frac{2}{n} \\sum_i x_i(y_i - (wx_i + b))$",
+        "explanation": "* To find the gradient with respect to $w$, we take the partial derivative of $L(w, b)$ with respect to $w$:\n    $$\\frac{\\partial L}{\\partial w} = \\frac{\\partial}{\\partial w} \\left[ \\frac{1}{n} \\sum_{i} (y_i - (wx_i + b))^2 \\right]$$\n  * By applying the chain rule:\n    $$\\frac{\\partial L}{\\partial w} = \\frac{1}{n} \\sum_{i} 2(y_i - (wx_i + b)) \\cdot \\frac{\\partial}{\\partial w} (y_i - wx_i - b)$$\n    $$\\frac{\\partial L}{\\partial w} = \\frac{2}{n} \\sum_{i} (y_i - (wx_i + b)) \\cdot (-x_i)$$\n    $$\\frac{\\partial L}{\\partial w} = -\\frac{2}{n} \\sum_{i} x_i(y_i - (wx_i + b))$$\n\n---"
+      },
+      {
+        "id": "exam_3_q4",
+        "number": 4,
+        "points": 2,
+        "text": "In matrix form, linear regression solves\n\n$$\\hat{w} = (X^T X)^{-1} X^T y$$\n\nWhich condition must hold for this equation to be valid?",
+        "type": "multiple-choice",
+        "options": [
+          "**y** has zero mean",
+          "$X^T X$ is invertible",
+          "$X$ is symmetric",
+          "None of above is correct",
+          "$X$ is orthogonal"
+        ],
+        "correctAnswer": "$X^T X$ is invertible",
+        "explanation": "* The equation involves the term $(X^T X)^{-1}$, which is the inverse of the matrix $X^T X$.\n  * For a matrix to have an inverse, it must be invertible (non-singular), meaning its determinant must be non-zero and it must have full rank. If $X^T X$ is not invertible, its inverse does not exist, and the analytical solution cannot be computed.\n\n---"
+      },
+      {
+        "id": "exam_3_q5",
+        "number": 5,
+        "points": 2,
+        "text": "The vectorized form of the weight update for MSE loss is:",
+        "type": "multiple-choice",
+        "options": [
+          "$w := w + \\frac{2\\alpha}{n} (Xw - y)X^T$",
+          "$w := w - \\alpha(wX^T - y)$",
+          "$w := w - \\alpha(X - y^T)$",
+          "$w := w - 2\\alpha X(X^T w - y)$",
+          "$w := w - \\frac{2\\alpha}{n} X^T(Xw - y)$"
+        ],
+        "correctAnswer": "$w := w - \\frac{2\\alpha}{n} X^T(Xw - y)$",
+        "explanation": "* Let the Mean Squared Error (MSE) loss function be:\n    $$L(w) = \\frac{1}{n} \\|Xw - y\\|^2 = \\frac{1}{n} (Xw - y)^T(Xw - y)$$\n  * The gradient of this loss function with respect to the parameter vector $w$ is:\n    $$\\nabla_w L(w) = \\frac{2}{n} X^T (Xw - y)$$\n  * In gradient descent, we update the weights by subtracting the gradient scaled by the learning rate $\\alpha$:\n    $$w := w - \\alpha \\nabla_w L(w) = w - \\frac{2\\alpha}{n} X^T(Xw - y)$$\n\n---"
+      },
+      {
+        "id": "exam_3_q6",
+        "number": 6,
+        "points": 2,
+        "text": "Why is standardization (z-score scaling) important before gradient-based optimization?",
+        "type": "multiple-choice",
+        "options": [
+          "It changes model interpretability.",
+          "It improves tree-based model accuracy.",
+          "It centers features at 0 and reduces large gradient steps.",
+          "It ensures all features are integers.",
+          "It eliminates correlation between features."
+        ],
+        "correctAnswer": "It centers features at 0 and reduces large gradient steps.",
+        "explanation": "* Standardization transforms features to have a mean of 0 and a standard deviation of 1.\n  * When features have widely different scales, the contours of the cost function become highly elongated (eccentric ellipses). This causes gradient descent to oscillate wildly or take extremely large/inefficient steps in some directions while making slow progress in others.\n  * Centering and scaling the features makes the contours of the loss function more spherical, enabling smoother, more direct, and faster convergence using larger stable learning rates without taking excessively large gradient steps.\n\n---"
+      },
+      {
+        "id": "exam_3_q7",
+        "number": 7,
+        "points": 2,
+        "text": "Given the following Python code, what is the worst case time complexity if the function is called.\n\n```python\ndef cal(n):\n    i = 1\n    while i <= n:\n        i = i * 3\n        print(i)\n```",
+        "type": "multiple-choice",
+        "options": [
+          "$O(N^2)$",
+          "$O(\\log_2 N)$",
+          "$O(1)$",
+          "$O(\\log_3 N)$",
+          "$O(N)$"
+        ],
+        "correctAnswer": "$O(\\log_3 N)$",
+        "explanation": "* The variable `i` starts at `1` and is multiplied by `3` in each iteration.\n  * The values of `i` in successive iterations are $1, 3, 9, 27, \\dots, 3^k$.\n  * The loop terminates when $i > n$, which means the loop runs $k$ times where $3^k \\le n$.\n  * Solving for $k$ gives:\n    $$k \\le \\log_3 n$$\n  * Thus, the number of iterations grows logarithmically with base 3, giving a time complexity of $O(\\log_3 N)$.\n\n---"
+      },
+      {
+        "id": "exam_3_q8",
+        "number": 8,
+        "points": 2,
+        "text": "If the sigmoid activation receives extreme values (very large positive or negative $z$), what happens to the gradient?",
+        "type": "multiple-choice",
+        "options": [
+          "It becomes very large (explodes)",
+          "It increases the cost immediately",
+          "It reverses direction",
+          "It oscillates randomly",
+          "It approaches zero (vanishes)"
+        ],
+        "correctAnswer": "It approaches zero (vanishes)",
+        "explanation": "* The sigmoid function is defined as $\\sigma(z) = \\frac{1}{1 + e^{-z}}$, and its derivative is:\n    $$\\sigma'(z) = \\sigma(z)(1 - \\sigma(z))$$\n  * For very large positive values of $z$, $\\sigma(z) \\approx 1$, which gives:\n    $$\\sigma'(z) \\approx 1(1 - 1) = 0$$\n  * For very large negative values of $z$, $\\sigma(z) \\approx 0$, which gives:\n    $$\\sigma'(z) \\approx 0(1 - 0) = 0$$\n  * In both extreme cases, the derivative (gradient) approaches zero, which leads to the vanishing gradient problem.\n\n---"
+      },
+      {
+        "id": "exam_3_q9",
+        "number": 9,
+        "points": 2,
+        "text": "If regularization parameter $\\lambda$ is too large, the model will likely:",
+        "type": "multiple-choice",
+        "options": [
+          "Overfit",
+          "Ignore gradient updates",
+          "Oscillate between solutions",
+          "Stop converging",
+          "Underfit"
+        ],
+        "correctAnswer": "Underfit",
+        "explanation": "* The regularization parameter $\\lambda$ controls the penalty on the magnitude of the model parameters (weights).\n  * If $\\lambda$ is set too large, the model penalizes weight values excessively, forcing them to become very close to zero.\n  * This severely limits the capacity of the model, preventing it from capturing the underlying patterns and relationships in the training data, leading to **underfitting** (high bias).\n\n---"
+      },
+      {
+        "id": "exam_3_q10",
+        "number": 10,
+        "points": 2,
+        "text": "Lowering the XGBoost learning rate $\\eta$ typically:",
+        "type": "multiple-choice",
+        "options": [
+          "Reduces bias and increases variance",
+          "Makes boosting converge faster",
+          "Makes trees shallower",
+          "Makes training unstable",
+          "Requires more trees but improves generalization"
+        ],
+        "correctAnswer": "Requires more trees but improves generalization",
+        "explanation": "* The learning rate $\\eta$ (shrinkage) scales the contribution of each new tree added to the ensemble.\n  * Lowering $\\eta$ means each tree makes a smaller correction. Consequently, you need more trees (more boosting rounds) to reach the same level of training fit.\n  * However, this slow, step-by-step learning process reduces the risk of overfitting to noise and typically leads to better generalization on unseen test data.\n\n---"
+      },
+      {
+        "id": "exam_3_q11",
+        "number": 11,
+        "points": 2,
+        "text": "Weighted A* search algorithm, a variant of A* search algorithm, uses combined cost function:\n\n$$f(n) = g(n) + w \\times h(n)$$\n\nwith $w > 1$. What is the effect compare to the normal A* search algorithm?",
+        "type": "multiple-choice",
+        "options": [
+          "Makes the algorithm faster but possibly sub-optimal",
+          "Increases optimality but slows down search",
+          "Same behavior as UCS",
+          "Guarantees exact optimality",
+          "Removes heuristic influence"
+        ],
+        "correctAnswer": "Makes the algorithm faster but possibly sub-optimal",
+        "explanation": "* In Weighted A*, setting $w > 1$ scales up the heuristic function $h(n)$ relative to the actual path cost $g(n)$.\n  * This pushes the search to behave more like Greedy Best-First Search, prioritizing nodes closer to the goal and drastically reducing the number of expanded states (making the search faster).\n  * However, because the heuristic is over-emphasized, the algorithm loses its guarantee of finding the absolute shortest path, potentially returning a sub-optimal solution.\n\n---"
+      },
+      {
+        "id": "exam_3_q12",
+        "number": 12,
+        "points": 2,
+        "text": "If Uniform Cost Search is applied to a graph where edge costs can be negative, what happens?",
+        "type": "multiple-choice",
+        "options": [
+          "The algorithm remains optimal",
+          "It terminates early with incorrect cost",
+          "The algorithm may enter an infinite loop",
+          "It becomes equivalent to BFS",
+          "It still finds the least-cost path"
+        ],
+        "correctAnswer": "The algorithm may enter an infinite loop",
+        "explanation": "* Uniform Cost Search (UCS) assumes edge costs are non-negative.\n  * If negative edge costs are present, UCS can fail to find the optimal path. Furthermore, if a graph contains a **negative cycle** (a cycle whose sum of edge costs is negative), the search can traverse the cycle indefinitely to keep reducing the path cost, resulting in an infinite loop.\n\n---"
+      },
+      {
+        "id": "exam_3_q13",
+        "number": 13,
+        "points": 2,
+        "text": "You run K-means with K = 2 on the following 1-dimensional data points:\nData points: 1, 2, 3, 10, 12, 13\n\nYou initialize the centroids as:\nC1 = 2\nC2 = 12\n\nK-means assigns each point to the nearest centroid and then recomputes the centroids as the mean of assigned points. What will the centroids be after ONE iteration (assignment + centroid update)?",
+        "type": "multiple-choice",
+        "options": [
+          "C1 = 2, C2 = 13",
+          "C1 = 2, C2 = 10",
+          "C1 = 2, C2 = 11",
+          "A. C1 = 2, C2 = 11.67",
+          "C1 = 3.5, C2 = 11.67"
+        ],
+        "correctAnswer": "A. C1 = 2, C2 = 11.67",
+        "explanation": "* **Step 1: Assignment Step**\n    Assign each data point $\\{1, 2, 3, 10, 12, 13\\}$ to the nearest centroid ($C_1 = 2$, $C_2 = 12$):\n    * Point 1: $|1-2| = 1$, $|1-12| = 11 \\implies$ Assigned to $C_1$\n    * Point 2: $|2-2| = 0$, $|2-12| = 10 \\implies$ Assigned to $C_1$\n    * Point 3: $|3-2| = 1$, $|3-12| = 9 \\implies$ Assigned to $C_1$\n    * Point 10: $|10-2| = 8$, $|10-12| = 2 \\implies$ Assigned to $C_2$\n    * Point 12: $|12-2| = 10$, $|12-12| = 0 \\implies$ Assigned to $C_2$\n    * Point 13: $|13-2| = 11$, $|13-12| = 1 \\implies$ Assigned to $C_2$\n    * Cluster 1: $\\{1, 2, 3\\}$\n    * Cluster 2: $\\{10, 12, 13\\}$\n  * **Step 2: Centroid Update Step**\n    Recompute centroids as the mean of the assigned points:\n    * New $C_1 = \\frac{1 + 2 + 3}{3} = \\frac{6}{3} = 2$\n    * New $C_2 = \\frac{10 + 12 + 13}{3} = \\frac{35}{3} \\approx 11.67$\n  * Therefore, the centroids after one iteration are $C_1 = 2$ and $C_2 = 11.67$.\n\n---"
+      },
+      {
+        "id": "exam_3_q14",
+        "number": 14,
+        "points": 2,
+        "text": "Consider the following code, what is the output?\n\n```python\nimport pandas as pd\nimport numpy as np\n\ndf = pd.DataFrame({\n    'A': [1, 2, 3],\n    'B': [4, np.nan, 6]\n})\n\ndf['C'] = df['A'] + df['B'].fillna(0)\n\nprint(df.iloc[1])\n```",
+        "type": "multiple-choice",
+        "options": [
+          "Option A:\n  ```\n  A    2.0\n  B    NaN\n  C    2.0\n  Name: 1, dtype: float64\n  ```",
+          "Option B:\n  ```\n  A    2.0\n  B    0.0\n  C    2.0\n  Name: 1, dtype: float64\n  ```",
+          "Option C:\n  ```\n  A    2.0\n  B    0.0\n  C    6.0\n  Name: 1, dtype: float64\n  ```",
+          "Option D:\n  ```\n  A    2.0\n  B    4.0\n  C    6.0\n  Name: 1, dtype: float64\n  ```",
+          "Option E:\n  ```\n  A    2.0\n  B    NaN\n  C    6.0\n  Name: 1, dtype: float64\n  ```"
+        ],
+        "correctAnswer": "Option A",
+        "explanation": "* Initially, column `B` contains `NaN`. Since it has a missing float value, its type is `float64`, which propagates to other elements in the column.\n  * In `df['C'] = df['A'] + df['B'].fillna(0)`, the Series `df['B'].fillna(0)` evaluates to `[4.0, 0.0, 6.0]`. Adding this to column `A` (`[1, 2, 3]`) results in column `C` containing `[5.0, 2.0, 9.0]`.\n  * Note that `df['B'].fillna(0)` does not modify `df['B']` in place. Therefore, `df['B']` still contains `NaN` at row index 1.\n  * When executing `df.iloc[1]`, Pandas returns a Series representing the row at index 1:\n    * `A` has value `2`.\n    * `B` has value `NaN`.\n    * `C` has value `2.0`.\n  * Since a Series must have a single data type and the row contains a `NaN` (float), the integer in column `A` is upcast to `float64` (`2.0`).\n  * The printed Series is:\n    ```\n    A    2.0\n    B    NaN\n    C    2.0\n    Name: 1, dtype: float64\n    ```\n\n---"
+      },
+      {
+        "id": "exam_3_q15",
+        "number": 15,
+        "points": 2,
+        "text": "If the learning rate $\\alpha$ in gradient descent is set too high in logistic regression:",
+        "type": "multiple-choice",
+        "options": [
+          "The gradient becomes smaller",
+          "The cost function oscillates or diverges",
+          "Training reaches local minima faster",
+          "The model becomes underfit",
+          "Convergence slows down but remains stable"
+        ],
+        "correctAnswer": "The cost function oscillates or diverges",
+        "explanation": "* If the learning rate $\\alpha$ is too high, the parameter updates will be too large.\n  * Instead of moving smoothly down the gradient toward the minimum, the parameters may overshoot the minimum. This causes the cost function to oscillate (bounce back and forth across the valley) or even diverge (increase instead of decrease).\n\n---"
+      },
+      {
+        "id": "exam_3_q16",
+        "number": 16,
+        "points": 2,
+        "text": "Which statement best summarizes the bias-variance trade-off?",
+        "type": "multiple-choice",
+        "options": [
+          "Increasing bias always decreases variance",
+          "Variance depends only on data size",
+          "Bias is independent of model complexity",
+          "Reducing bias often increases variance",
+          "Bias and variance can both be minimized simultaneously"
+        ],
+        "correctAnswer": "Reducing bias often increases variance",
+        "explanation": "* Bias and variance are two sources of error in machine learning models.\n  * **Bias** is error from erroneous assumptions in the model (underfitting), while **variance** is error from sensitivity to small fluctuations in the training set (overfitting).\n  * Increasing model complexity reduces bias (allowing it to fit training data better) but increases variance (making it more sensitive to noise). Conversely, simplifying a model reduces variance but increases bias. This reciprocal relationship is the bias-variance trade-off.\n\n---"
+      },
+      {
+        "id": "exam_3_q17",
+        "number": 17,
+        "points": 2,
+        "text": "A learning curve shows training and validation error vs training set size. If both curves converge at a high error value as data grows, the model:",
+        "type": "multiple-choice",
+        "options": [
+          "Has data leakage",
+          "Needs more data",
+          "Is underfitting",
+          "Has excessive variance",
+          "Is overfitting"
+        ],
+        "correctAnswer": "Is underfitting",
+        "explanation": "* When a model is underfitting (high bias), it is too simple to capture the underlying structure of the data.\n  * As the training set size increases, both the training error and validation error remain high and close to each other. Adding more training data does not help resolve this because the model lacks the capacity to represent the true function.\n\n---"
+      },
+      {
+        "id": "exam_3_q18",
+        "number": 18,
+        "points": 2,
+        "text": "Adding L2 regularization term $\\frac{\\lambda}{2} \\|w\\|^2$ to the loss function has what effect?",
+        "type": "multiple-choice",
+        "options": [
+          "Shifts the decision boundary by a constant factor",
+          "Increases variance, decreases bias",
+          "Has no effect on gradient updates",
+          "Increases bias, decreases variance",
+          "Makes all weights exactly zero"
+        ],
+        "correctAnswer": "Increases bias, decreases variance",
+        "explanation": "* L2 regularization penalizes large weights, preventing the model from fitting the training data's noise too closely.\n  * This constraint simplifies the model, which **decreases variance** (making it generalize better to new data) but **increases bias** (since it fits the training data slightly less closely).\n\n---"
+      },
+      {
+        "id": "exam_3_q19",
+        "number": 19,
+        "points": 2,
+        "text": "Which of the following is not a limitation of Support Vector Machines?",
+        "type": "multiple-choice",
+        "options": [
+          "SVMs are sensitive to feature scaling and usually require standardization",
+          "SVMs tend to suffer from severe overfitting when the feature dimension is higher than the number of samples",
+          "SVMs require careful tuning of hyperparameters such as $C$ and kernel parameters",
+          "SVMs do not directly output probability estimates without additional computation",
+          "Training on large datasets is computationally expensive"
+        ],
+        "correctAnswer": "SVMs tend to suffer from severe overfitting when the feature dimension is higher than the number of samples",
+        "explanation": "* SVMs are actually highly robust and effective in high-dimensional spaces, even when the number of features ($d$) is larger than the number of samples ($n$).\n  * By finding the maximum-margin hyperplane, they are inherently regularized against overfitting in high dimensions, making this a strength rather than a limitation.\n  * All other options are well-known limitations of SVMs (sensitivity to scale, parameter sensitivity, lack of probabilistic outputs, and $O(n^3)$ training complexity for large datasets).\n\n---"
+      },
+      {
+        "id": "exam_3_q20",
+        "number": 20,
+        "points": 2,
+        "text": "The kernel trick allows SVM to:",
+        "type": "multiple-choice",
+        "options": [
+          "Avoid dual formulation",
+          "Replace nonlinear boundary with linear one in input space",
+          "Compute dot products in feature space without explicitly mapping",
+          "Reduce number of samples",
+          "Guarantee 0 error"
+        ],
+        "correctAnswer": "Compute dot products in feature space without explicitly mapping",
+        "explanation": "* The kernel trick enables SVMs to learn non-linear decision boundaries by implicitly mapping input features into higher-dimensional spaces.\n  * Instead of performing the expensive transformation $\\Phi(x)$ and calculating the dot product $\\Phi(x)^T \\Phi(z)$, the kernel function $K(x, z)$ computes this dot product directly in the original space. This avoids the computational complexity of mapping data explicitly.\n\n---"
+      },
+      {
+        "id": "exam_3_q21",
+        "number": 21,
+        "points": 2,
+        "text": "In Decision Tree, which condition most strongly leads to overfitting?",
+        "type": "multiple-choice",
+        "options": [
+          "High bias model",
+          "Deep tree with few samples per leaf",
+          "Large random forest",
+          "Using entropy instead of Gini",
+          "Shallow tree"
+        ],
+        "correctAnswer": "Deep tree with few samples per leaf",
+        "explanation": "* If a decision tree is allowed to grow very deep and split until there are very few samples per leaf, it will create highly complex, fine-grained decision boundaries.\n  * This permits the tree to fit noise and outliers in the training data, leading to severe overfitting (high variance).\n\n---"
+      },
+      {
+        "id": "exam_3_q22",
+        "number": 22,
+        "points": 2,
+        "text": "In terms of Bias-Variance Tradeoff, a model with high variance typically has:",
+        "type": "multiple-choice",
+        "options": [
+          "High training error, high test error",
+          "High training error, low test error",
+          "High bias",
+          "Low training error, high test error",
+          "Low training error, low test error"
+        ],
+        "correctAnswer": "Low training error, high test error",
+        "explanation": "* High variance (overfitting) occurs when a model fits the training set too closely, capturing noise along with the signal.\n  * This results in very low training error, but the model fails to generalize to unseen test data, resulting in high test error.\n\n---"
+      },
+      {
+        "id": "exam_3_q23",
+        "number": 23,
+        "points": 2,
+        "text": "If you replace $P(x_i \\mid C_k)$ with a logistic regression-estimated conditional probability while keeping Bayes' rule intact, what property do you lose?",
+        "type": "multiple-choice",
+        "options": [
+          "Priors",
+          "Normalization",
+          "Likelihood estimation",
+          "Posterior computation",
+          "Conditional independence"
+        ],
+        "correctAnswer": "Likelihood estimation",
+        "explanation": "* Naive Bayes is a **generative** classifier that models the joint probability $P(X, C_k) = P(C_k) \\prod P(x_i | C_k)$, where $P(x_i | C_k)$ represents the **likelihood** of the features.\n  * Logistic regression is a **discriminative** classifier that directly estimates the posterior class probability $P(C_k | x_i)$ without modeling the distribution of the features.\n  * Replacing $P(x_i | C_k)$ with a discriminative model's output means you no longer estimate the generative likelihoods of the features, thus losing **likelihood estimation**.\n\n---"
+      },
+      {
+        "id": "exam_3_q24",
+        "number": 24,
+        "points": 2,
+        "text": "If the model's cross validation error $J_{cv}$ is much higher than the training error $J_{train}$, this is an indication that the model has:",
+        "type": "multiple-choice",
+        "options": [
+          "Low variance",
+          "high variance",
+          "low bias",
+          "hard to tell",
+          "high bias"
+        ],
+        "correctAnswer": "high variance",
+        "explanation": "* A large gap between a low training error ($J_{train}$) and a high cross-validation error ($J_{cv}$) is the signature of overfitting.\n  * This indicates that the model has high variance, meaning it has memorized the training data's noise and fails to generalize to validation data.\n\n---"
+      },
+      {
+        "id": "exam_3_q25",
+        "number": 25,
+        "points": 2,
+        "text": "Suppose your unvectorized linear regression training loop takes 3 minutes to run. After vectorizing the code, it runs in 0.1 seconds. What explains this improvement?",
+        "type": "multiple-choice",
+        "options": [
+          "The learning rate increases automatically",
+          "Vectorization uses GPU memory automatically",
+          "Vectorization avoids computing gradients",
+          "Training data becomes smaller",
+          "Vectorization allows parallel operations on entire data"
+        ],
+        "correctAnswer": "Vectorization allows parallel operations on entire data",
+        "explanation": "* Unvectorized code uses explicit loops (e.g. `for` loops in Python) that execute operations sequentially and suffer from high interpreter overhead.\n  * Vectorization delegates loops to highly optimized, pre-compiled C/C++ backend libraries (like BLAS/LAPACK inside NumPy). These libraries use SIMD (Single Instruction Data) instructions to perform operations on entire arrays in parallel at the hardware level, dramatically improving execution speed.\n\n---"
+      },
+      {
+        "id": "exam_3_q26",
+        "number": 26,
+        "points": 5,
+        "text": "You are given a small dataset stored in a CSV file named `temperature.csv`, which contains two columns:\n\n| day | temp_c |\n| --- | ------ |\n| 1   | 12     |\n| 2   | 14     |\n| 3   | 15     |\n| 4   | 11     |\n| 5   | 13     |\n\n**Task:**\n1. Load the dataset using **Pandas**\n2. Convert all temperatures from **Celsius to Fahrenheit** using **NumPy**\n3. Plot a line graph of the Fahrenheit temperatures using **Matplotlib**\n\n**Formula:**\n$$F = C \\times \\frac{9}{5} + 32$$\n\nPlease fill in the blank code:\n\n```python\nimport pandas as pd\nimport numpy as np\nimport matplotlib.pyplot as plt\n\n# Step 1: Load the dataset\ndf = pd.___________('temperature.csv')\n\n# Step 2: Convert Celsius to Fahrenheit\ndf['temp_f'] = ___________\n\n# Step 3: Plot the Fahrenheit temperature, define an appropriate xlabel, ylabel and title\n____ few lines here ____\n... ...\n... ...\n```",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "```python",
+        "explanation": "```python\n  df = pd.read_csv('temperature.csv')\n  df['temp_f'] = df['temp_c'] * 9/5 + 32 # or df['temp_c'] * 1.8 + 32\n  plt.plot(df['day'], df['temp_f'])\n  plt.xlabel('Day')\n  plt.ylabel('Temperature (F)')\n  plt.title('Temperature over Days')\n  plt.show()\n  ```\n  * **Step 1:** To load a CSV file, we use `pd.read_csv('temperature.csv')`.\n  * **Step 2:** We apply the Celsius-to-Fahrenheit formula element-wise: `df['temp_c'] * 9/5 + 32` (or `df['temp_c'] * 1.8 + 32`).\n  * **Step 3:** To plot, we call `plt.plot()` with the `day` column as the x-axis and the new `temp_f` column as the y-axis, set labels using `plt.xlabel()` and `plt.ylabel()`, and define a title with `plt.title()`. Finally, `plt.show()` renders the plot.\n\n---"
+      },
+      {
+        "id": "exam_3_q27",
+        "number": 27,
+        "points": 5,
+        "text": "Data Cleaning and Feature Engineering (Fill in the Blanks)\n\nYou are given a CSV file called `sales.csv` with the following columns:\n* `date` – date of transaction (string, e.g. `\"2024-01-05\"`)\n* `store_id` – store ID (integer)\n* `product_id` – product ID (integer)\n* `units_sold` – number of units sold (may contain missing values)\n* `price` – price per unit (float)\n* `discount` – discount rate between 0 and 1 (may contain missing values)\n\nYou want to:\n1. Load the data\n2. Fill missing `units_sold` with `0`\n3. Fill missing `discount` with the **mean discount**\n4. Create a new column `revenue = units_sold * price * (1 - discount)`\n5. Compute the **total revenue per store** and sort descending\n\nFill in the missing parts (`______`) in the following code:\n\n```python\nimport pandas as pd\nimport numpy as np\n\n# Step 1: Load the dataset\ndf = pd.read_csv('sales.csv')\n\n# Step 2: Fill missing units_sold with 0\ndf['units_sold'] = df['units_sold'].__________\n\n# Step 3: Fill missing discount with the mean discount\nmean_discount = df['discount'].___________\ndf['discount'] = df['discount'].___________\n\n# Step 4: Create revenue = units_sold * price * (1 - discount)\ndf['revenue'] = ___________________________\n\n# Step 5: Compute total revenue per store and sort in descending order\nstore_revenue = df.___________('store_id')['revenue'].sum()\nstore_revenue = store_revenue.___________(ascending=False)\n\nprint(store_revenue.head())\n```",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "* **Step 2:** `fillna(0)`",
+        "explanation": "* **Step 2:** `fillna(0)`\n  * **Step 3:** `mean()` and `fillna(mean_discount)`\n  * **Step 4:** `df['units_sold'] * df['price'] * (1 - df['discount'])`\n  * **Step 5:** `groupby` and `sort_values`\n  * **Step 2:** We fill missing values with 0 using `.fillna(0)`.\n  * **Step 3:** We compute the mean of the column using `.mean()`, then fill NaNs in that column using `.fillna(mean_discount)`.\n  * **Step 4:** We calculate revenue using element-wise vector operations: `df['units_sold'] * df['price'] * (1 - df['discount'])`.\n  * **Step 5:** To group by store, we use `.groupby('store_id')`. After computing the sum of the revenue column, we sort the Series using `.sort_values(ascending=False)`.\n\n---"
+      },
+      {
+        "id": "exam_3_q28",
+        "number": 28,
+        "points": 5,
+        "text": "We fit the model:\n$$f_{w,b}(x) = wx + b$$\n\nLet's change the parameters to:\n* $w = 6$\n* $b = 4$\n\nAnd change the training data to 5 new points:\n$$(1, 10), (2, 17), (3, 25), (4, 32), (5, 35)$$\n\nWe compute the cost:\n$$J(w,b) = \\frac{1}{2m} \\sum_{i=1}^{m} (f_{w,b}(x^{(i)}) - y^{(i)})^2$$\n\nwhere $m = 5$.\n\nCompute the exact value of the cost $J(w,b)$.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "2.7",
+        "explanation": "* The model prediction formula is:\n    $$f_{6,4}(x) = 6x + 4$$\n  * Let's calculate the predicted value, actual value, error, and squared error for each of the $m=5$ data points:\n    1. For $(1, 10)$: $f(1) = 6(1)+4=10$. Error: $10-10=0$. Squared Error: $0^2=0$.\n    2. For $(2, 17)$: $f(2) = 6(2)+4=16$. Error: $16-17=-1$. Squared Error: $(-1)^2=1$.\n    3. For $(3, 25)$: $f(3) = 6(3)+4=22$. Error: $22-25=-3$. Squared Error: $(-3)^2=9$.\n    4. For $(4, 32)$: $f(4) = 6(4)+4=28$. Error: $28-32=-4$. Squared Error: $(-4)^2=16$.\n    5. For $(5, 35)$: $f(5) = 6(5)+4=34$. Error: $34-35=-1$. Squared Error: $(-1)^2=1$.\n  * Now, sum the squared errors:\n    $$\\sum_{i=1}^5 (f(x^{(i)}) - y^{(i)})^2 = 0 + 1 + 9 + 16 + 1 = 27$$\n  * The cost $J(w,b)$ is:\n    $$J(6, 4) = \\frac{1}{2m} \\times 27 = \\frac{27}{2 \\times 5} = \\frac{27}{10} = 2.7$$\n\n---"
+      },
+      {
+        "id": "exam_3_q29",
+        "number": 29,
+        "points": 5,
+        "text": "You are working with a dataset that has **3000 rows** and **200 columns**, loaded into a pandas DataFrame `df`. You need to explore and handle missing values (NaNs).\n\n* **Step 1:** Write Python code to:\n  1. Count the number of NaN values in each column.\n  2. Produce a list of columns sorted in descending order by their number of NaN values.\n* **Step 2:** Visualize all columns that have **20% or more NaN values** using a **bar graph** where:\n  * x-axis: column names (only those with $\\ge 20\\%$ NaNs)\n  * y-axis: percentage of NaN values\n  * Columns in the bar graph should be sorted in descending order of their percentage of NaNs.\n\nAssume you already have:\n```python\nimport pandas as pd\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nwith open('data.csv') as file:\n    df = pd.read_csv(file)\n```\n\nPlease implement the code for Step 1 and Step 2.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "```python",
+        "explanation": "```python\n  # Step 1: Count and sort NaNs per column\n  nan_counts = df.isna().sum() # or df.isnull().sum()\n  sorted_nan_cols = nan_counts.sort_values(ascending=False)\n\n  # Step 2: Calculate percentages, filter, sort and plot\n  nan_percentages = (df.isna().sum() / len(df)) * 100\n  filtered_nans = nan_percentages[nan_percentages >= 20].sort_values(ascending=False)\n\n  # Create the bar graph\n  plt.bar(filtered_nans.index, filtered_nans.values)\n  plt.xlabel('Column Names')\n  plt.ylabel('Percentage of NaN Values')\n  plt.title('Columns with 20% or More Missing Values')\n  plt.xticks(rotation=45) # optional rotation for readability\n  plt.show()\n  ```\n  * **Step 1.1:** `.isna().sum()` counts the number of NaNs per column.\n  * **Step 1.2:** `.sort_values(ascending=False)` sorts the counts in descending order.\n  * **Step 2:**\n    * We calculate percentages by dividing the NaN counts by `len(df)` and multiplying by 100.\n    * We filter the Series using boolean indexing: `nan_percentages[nan_percentages >= 20]`.\n    * We sort them descending with `.sort_values(ascending=False)`.\n    * `plt.bar()` takes the indices (column names) as x coordinates and values (percentages) as heights.\n\n---"
+      },
+      {
+        "id": "exam_3_q30",
+        "number": 30,
+        "points": 5,
+        "text": "You have a dataset with **10 samples**:\n\n| Class    | Count |\n| -------- | ----- |\n| Positive | 6     |\n| Negative | 4     |\n\nA split on feature X partitions the data into:\n\n**Left branch:**\n* Positive: 4\n* Negative: 1\n\n**Right branch:**\n* Positive: 2\n* Negative: 3\n\n**Question:** What is the **Information Gain** from splitting on X? (Use log base 2.)\n\n**Hints:**\n* $\\log_2 \\frac{6}{10} = -0.737$\n* $\\log_2 \\frac{4}{10} = -1.322$\n* $\\log_2 \\frac{4}{5} = -0.322$\n* $\\log_2 \\frac{1}{5} = -2.322$\n* $\\log_2 \\frac{2}{5} = -1.322$\n* $\\log_2 \\frac{3}{5} = -0.737$\n\n(Results rounded to two decimal places)",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "0.12",
+        "explanation": "* **Step 1: Calculate Parent Entropy ($H(\\text{parent})$)**\n    The parent node has 6 positive and 4 negative samples (total 10):\n    $$H(\\text{parent}) = -p_+ \\log_2(p_+) - p_- \\log_2(p_-)$$\n    $$H(\\text{parent}) = -0.6 \\log_2(0.6) - 0.4 \\log_2(0.4)$$\n    Using the hints $\\log_2(0.6) = -0.737$ and $\\log_2(0.4) = -1.322$:\n    $$H(\\text{parent}) = -0.6(-0.737) - 0.4(-1.322) = 0.4422 + 0.5288 = 0.971$$\n  * **Step 2: Calculate Left Child Entropy ($H(\\text{left})$)**\n    The left child has 4 positive and 1 negative samples (total 5):\n    $$H(\\text{left}) = -0.8 \\log_2(0.8) - 0.2 \\log_2(0.2)$$\n    Using the hints $\\log_2(0.8) = -0.322$ and $\\log_2(0.2) = -2.322$:\n    $$H(\\text{left}) = -0.8(-0.322) - 0.2(-2.322) = 0.2576 + 0.4644 = 0.722$$\n  * **Step 3: Calculate Right Child Entropy ($H(\\text{right})$)**\n    The right child has 2 positive and 3 negative samples (total 5):\n    $$H(\\text{right}) = -0.4 \\log_2(0.4) - 0.6 \\log_2(0.6)$$\n    Using the hints $\\log_2(0.4) = -1.322$ and $\\log_2(0.6) = -0.737$:\n    $$H(\\text{right}) = -0.4(-1.322) - 0.6(-0.737) = 0.5288 + 0.4422 = 0.971$$\n  * **Step 4: Calculate Children Weighted Entropy ($H(\\text{children})$)**\n    Both children have 5 samples, so each has weight $\\frac{5}{10} = 0.5$:\n    $$H(\\text{children}) = 0.5 H(\\text{left}) + 0.5 H(\\text{right})$$\n    $$H(\\text{children}) = 0.5(0.722) + 0.5(0.971) = 0.361 + 0.4855 = 0.8465$$\n  * **Step 5: Calculate Information Gain ($IG$)**\n    $$IG = H(\\text{parent}) - H(\\text{children}) = 0.971 - 0.8465 = 0.1245$$\n    Rounding to two decimal places, the Information Gain is **0.12**.\n\n---"
+      },
+      {
+        "id": "exam_3_q31",
+        "number": 31,
+        "points": 5,
+        "text": "You train a Multinomial Naïve Bayes text classifier with vocabulary `{economy, game, goal}`.\n\nClass token counts and priors:\n* **Economics (E):** total $N_E = 15$; counts: `economy` = 8, `game` = 3, `goal` = 4\n* **Sports (S):** total $N_S = 15$; counts: `economy` = 2, `game` = 7, `goal` = 6\n\nUse Laplace smoothing with $\\alpha = 1$, and equal priors $P(E) = P(S) = 0.5$.\n\nA new document is:\n> \"economy goal\"\n\nUsing Multinomial Naïve Bayes, what is the **normalized posterior** $P(E \\mid \\text{doc})$?\n\n(Answer rounded to two decimal places.)",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "0.68",
+        "explanation": "* In Multinomial Naïve Bayes with Laplace smoothing ($\\alpha = 1$), the conditional probability of word $w$ given class $C$ is:\n    $$P(w \\mid C) = \\frac{N_{C, w} + 1}{N_C + |V|}$$\n    where $N_C = 15$ and vocabulary size $|V| = 3$. The denominator is $15 + 3 = 18$ for both classes.\n  * **For Class Economics (E):**\n    * $P(\\text{\"economy\"} \\mid E) = \\frac{8 + 1}{18} = \\frac{9}{18} = 0.5$\n    * $P(\\text{\"goal\"} \\mid E) = \\frac{4 + 1}{18} = \\frac{5}{18}$\n    * The unnormalized class likelihood is:\n      $$P(E) \\cdot P(\\text{\"economy\"} \\mid E) \\cdot P(\\text{\"goal\"} \\mid E) = 0.5 \\cdot 0.5 \\cdot \\frac{5}{18} = \\frac{5}{72}$$\n  * **For Class Sports (S):**\n    * $P(\\text{\"economy\"} \\mid S) = \\frac{2 + 1}{18} = \\frac{3}{18} = \\frac{1}{6}$\n    * $P(\\text{\"goal\"} \\mid S) = \\frac{6 + 1}{18} = \\frac{7}{18}$\n    * The unnormalized class likelihood is:\n      $$P(S) \\cdot P(\\text{\"economy\"} \\mid S) \\cdot P(\\text{\"goal\"} \\mid S) = 0.5 \\cdot \\frac{1}{6} \\cdot \\frac{7}{18} = \\frac{7}{216}$$\n  * **Normalized Posterior $P(E \\mid \\text{doc})$:**\n    $$P(E \\mid \\text{doc}) = \\frac{\\frac{5}{72}}{\\frac{5}{72} + \\frac{7}{216}}$$\n    Multiply numerator and denominator by 216 (note that $72 \\times 3 = 216$):\n    $$P(E \\mid \\text{doc}) = \\frac{5 \\times 3}{(5 \\times 3) + 7} = \\frac{15}{15 + 7} = \\frac{15}{22} \\approx 0.6818$$\n    Rounding to two decimal places, we get **0.68**.\n\n---"
+      },
+      {
+        "id": "exam_3_q32",
+        "number": 32,
+        "points": 5,
+        "text": "Binary Classification with Logistic Regression (Fill in the Blanks)\n\nYou are given a dataset in a CSV file called `students.csv` with the following columns:\n* `hours` – number of hours a student studied\n* `score` – exam score (0-100)\n* `passed` – target label, `1` if the student passed, `0` otherwise\n\nYou want to build a **logistic regression model** using **scikit-learn** to predict whether a student will pass the exam based on `hours` and `score`.\n\n**Task:**\nComplete the code below by filling in the blanks (`______`) so that:\n1. The data is loaded and features/labels are prepared\n2. The dataset is split into training and test sets\n3. A logistic regression model is trained\n4. The accuracy on the test set is printed\n\n```python\nimport pandas as pd\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.linear_model import _________\nfrom sklearn.metrics import _________\n\n# # 1. Load the data\ndf = pd.read_csv('students.csv')\n\n# # 2. Prepare features (X) and labels (y)\nX = df[['hours', 'score']]\ny = df['passed']\n\n# # 3. Split into train and test sets (20% test)\nX_train, X_test, y_train, y_test = train_test_split(\n    X, y, test_size=0.2, random_state=42\n)\n\n# # 4. Create the logistic regression model\nmodel = _________()\n\n# # 5. Train (fit) the model\nmodel._________(X_train, y_train)\n\n# # 6. Predict on the test set\ny_pred = model._________(X_test)\n\n# # 7. Compute accuracy\nacc = _________(y_test, y_pred)\nprint(\"Test accuracy:\", acc)\n```",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "* `LogisticRegression`",
+        "explanation": "* `LogisticRegression`\n  * `accuracy_score`\n  * `LogisticRegression`\n  * `fit`\n  * `predict`\n  * `accuracy_score`\n  * **Imports:** We import `LogisticRegression` from `sklearn.linear_model` and `accuracy_score` from `sklearn.metrics`.\n  * **Model Creation:** We initialize the classifier with `model = LogisticRegression()`.\n  * **Training:** We train the model on the training set using the `fit` method: `model.fit(X_train, y_train)`.\n  * **Inference:** We predict labels for the test set using the `predict` method: `model.predict(X_test)`.\n  * **Evaluation:** We calculate predictions' accuracy using `accuracy_score(y_test, y_pred)`.\n\n---"
+      },
+      {
+        "id": "exam_3_q33",
+        "number": 33,
+        "points": 5,
+        "text": "In terms of linear regression cost function, the equation for cost with one variable is:\n$$J(w,b) = \\frac{1}{2m} \\sum_{i=0}^{m-1} (f_{w,b}(x^{(i)}) - y^{(i)})^2$$\n\nwhere:\n$$f_{w,b}(x^{(i)}) = wx^{(i)} + b$$\n\n* $f_{w,b}(x^{(i)})$ is our prediction for example $i$ using parameters $w,b$.\n* $(f_{w,b}(x^{(i)}) - y^{(i)})^2$ is the squared difference between the target value and the prediction.\n* These differences are summed over all the $m$ examples and divided by $2m$ to produce the cost, $J(w,b)$.\n\nThe code below calculates cost by looping over each example. In each loop:\n1. `f_wb`, a prediction is calculated\n2. the difference between the target and the prediction is calculated and squared.\n3. this is added to the total cost.\n\nPlease fill in the blanks.\n\n```python\ndef compute_cost(x, y, w, b):\n    \"\"\"\n    Computes the cost function for linear regression.\n    \n    Args:\n      x (ndarray (m,)): Data, m examples\n      y (ndarray (m,)): target values\n      w,b (scalar)    : model parameters\n      \n    Returns:\n        total_cost (float): The cost of using w,b as the parameters for linear regression\n          to fit the data points in x and y\n    \"\"\"\n    # number of training examples\n    m = x.shape[0]\n    \n    cost_sum = 0\n    for i in range(m):\n        # Your Code is Here\n        f_wb = ____________________\n        cost = ____________________\n        cost_sum = ____________________\n        \n    total_cost = (1 / (2 * m)) * cost_sum\n    \n    return total_cost\n```",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "* `f_wb = w * x[i] + b`",
+        "explanation": "* `f_wb = w * x[i] + b`\n  * `cost = (f_wb - y[i]) ** 2`\n  * `cost_sum = cost_sum + cost`\n  * Inside the loop over the `m` examples:\n    1. We calculate the prediction for the $i$-th example: `f_wb = w * x[i] + b`.\n    2. We calculate the squared error between prediction and actual target value: `cost = (f_wb - y[i]) ** 2`.\n    3. We accumulate the squared error into our sum: `cost_sum = cost_sum + cost`.\n\n---"
+      },
+      {
+        "id": "exam_3_q34",
+        "number": 34,
+        "points": 5,
+        "text": "Logistic Gradient Descent\n\nRecall the gradient descent algorithm utilizes the gradient calculation:\n$$\\text{repeat until convergence: } \\{$$\n$$w_j = w_j - \\alpha \\frac{\\partial J(\\mathbf{w},b)}{\\partial w_j} \\quad \\text{for } j := 0 \\dots n-1$$\n$$b = b - \\alpha \\frac{\\partial J(\\mathbf{w},b)}{\\partial b}$$\n$$\\}$$\n\nWhere each iteration performs simultaneous updates on $w_j$ for all $j$, where\n$$\\frac{\\partial J(\\mathbf{w},b)}{\\partial w_j} = \\frac{1}{m} \\sum_{i=0}^{m-1} (f_{\\mathbf{w},b}(\\mathbf{x}^{(i)}) - y^{(i)})x_j^{(i)}$$\n$$\\frac{\\partial J(\\mathbf{w},b)}{\\partial b} = \\frac{1}{m} \\sum_{i=0}^{m-1} (f_{\\mathbf{w},b}(\\mathbf{x}^{(i)}) - y^{(i)})$$\n\n* $m$ is the number of training examples in the data set\n* $f_{\\mathbf{w},b}(\\mathbf{x}^{(i)})$ is the model's prediction, while $y^{(i)}$ is the target\n* For a logistic regression model:\n  $$z = \\mathbf{w} \\cdot \\mathbf{x} + b$$\n  $$f_{\\mathbf{w},b}(\\mathbf{x}) = g(z)$$\n  where $g(z)$ is the sigmoid function:\n  $$g(z) = \\frac{1}{1 + e^{-z}}$$\n\nBelow is an implementation of the gradient descent, please fill-in the blanks.\n\n```python\ndef compute_gradient_logistic(X, y, w, b):\n    \"\"\"\n    Computes the gradient for linear regression\n    \n    Args:\n      X (ndarray (m,n)): Data, m examples with n features\n      y (ndarray (m,)): target values\n      w (ndarray (n,)): model parameters\n      b (scalar)      : model parameter\n      \n    Returns:\n      dj_dw (ndarray (n,)): The gradient of the cost w.r.t. the parameters w\n      dj_db (scalar)      : The gradient of the cost w.r.t. the parameter b\n    \"\"\"\n    m, n = X.shape\n    dj_dw = np.zeros((n,))\n    dj_db = 0.\n    \n    # TODO\n    for i in range(m):\n        f_wb_i = ____________________\n        err_i = ____________________\n        for j in range(n):\n            dj_dw[j] = dj_dw[j] + ____________________\n        dj_db = dj_db + ____________________\n        \n    dj_dw = ____________________\n    dj_db = ____________________\n    \n    return dj_db, dj_dw\n```",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "* `f_wb_i = 1 / (1 + np.exp(-(np.dot(X[i], w) + b)))`",
+        "explanation": "* `f_wb_i = 1 / (1 + np.exp(-(np.dot(X[i], w) + b)))`\n  * `err_i = f_wb_i - y[i]`\n  * `dj_dw[j] = dj_dw[j] + err_i * X[i, j]`\n  * `dj_db = dj_db + err_i`\n  * `dj_dw = dj_dw / m`\n  * `dj_db = dj_db / m`\n  * **Prediction:** In logistic regression, the prediction is the sigmoid of the linear dot product plus bias: $f(x^{(i)}) = \\frac{1}{1 + e^{-(\\mathbf{w} \\cdot \\mathbf{x}^{(i)} + b)}}$. In NumPy, this is: `f_wb_i = 1 / (1 + np.exp(-(np.dot(X[i], w) + b)))`.\n  * **Error:** The difference between prediction and target is: `err_i = f_wb_i - y[i]`.\n  * **Gradient w.r.t w:** For each feature `j`, we add `err_i * X[i, j]` to `dj_dw[j]`.\n  * **Gradient w.r.t b:** We add `err_i` to `dj_db`.\n  * **Mean:** Finally, after looping over all $m$ examples, we divide the accumulated gradients by $m$ to compute the averages: `dj_dw = dj_dw / m` and `dj_db = dj_db / m`.\n\n---"
+      },
+      {
+        "id": "exam_3_q35",
+        "number": 35,
+        "points": 5,
+        "text": "When building a web-scraping tool, you start with a main website URL. This page contains links to sub-pages, and each sub-page may contain additional URLs. To efficiently crawl the entire site, you can model the structure as a graph where each URL is a node and each hyperlink is an edge.\n\nWhich graph search algorithm (BFS, DFS, UCS, or A*) is most appropriate for crawling the website, and why?",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "BFS (Breadth-First Search)",
+        "explanation": "* **Shallow crawling first:** Web crawlers typically aim to index pages closest to the homepage first (e.g. root links, category headers) because they tend to be of higher quality and contain more important directories. BFS explores level-by-level, ensuring shallow pages are visited before deep ones.\n  * **Avoid getting stuck:** DFS is prone to getting stuck in deep/infinite paths (such as dynamically generated links, calendars, or cyclic sub-directories) and would fail to explore other sections of the website.\n  * **Queue-based structure:** BFS uses a FIFO queue, which naturally matches the scheduling structure of a crawler (fetching a page, parsing out new URLs, and appending them to the crawl queue).\n  * **Traversal vs. Pathfinding:** Web crawling is a graph traversal problem (discovering all reachable nodes), not a pathfinding problem (finding the shortest path to a target). Since there are no edge costs or target heuristics, UCS and A* are unnecessarily complex and not applicable."
+      }
+    ]
+  },
+  {
+    "id": "exam_4",
+    "name": "Max's Drill Test 1",
+    "difficulty": "Equivalent to actual exam",
+    "questions": [
+      {
+        "id": "exam_4_q1",
+        "number": 1,
+        "points": 2,
+        "text": "You are building a classifier and need to normalize numerical features. Which workflow best avoids data leakage?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** Fit the scaler on the full dataset, then split into train and test sets.",
+          "**B.** Fit the scaler only on the test set because the test set measures generalization.",
+          "**C.** Split first, fit preprocessing only on the training set, then transform validation/test sets.",
+          "**D.** Fit the scaler separately on the training and test sets.",
+          "**E.** Include the target label as one of the scaled features."
+        ],
+        "correctAnswer": "**C.** Split first, fit preprocessing only on the training set, then transform validation/test sets.",
+        "explanation": "* To obtain an unbiased estimate of model performance, the test/validation sets must remain completely unseen during training.\n  * Parameters such as the mean, variance, or median used for scaling/imputation must be calculated from the **training set only**.\n  * If you fit the scaler on the entire dataset (Option A), information about the distribution (mean/variance) of the validation/test set leaks into the training process, leading to optimistic performance estimates (data leakage).\n  * Option D is incorrect because scaling the test set with its own parameters creates a shift in feature representation between training and evaluation time.\n\n---"
+      },
+      {
+        "id": "exam_4_q2",
+        "number": 2,
+        "points": 2,
+        "text": "A categorical feature contains values such as `\"red\"`, `\"blue\"`, and `\"green\"` during training. At test time, a new value `\"yellow\"` appears. Which preprocessing choice is most appropriate in a scikit-learn pipeline?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** `LabelEncoder()` on the feature column, because it always handles unseen categories automatically.",
+          "**B.** `OneHotEncoder(handle_unknown=\"ignore\")`, because unseen categories will not crash prediction.",
+          "**C.** `StandardScaler()`, because categorical variables should be centered and divided by standard deviation.",
+          "**D.** `PCA(n_components=1)`, because PCA converts categories into a single numerical axis.",
+          "**E.** Leave the strings unchanged, because all scikit-learn estimators accept raw text categories."
+        ],
+        "correctAnswer": "**B.** `OneHotEncoder(handle_unknown=\"ignore\")`, because unseen categories will not crash prediction.",
+        "explanation": "* If a category appears at test time that was not present in the training set, standard encoders will throw an error.\n  * In scikit-learn, setting `handle_unknown=\"ignore\"` in `OneHotEncoder` causes the encoder to represent unseen categories (like `\"yellow\"`) as all zeros in the one-hot encoded columns, preventing runtime crashes.\n  * `LabelEncoder` (Option A) is designed for target labels, not feature columns, and throws an error on unseen classes.\n\n---"
+      },
+      {
+        "id": "exam_4_q3",
+        "number": 3,
+        "points": 2,
+        "text": "In Ridge regression, what is the usual effect of increasing the regularization strength `alpha`?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** It makes all coefficients larger and increases variance.",
+          "**B.** It removes the intercept term from the model.",
+          "**C.** It shrinks coefficients, usually increasing bias and decreasing variance.",
+          "**D.** It converts regression into classification.",
+          "**E.** It guarantees zero training error."
+        ],
+        "correctAnswer": "**C.** It shrinks coefficients, usually increasing bias and decreasing variance.",
+        "explanation": "* Ridge regression minimizes the sum of squared errors plus an L2 penalty on the size of the coefficients: $\\alpha \\sum w_j^2$.\n  * Increasing the regularization strength $\\alpha$ penalizes larger coefficients more heavily, shrinking the weights towards zero.\n  * This reduces model complexity, which **decreases variance** (making it less sensitive to training noise) but **increases bias** (since the model is more restricted).\n\n---"
+      },
+      {
+        "id": "exam_4_q4",
+        "number": 4,
+        "points": 2,
+        "text": "A disease classifier produces the following confusion-matrix counts:\n* True positives = 36\n* False positives = 12\n* False negatives = 9\n* True negatives = 143\n\nWhat is the precision?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** 0.60",
+          "**B.** 0.75",
+          "**C.** 0.80",
+          "**D.** 0.88",
+          "**E.** 0.92"
+        ],
+        "correctAnswer": "**B.** 0.75",
+        "explanation": "* **Precision** measures the proportion of positive identifications that were actually correct.\n  * The formula for precision is:\n    $$\\text{Precision} = \\frac{TP}{TP + FP}$$\n  * Given $TP = 36$ and $FP = 12$:\n    $$\\text{Precision} = \\frac{36}{36 + 12} = \\frac{36}{48} = 0.75$$\n\n---"
+      },
+      {
+        "id": "exam_4_q5",
+        "number": 5,
+        "points": 2,
+        "text": "A decision tree is changed from `min_samples_leaf=1` to `min_samples_leaf=20`. What is the most likely effect?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** The tree becomes deeper and memorizes more training examples.",
+          "**B.** The tree becomes impossible to train.",
+          "**C.** The model becomes a linear classifier.",
+          "**D.** The tree becomes smoother and usually less prone to overfitting.",
+          "**E.** The tree changes from classification to regression."
+        ],
+        "correctAnswer": "**D.** The tree becomes smoother and usually less prone to overfitting.",
+        "explanation": "* The parameter `min_samples_leaf` defines the minimum number of training samples required to be in a leaf node.\n  * Increasing it from 1 to 20 prevents the tree from splitting further when a leaf contains few samples. This prunes the tree, making the decision boundary less complex (smoother), reducing variance, and mitigating overfitting.\n\n---"
+      },
+      {
+        "id": "exam_4_q6",
+        "number": 6,
+        "points": 2,
+        "text": "Which statement best distinguishes Random Forest from Gradient Boosting?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** Random Forest averages many independently trained trees; Gradient Boosting builds trees sequentially to correct previous errors.",
+          "**B.** Random Forest uses only one tree; Gradient Boosting uses only linear models.",
+          "**C.** Random Forest requires differentiable loss functions; Gradient Boosting does not.",
+          "**D.** Random Forest cannot handle classification, while Gradient Boosting can.",
+          "**E.** Random Forest is always worse than a single decision tree."
+        ],
+        "correctAnswer": "**A.** Random Forest averages many independently trained trees; Gradient Boosting builds trees sequentially to correct previous errors.",
+        "explanation": "* **Random Forest** is a bagging technique where multiple decision trees are trained independently in parallel (using bootstrap samples and random feature subsets) and averaged to reduce variance.\n  * **Gradient Boosting** is a sequential ensemble method where each subsequent tree is trained on the residuals (errors) of the preceding trees, boosting performance by reducing bias.\n\n---"
+      },
+      {
+        "id": "exam_4_q7",
+        "number": 7,
+        "points": 2,
+        "text": "In PCA, the first principal component is the direction that:",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** Minimizes the average value of all features.",
+          "**B.** Separates labeled classes with maximum margin.",
+          "**C.** Captures the largest possible variance under a unit-length constraint.",
+          "**D.** Has the smallest eigenvalue of the covariance matrix.",
+          "**E.** Removes all correlation among target labels."
+        ],
+        "correctAnswer": "**C.** Captures the largest possible variance under a unit-length constraint.",
+        "explanation": "* Principal Component Analysis (PCA) identifies orthogonal axes that maximize the projection variance of the data.\n  * The first principal component corresponds to the eigenvector of the covariance matrix associated with the largest eigenvalue. This is the unit-length direction along which the variance of the projected data is maximized.\n\n---"
+      },
+      {
+        "id": "exam_4_q8",
+        "number": 8,
+        "points": 2,
+        "text": "A K-Means clustering solution has a silhouette score close to 1. What does this usually indicate?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** Clusters are poorly separated and points are likely assigned incorrectly.",
+          "**B.** Every point is labeled as noise.",
+          "**C.** The number of clusters must be exactly 1.",
+          "**D.** Points are close to their own cluster and far from neighboring clusters.",
+          "**E.** K-Means has not converged."
+        ],
+        "correctAnswer": "**D.** Points are close to their own cluster and far from neighboring clusters.",
+        "explanation": "* The silhouette coefficient is defined for a single sample as $s = \\frac{b - a}{\\max(a, b)}$, where $a$ is the mean intra-cluster distance and $b$ is the mean nearest-cluster distance.\n  * A silhouette score near +1 indicates that $a \\ll b$, meaning the points in a cluster are very compact (small $a$) and the clusters are highly separated (large $b$).\n\n---"
+      },
+      {
+        "id": "exam_4_q9",
+        "number": 9,
+        "points": 2,
+        "text": "In reinforcement learning, what does the discount factor `gamma` mainly control?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** How much the agent values future rewards relative to immediate rewards.",
+          "**B.** The probability of selecting a random action in epsilon-greedy exploration.",
+          "**C.** The number of hidden layers in the policy network.",
+          "**D.** The size of the replay buffer only.",
+          "**E.** Whether the state space is continuous or discrete."
+        ],
+        "correctAnswer": "**A.** How much the agent values future rewards relative to immediate rewards.",
+        "explanation": "* The discount factor $\\gamma \\in [0, 1]$ determines the present value of future rewards.\n  * A value of $\\gamma$ close to 0 makes the agent short-sighted (myopic), focusing only on immediate rewards. A value of $\\gamma$ close to 1 makes the agent far-sighted, placing high value on long-term cumulative returns.\n\n---"
+      },
+      {
+        "id": "exam_4_q10",
+        "number": 10,
+        "points": 2,
+        "text": "An epsilon-greedy policy has four actions and `epsilon = 0.2`. During exploration, the random action is chosen uniformly among all four actions. What is the probability of selecting the greedy action?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** 0.20",
+          "**B.** 0.25",
+          "**C.** 0.80",
+          "**D.** 0.85",
+          "**E.** 1.00"
+        ],
+        "correctAnswer": "**D.** 0.85",
+        "explanation": "* Under $\\epsilon$-greedy action selection:\n    * With probability $1 - \\epsilon = 0.80$, we select the greedy (best) action.\n    * With probability $\\epsilon = 0.20$, we choose a random action uniformly among all $K=4$ available actions.\n  * Since the greedy action is one of the four actions, the probability of selecting it during exploration is:\n    $$\\frac{\\epsilon}{K} = \\frac{0.20}{4} = 0.05$$\n  * Thus, the total probability of selecting the greedy action is:\n    $$(1 - \\epsilon) + \\frac{\\epsilon}{K} = 0.80 + 0.05 = 0.85$$\n\n---"
+      },
+      {
+        "id": "exam_4_q11",
+        "number": 11,
+        "points": 2,
+        "text": "When edge costs are unequal, why can Breadth-First Search fail to find the lowest-cost path?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** BFS never explores the start node.",
+          "**B.** BFS minimizes the number of edges, not the total path cost.",
+          "**C.** BFS requires a heuristic function.",
+          "**D.** BFS is identical to A* when costs are unequal.",
+          "**E.** BFS can only be used on trees, not graphs."
+        ],
+        "correctAnswer": "**B.** BFS minimizes the number of edges, not the total path cost.",
+        "explanation": "* Breadth-First Search (BFS) expands nodes level-by-level (FIFO queue) and is guaranteed to find the path with the fewest edges.\n  * When edge costs are unequal, a path with fewer edges can have a much higher cumulative cost than a path with more edges but cheaper individual steps. Uniform-Cost Search (Dijkstra's) is required to find the lowest-cost path under unequal edge costs.\n\n---"
+      },
+      {
+        "id": "exam_4_q12",
+        "number": 12,
+        "points": 2,
+        "text": "In Alpha–Beta pruning, what is the main benefit when the pruning conditions are implemented correctly?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** It changes the final minimax decision to make it more optimistic.",
+          "**B.** It removes the need for an evaluation function.",
+          "**C.** It avoids exploring branches that cannot affect the minimax value.\n- **D.** It works only when the game is stochastic.",
+          "**E.** It guarantees that the search depth becomes infinite."
+        ],
+        "correctAnswer": "**C.** It avoids exploring branches that cannot affect the minimax value.",
+        "explanation": "* Alpha–Beta pruning is an optimization of the minimax search algorithm.\n  * It maintains two values: $\\alpha$ (the minimum score the maximizing player is assured of) and $\\beta$ (the maximum score the minimizing player is assured of).\n  * If a branch is found that will yield a worse outcome for a player than an already evaluated alternative, that branch is pruned (not searched further) because it cannot affect the final decision. The minimax value returned is identical to standard minimax but found faster.\n\n---"
+      },
+      {
+        "id": "exam_4_q13",
+        "number": 13,
+        "points": 2,
+        "text": "Which formula is logically equivalent to the implication \\(P \\Rightarrow Q\\)?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** \\(P \\land Q\\)",
+          "**B.** \\(P \\lor Q\\)",
+          "**C.** \\(\\lnot P \\lor Q\\)",
+          "**D.** \\(\\lnot Q \\lor P\\)",
+          "**E.** \\(\\lnot P \\land Q\\)"
+        ],
+        "correctAnswer": "**C.** \\(\\lnot P \\lor Q\\)",
+        "explanation": "* In propositional logic, the implication $P \\Rightarrow Q$ (\"if P, then Q\") is false only when $P$ is true and $Q$ is false.\n  * The expression $\\lnot P \\lor Q$ is also false only when $P$ is true (making $\\lnot P$ false) and $Q$ is false.\n  * Thus, they share the exact same truth table, making them logically equivalent.\n\n---"
+      },
+      {
+        "id": "exam_4_q14",
+        "number": 14,
+        "points": 2,
+        "text": "Suppose a knowledge base contains \\(A \\Rightarrow B\\) and \\(A\\). What can be inferred by modus ponens?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** \\(\\lnot A\\)",
+          "**B.** \\(\\lnot B\\)",
+          "**C.** \\(A \\land \\lnot B\\)",
+          "**D.** \\(B\\)",
+          "**E.** \\(A \\Rightarrow \\lnot B\\)"
+        ],
+        "correctAnswer": "**D.** \\(B\\)",
+        "explanation": "* Modus ponens is a fundamental rule of inference.\n  * It states that if we know $A \\Rightarrow B$ (if A is true, then B is true) and we also know $A$ is true, we can logically deduce that $B$ must be true.\n\n---"
+      },
+      {
+        "id": "exam_4_q15",
+        "number": 15,
+        "points": 2,
+        "text": "In a CSP backtracking solver, the Minimum Remaining Values heuristic chooses:",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** The unassigned variable with the fewest legal values remaining.",
+          "**B.** The assigned variable with the largest numerical value.",
+          "**C.** The value that appears least often in the dataset.",
+          "**D.** The variable with the longest name.",
+          "**E.** A random constraint to delete."
+        ],
+        "correctAnswer": "**A.** The unassigned variable with the fewest legal values remaining.",
+        "explanation": "* The Minimum Remaining Values (MRV) heuristic (also known as the \"most constrained variable\" heuristic) prioritizes assigning the variable that has the smallest number of valid domain values left.\n  * This is an effective pruning strategy because it tries to assign difficult variables first, helping the solver fail fast and backtrack early if a variable has no legal values left.\n\n---"
+      },
+      {
+        "id": "exam_4_q16",
+        "number": 16,
+        "points": 2,
+        "text": "What does arc consistency usually remove?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** Values in a variable domain that have no supporting value in a neighboring variable domain.",
+          "**B.** All variables with more than two possible values.",
+          "**C.** The objective function of a reinforcement-learning problem.",
+          "**D.** The entire graph structure of the CSP.",
+          "**E.** The training labels in a supervised-learning dataset."
+        ],
+        "correctAnswer": "**A.** Values in a variable domain that have no supporting value in a neighboring variable domain.",
+        "explanation": "* A directed arc from variable $X$ to $Y$ is arc-consistent if, for every value in the domain of $X$, there is at least one value in the domain of $Y$ that satisfies the binary constraint between them.\n  * Arc consistency algorithms (like AC-3) prune/remove values from the domain of $X$ that violate this property, reducing the search space of the CSP.\n\n---"
+      },
+      {
+        "id": "exam_4_q17",
+        "number": 17,
+        "points": 2,
+        "text": "A fraud-detection dataset has 99% non-fraud examples and 1% fraud examples. A classifier that always predicts “non-fraud” obtains 99% accuracy. What is the best interpretation?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** The classifier is excellent because accuracy is almost perfect.",
+          "**B.** The classifier has high recall for fraud.",
+          "**C.** Accuracy is misleading; recall, precision, F1, or PR-AUC should be examined.",
+          "**D.** The dataset must be linearly separable.",
+          "**E.** The model is necessarily overfitting."
+        ],
+        "correctAnswer": "**C.** Accuracy is misleading; recall, precision, F1, or PR-AUC should be examined.",
+        "explanation": "* Accuracy is a poor evaluation metric for highly imbalanced datasets.\n  * A trivial baseline model that predicts the majority class for every sample yields 99% accuracy but fails to detect a single actual fraud case (Recall = 0%).\n  * Precision, Recall, F1 score, or Precision-Recall AUC (PR-AUC) are much more informative metrics to measure performance on the minority class.\n\n---"
+      },
+      {
+        "id": "exam_4_q18",
+        "number": 18,
+        "points": 2,
+        "text": "A classifier is well calibrated if, among all examples receiving predicted probability 0.70 for class 1:",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** Exactly 100% of them are class 1.",
+          "**B.** Exactly 0% of them are class 1.",
+          "**C.** Approximately 70% of them are class 1.",
+          "**D.** The model always predicts class 0.",
+          "**E.** The model has the highest possible training accuracy."
+        ],
+        "correctAnswer": "**C.** Approximately 70% of them are class 1.",
+        "explanation": "* Probability calibration means the predicted confidence values match the actual empirical frequencies.\n  * If a model predicts a probability of 0.70 (70% confidence) for a group of samples, then approximately 70% of those samples should indeed belong to the positive class in reality.\n\n---"
+      },
+      {
+        "id": "exam_4_q19",
+        "number": 19,
+        "points": 2,
+        "text": "Which expression is the standard RBF kernel?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** \\(K(x,z)=\\exp(-\\gamma\\|x-z\\|^2)\\)",
+          "**B.** \\(K(x,z)=x+z\\)",
+          "**C.** \\(K(x,z)=\\max(x,z)\\)",
+          "**D.** \\(K(x,z)=\\|x-z\\|_1\\)",
+          "**E.** \\(K(x,z)=0\\) for all inputs"
+        ],
+        "correctAnswer": "**A.** \\(K(x,z)=\\exp(-\\gamma\\|x-z\\|^2)\\)",
+        "explanation": "* The Radial Basis Function (RBF) kernel (also known as the Gaussian kernel) measures the similarity between two vectors as a decaying exponential of their squared Euclidean distance.\n  * The parameter $\\gamma > 0$ controls the width/influence of the kernel.\n\n---"
+      },
+      {
+        "id": "exam_4_q20",
+        "number": 20,
+        "points": 2,
+        "text": "In an SVM, what is the usual effect of decreasing `C`?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** It forces every training point to be classified correctly.",
+          "**B.** It removes the kernel function.",
+          "**C.** It makes the RBF gamma value larger.",
+          "**D.** It increases regularization, allowing a wider margin with more violations.",
+          "**E.** It changes the optimization problem into K-Means."
+        ],
+        "correctAnswer": "**D.** It increases regularization, allowing a wider margin with more violations.",
+        "explanation": "* In Support Vector Machines, the parameter $C$ controls the trade-off between maximizing the margin and minimizing classification errors on the training set.\n  * A large $C$ heavily penalizes misclassifications, leading to a narrower margin (prone to overfitting).\n  * Decreasing $C$ reduces the penalty on errors (increases regularization), allowing more margin violations (softer margin) and yielding a wider, more generalizable margin and smoother decision boundary.\n\n---"
+      },
+      {
+        "id": "exam_4_q21",
+        "number": 21,
+        "points": 2,
+        "text": "A new movie has no ratings yet, but it has metadata such as genre, director, actors, and plot keywords. Which recommender approach is most directly useful for recommending this item?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** Pure user-user collaborative filtering only.",
+          "**B.** Content-based recommendation using item features.",
+          "**C.** K-Means on missing values only.",
+          "**D.** Alpha–Beta pruning.",
+          "**E.** Logistic regression without any item features."
+        ],
+        "correctAnswer": "**B.** Content-based recommendation using item features.",
+        "explanation": "* This scenario is a classic **item cold-start problem** where a new item has no user ratings/interactions yet.\n  * Collaborative filtering fails because there is no interaction history to compute user/item similarities.\n  * Content-based filtering, however, maps items based on their intrinsic features (metadata like director, genre, actors) and can recommend the movie by matching these attributes to a user's profile.\n\n---"
+      },
+      {
+        "id": "exam_4_q22",
+        "number": 22,
+        "points": 2,
+        "text": "In matrix factorization for recommendation, a predicted rating is often modeled as:",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** The dot product between a user latent vector and an item latent vector, possibly plus bias terms.",
+          "**B.** The Euclidean distance between two CNN filters only.",
+          "**C.** The number of layers in a transformer.",
+          "**D.** The maximum class probability from softmax.",
+          "**E.** The result of applying A* search to a grid."
+        ],
+        "correctAnswer": "**A.** The dot product between a user latent vector and an item latent vector, possibly plus bias terms.",
+        "explanation": "* Matrix factorization (like SVD) decomposes the user-item rating matrix into two lower-rank matrices representing user latent features ($P_u$) and item latent features ($Q_i$).\n  * The rating for user $u$ on item $i$ is predicted by their dot product: $\\hat{R}_{u,i} = P_u \\cdot Q_i^T$. This is often added to global, user, and item bias terms to capture baseline rating behaviors.\n\n---"
+      },
+      {
+        "id": "exam_4_q23",
+        "number": 23,
+        "points": 2,
+        "text": "Why is a nonlinear activation function needed between neural-network layers?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** Without nonlinearity, stacked linear layers collapse into one linear transformation.",
+          "**B.** It guarantees zero validation loss.",
+          "**C.** It removes the need for gradients.",
+          "**D.** It changes supervised learning into unsupervised learning.",
+          "**E.** It prevents all overfitting."
+        ],
+        "correctAnswer": "**A.** Without nonlinearity, stacked linear layers collapse into one linear transformation.",
+        "explanation": "* Linear operations are closed under composition. That is, a composition of two linear maps $W_2(W_1 X + b_1) + b_2$ can be simplified to a single linear map $W' X + b'$.\n  * Without non-linear activation functions (like ReLU, Sigmoid, or Tanh) between layers, a deep neural network would be mathematically equivalent to a single-layer linear model, unable to learn complex non-linear functions.\n\n---"
+      },
+      {
+        "id": "exam_4_q24",
+        "number": 24,
+        "points": 2,
+        "text": "In multi-class classification with PyTorch, which input should usually be passed to `nn.CrossEntropyLoss`?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** Already-softmaxed probabilities and one-hot labels only.",
+          "**B.** Raw logits and integer class labels.",
+          "**C.** Cluster centroids and PCA loadings.",
+          "**D.** Only the predicted class index, without logits.",
+          "**E.** A confusion matrix."
+        ],
+        "correctAnswer": "**B.** Raw logits and integer class labels.",
+        "explanation": "* PyTorch's `nn.CrossEntropyLoss` combines `nn.LogSoftmax()` and `nn.NLLLoss()` (Negative Log-Likelihood Loss) in a single class.\n  * Therefore, it expects raw unnormalized predictions (logits) of shape `(N, C)` and target indices of shape `(N,)` containing the integer class labels, rather than normalized probabilities or one-hot vectors.\n\n---"
+      },
+      {
+        "id": "exam_4_q25",
+        "number": 25,
+        "points": 2,
+        "text": "Compared with plain SGD, Adam maintains:",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** Only the training labels.",
+          "**B.** Moving averages of gradients and squared gradients.",
+          "**C.** A decision tree at every layer.",
+          "**D.** A fixed learning rate that cannot be changed.",
+          "**E.** A hard-coded confusion matrix."
+        ],
+        "correctAnswer": "**B.** Moving averages of gradients and squared gradients.",
+        "explanation": "* The Adam (Adaptive Moment Estimation) optimizer dynamically adjusts the learning rate for each parameter.\n  * It does this by keeping track of the exponentially decaying moving averages of past gradients (first raw moment / momentum) and past squared gradients (second uncentered moment / variance).\n\n---"
+      },
+      {
+        "id": "exam_4_q26",
+        "number": 26,
+        "points": 5,
+        "text": "Complete the scikit-learn pipeline code.\n\n```python\nfrom sklearn.pipeline import Pipeline\nfrom sklearn.impute import SimpleImputer\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.linear_model import LogisticRegression\n\npipe = Pipeline([\n    (\"imputer\", SimpleImputer(strategy=\"median\")),\n    (\"scaler\", StandardScaler()),\n    (\"clf\", LogisticRegression(max_iter=1000))\n])\n\n# Fill in the two missing lines\n_____________________________\ntest_acc = _____________________________\n```\n\nWrite the two statements separated by a semicolon `;`.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "`pipe.fit(X_train, y_train); pipe.score(X_test, y_test)`",
+        "explanation": "* First, we must fit the pipeline to the training data. This learns the median values for imputation, mean/variance for scaling, and trains the logistic regression model:\n    `pipe.fit(X_train, y_train)`\n  * Second, we evaluate the pipeline's performance on the test set. For classification models, scikit-learn's `.score()` method computes classification accuracy by default:\n    `pipe.score(X_test, y_test)`\n  * Combining them separated by a semicolon yields: `pipe.fit(X_train, y_train); pipe.score(X_test, y_test)`.\n\n---"
+      },
+      {
+        "id": "exam_4_q27",
+        "number": 27,
+        "points": 5,
+        "text": "You trained a binary classifier and want to lower the decision threshold to 0.30 because missing positive cases is costly.\n\n```python\nfrom sklearn.metrics import recall_score\n\nproba = clf.predict_proba(X_test)[:, 1]\ny_pred = (proba >= ________).astype(int)\nrecall = recall_score(________, ________)\n```\n\nWrite the three blanks separated by semicolons.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "`0.30; y_test; y_pred`",
+        "explanation": "* The decision threshold is lowered to 0.30:\n    `y_pred = (proba >= 0.30).astype(int)`\n  * To calculate the recall, we compare the true ground truth labels (`y_test`) against our predicted binary labels (`y_pred`):\n    `recall_score(y_test, y_pred)`\n\n---"
+      },
+      {
+        "id": "exam_4_q28",
+        "number": 28,
+        "points": 5,
+        "text": "Complete the DBSCAN code.\n\n```python\nimport numpy as np\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.cluster import DBSCAN\n\nscaler = StandardScaler()\nX_scaled = scaler.fit_transform(X)\n\ndb = DBSCAN(eps=0.6, min_samples=5).fit(__________)\nlabels = db.__________\nnum_noise = np.sum(labels == __________)\n```\n\nWrite the three blanks separated by semicolons.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "`X_scaled; labels_; -1`",
+        "explanation": "* **First blank:** DBSCAN should be fitted on the scaled design matrix `X_scaled`:\n    `db.fit(X_scaled)`\n  * **Second blank:** The cluster assignments are stored in the attribute `.labels_` of the fitted DBSCAN object:\n    `labels = db.labels_`\n  * **Third blank:** In scikit-learn's DBSCAN, noise/outlier points that do not belong to any cluster are labeled as `-1`:\n    `num_noise = np.sum(labels == -1)`\n\n---"
+      },
+      {
+        "id": "exam_4_q29",
+        "number": 29,
+        "points": 5,
+        "text": "A Q-learning update is\n\n\\[\nQ_{\\text{new}}(s,a)=Q(s,a)+\\alpha[r+\\gamma \\max_{a'}Q(s',a')-Q(s,a)].\n\\]\n\nGiven:\n* \\(Q(s,a)=2.0\\)\n* \\(r=1.0\\)\n* \\(\\gamma=0.9\\)\n* \\(\\max_{a'}Q(s',a')=4.0\\)\n* \\(\\alpha=0.5\\)\n\nWhat is \\(Q_{\\text{new}}(s,a)\\)? Round to two decimal places.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "3.30",
+        "explanation": "* First, calculate the target value (Bellman optimality equation component):\n    $$\\text{Target} = r + \\gamma \\max_{a'} Q(s', a') = 1.0 + 0.9(4.0) = 1.0 + 3.6 = 4.6$$\n  * Next, calculate the temporal difference (TD) error:\n    $$\\text{TD Error} = \\text{Target} - Q(s,a) = 4.6 - 2.0 = 2.6$$\n  * Finally, apply the learning rate update:\n    $$Q_{\\text{new}}(s,a) = Q(s,a) + \\alpha \\times \\text{TD Error} = 2.0 + 0.5(2.6) = 2.0 + 1.3 = 3.3$$\n  * Rounded to two decimal places: **3.30**.\n\n---"
+      },
+      {
+        "id": "exam_4_q30",
+        "number": 30,
+        "points": 5,
+        "text": "Complete the A* update inside the neighbor loop.\n\n```python\nnew_g = g + cost\nnew_f = ______________________\nheapq.heappush(open_set, (__________, __________, neighbor))\n```\n\nWrite the three blanks separated by semicolons.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "`new_g + h(neighbor); new_f; new_g`",
+        "explanation": "* **First blank:** A* search uses the evaluation function $f(n) = g(n) + h(n)$. Therefore:\n    `new_f = new_g + h(neighbor)`\n  * **Second and third blanks:** The priority queue `open_set` stores tuples of `(f_score, g_score, node)`. We push the calculated `new_f` and `new_g`:\n    `heapq.heappush(open_set, (new_f, new_g, neighbor))`\n\n---"
+      },
+      {
+        "id": "exam_4_q31",
+        "number": 31,
+        "points": 5,
+        "text": "Complete the core part of a backtracking CSP solver.\n\n```python\nfor value in domains[var]:\n    if is_consistent(assignment, var, value):\n        assignment[var] = value\n        result = backtrack(assignment)\n        if result is not None:\n            return result\n        ______________________\nreturn None\n```\n\nWhat line should replace the blank?",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "`del assignment[var]`",
+        "explanation": "* If the recursive call to `backtrack(assignment)` returns `None`, it means assigning `value` to variable `var` led to a failure down the search tree (no solution was found).\n  * Therefore, we must backtrack by removing the tentative assignment of `value` to `var` (restoring it to unassigned) before trying the next available value in the loop:\n    `del assignment[var]` (or `assignment.pop(var)`)\n\n---"
+      },
+      {
+        "id": "exam_4_q32",
+        "number": 32,
+        "points": 5,
+        "text": "Complete the cross-validation code.\n\n```python\nfrom sklearn.model_selection import cross_val_score\n\nscores = cross_val_score(model, X, y, cv=5, scoring=\"f1\")\nmean_score = scores.__________()\nstd_score = scores.__________()\n```\n\nWrite the two blanks separated by a semicolon.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "`mean; std`",
+        "explanation": "* `cross_val_score` returns a NumPy array containing the score for each of the 5 folds.\n  * To summarize the performance, we call the NumPy methods `.mean()` (average score) and `.std()` (standard deviation / variance between folds):\n    `scores.mean()` and `scores.std()`\n\n---"
+      },
+      {
+        "id": "exam_4_q33",
+        "number": 33,
+        "points": 5,
+        "text": "Complete the forward pass for a dense layer followed by sigmoid activation.\n\n```python\nimport numpy as np\n\ndef forward(X, W, b):\n    Z = ______________________\n    A = ______________________\n    return A\n```\n\nWrite the two statements separated by a semicolon.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "`X @ W + b; 1 / (1 + np.exp(-Z))`",
+        "explanation": "* **First statement:** The linear layer calculation computes the dot product of inputs $X$ and weights $W$, plus bias $b$. In Python/NumPy, this is written using matrix multiplication `@`:\n    `Z = X @ W + b`\n  * **Second statement:** The output is passed through the sigmoid activation function $g(Z) = \\frac{1}{1 + e^{-Z}}$:\n    `A = 1 / (1 + np.exp(-Z))`\n\n---"
+      },
+      {
+        "id": "exam_4_q34",
+        "number": 34,
+        "points": 5,
+        "text": "Complete the standard PyTorch training-step order.\n\n```python\noptimizer.__________()\nloss.__________()\noptimizer.__________()\n```\n\nWrite the three blanks separated by semicolons.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "`zero_grad; backward; step`",
+        "explanation": "* **First blank:** Clear the gradients of all optimized variables to prevent accumulation from previous steps:\n    `optimizer.zero_grad()`\n  * **Second blank:** Compute the gradients of the loss with respect to all model parameters using backpropagation:\n    `loss.backward()`\n  * **Third blank:** Update the parameters using the calculated gradients and the optimizer's update rule:\n    `optimizer.step()`\n\n---"
+      },
+      {
+        "id": "exam_4_q35",
+        "number": 35,
+        "points": 5,
+        "text": "Complete the scaled dot-product attention code.\n\n```python\nimport math\nimport torch\n\nscores = Q @ K.transpose(-2, -1) / math.sqrt(d_k)\nweights = torch.softmax(scores, dim=__________)\nout = weights @ __________\n```\n\nWrite the two blanks separated by a semicolon.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "`-1; V`",
+        "explanation": "* **First blank:** Softmax is applied to normalize scores across the key dimension (the last axis, or `-1`):\n    `torch.softmax(scores, dim=-1)`\n  * **Second blank:** The attention weights are multiplied by the values matrix `V` to produce the final weighted context representations:\n    `out = weights @ V`"
+      }
+    ]
+  },
+  {
+    "id": "exam_5",
+    "name": "Max's Drill Test 2",
+    "difficulty": "Slightly harder than actual exam",
+    "questions": [
+      {
+        "id": "exam_5_q1",
+        "number": 1,
+        "points": 2,
+        "text": "You are using K-Nearest Neighbors for binary classification. What is the most likely effect of increasing \\(k\\) from \\(1\\) to a much larger value, assuming the dataset is not extremely small?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** The decision boundary usually becomes more jagged and variance increases",
+          "**B.** The decision boundary usually becomes smoother and variance decreases",
+          "**C.** The algorithm becomes a linear regression model",
+          "**D.** The algorithm stops depending on distance",
+          "**E.** The training accuracy must always increase"
+        ],
+        "correctAnswer": "**B.** The decision boundary usually becomes smoother and variance decreases",
+        "explanation": "* When $k=1$, the classifier fits to the exact nearest neighbor of each sample, making it highly sensitive to noise (high variance) and resulting in a very complex, jagged decision boundary.\n  * Increasing $k$ averages the class predictions over a larger neighborhood, which smooths out the decision boundary, decreases the model's variance (sensitivity to individual training data points), and increases its bias.\n\n---"
+      },
+      {
+        "id": "exam_5_q2",
+        "number": 2,
+        "points": 2,
+        "text": "Why is feature scaling especially important before applying KNN?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** KNN uses gradient descent, which requires scaled features",
+          "**B.** KNN computes distances, so large-scale features can dominate small-scale features",
+          "**C.** KNN requires every feature to have integer values",
+          "**D.** KNN cannot use continuous numerical features",
+          "**E.** KNN removes outliers automatically only after scaling"
+        ],
+        "correctAnswer": "**B.** KNN computes distances, so large-scale features can dominate small-scale features",
+        "explanation": "* K-Nearest Neighbors classifies points by finding the closest samples in the feature space using distance metrics (typically Euclidean distance).\n  * If features have vastly different ranges (e.g., salary ranging up to 100,000 and age ranging up to 100), the Euclidean distance will be dominated by salary, rendering the age feature practically irrelevant. Scaling (like normalization or standardization) ensures all features contribute equally to the distance computation.\n\n---"
+      },
+      {
+        "id": "exam_5_q3",
+        "number": 3,
+        "points": 2,
+        "text": "Which statement best compares ridge regression and lasso regression?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** Ridge uses an \\(L_1\\) penalty and lasso uses an \\(L_2\\) penalty",
+          "**B.** Ridge and lasso both always set exactly the same coefficients to zero",
+          "**C.** Ridge usually shrinks coefficients without making many exactly zero, while lasso can produce sparse coefficients",
+          "**D.** Lasso is only used for classification, while ridge is only used for clustering",
+          "**E.** Ridge removes the intercept term, while lasso removes the training labels"
+        ],
+        "correctAnswer": "**C.** Ridge usually shrinks coefficients without making many exactly zero, while lasso can produce sparse coefficients",
+        "explanation": "* **Ridge Regression** adds an L2 regularization penalty ($\\alpha \\sum w_j^2$) to the loss function. This shrinks the coefficients towards zero, but they rarely become mathematically equal to zero.\n  * **Lasso Regression** adds an L1 regularization penalty ($\\alpha \\sum |w_j|$). The diamond-shaped constraint geometry of L1 regularization often forces some coefficient paths to hit exactly zero, effectively performing feature selection (producing a sparse model).\n\n---"
+      },
+      {
+        "id": "exam_5_q4",
+        "number": 4,
+        "points": 2,
+        "text": "The lasso objective for linear regression is usually written as:",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** \\(\\text{MSE} + \\alpha \\sum_j |w_j|\\)",
+          "**B.** \\(\\text{MSE} + \\alpha \\sum_j w_j^2\\)",
+          "**C.** \\(\\text{MSE} - \\alpha \\sum_j |w_j|\\)",
+          "**D.** \\(\\text{Accuracy} + \\alpha \\sum_j w_j^2\\)",
+          "**E.** \\(\\text{Recall} - \\text{Precision}\\)"
+        ],
+        "correctAnswer": "**A.** \\(\\text{MSE} + \\alpha \\sum_j |w_j|\\)",
+        "explanation": "* Lasso regression (Least Absolute Shrinkage and Selection Operator) minimizes the mean squared error (MSE) plus a regularization penalty proportional to the sum of the absolute values of the coefficients (L1 penalty):\n    $$\\text{Lasso Loss} = \\text{MSE} + \\alpha \\sum_{j=1}^{d} |w_j|$$\n\n---"
+      },
+      {
+        "id": "exam_5_q5",
+        "number": 5,
+        "points": 2,
+        "text": "In logistic regression, the sigmoid function transforms a linear score \\(z = w^T x + b\\) into:",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** A cluster centroid",
+          "**B.** A probability between 0 and 1",
+          "**C.** A principal component",
+          "**D.** A squared residual",
+          "**E.** A Euclidean distance"
+        ],
+        "correctAnswer": "**B.** A probability between 0 and 1",
+        "explanation": "* The sigmoid activation function is defined as:\n    $$\\sigma(z) = \\frac{1}{1 + e^{-z}}$$\n  * It maps any real-valued input $z \\in (-\\infty, \\infty)$ to a value in the open interval $(0, 1)$, allowing the output to be interpreted as the probability that a sample belongs to the positive class: $P(y=1|x)$.\n\n---"
+      },
+      {
+        "id": "exam_5_q6",
+        "number": 6,
+        "points": 2,
+        "text": "For logistic regression with threshold \\(0.5\\), the decision boundary occurs when:",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** \\(w^T x + b = 0\\)",
+          "**B.** \\(w^T x + b = 1\\)",
+          "**C.** \\(w^T x + b = -1\\)",
+          "**D.** The learning rate equals 0",
+          "**E.** The training accuracy equals the test accuracy"
+        ],
+        "correctAnswer": "**A.** \\(w^T x + b = 0\\)",
+        "explanation": "* The classification prediction is positive if $\\sigma(w^T x + b) \\ge 0.5$.\n  * Since $\\sigma(0) = \\frac{1}{1 + e^0} = 0.5$, the transition point (decision boundary) occurs exactly when the input to the sigmoid function is 0, which means $w^T x + b = 0$.\n\n---"
+      },
+      {
+        "id": "exam_5_q7",
+        "number": 7,
+        "points": 2,
+        "text": "What may happen if the learning rate in gradient descent is too large?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** The cost may oscillate or diverge",
+          "**B.** The gradient becomes exactly zero immediately",
+          "**C.** The model becomes equivalent to PCA",
+          "**D.** The dataset is automatically standardized",
+          "**E.** The number of features decreases"
+        ],
+        "correctAnswer": "**A.** The cost may oscillate or diverge",
+        "explanation": "* Gradient descent updates parameters in the direction of the negative gradient: $\\theta \\leftarrow \\theta - \\alpha \\nabla J(\\theta)$.\n  * If the learning rate $\\alpha$ is too large, the update step will overshoot the local minimum. Repeated overshooting can cause the cost function to oscillate back and forth or even diverge (increase) over time.\n\n---"
+      },
+      {
+        "id": "exam_5_q8",
+        "number": 8,
+        "points": 2,
+        "text": "Which statement best distinguishes batch gradient descent from stochastic gradient descent?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** Batch gradient descent uses the entire training set per update; stochastic gradient descent uses one sample or a small subset per update",
+          "**B.** Batch gradient descent can only be used for decision trees",
+          "**C.** Stochastic gradient descent does not use gradients",
+          "**D.** Batch gradient descent always overfits, while stochastic gradient descent always underfits",
+          "**E.** Stochastic gradient descent requires no learning rate"
+        ],
+        "correctAnswer": "**A.** Batch gradient descent uses the entire training set per update; stochastic gradient descent uses one sample or a small subset per update",
+        "explanation": "* **Batch Gradient Descent** computes the gradient of the loss function over the entire training dataset to perform a single parameter update.\n  * **Stochastic Gradient Descent (SGD)** updates parameters using the gradient computed from only a single randomly selected sample (or a mini-batch of samples) at each step. This makes each step computationally cheaper and introduces noise that can help escape local minima.\n\n---"
+      },
+      {
+        "id": "exam_5_q9",
+        "number": 9,
+        "points": 2,
+        "text": "What is the main purpose of \\(k\\)-fold cross-validation?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** To train \\(k\\) unrelated models and use all of them at prediction time",
+          "**B.** To estimate generalization performance by rotating validation subsets",
+          "**C.** To remove all missing values from the dataset",
+          "**D.** To convert classification into clustering",
+          "**E.** To guarantee that the test score is always higher than the training score"
+        ],
+        "correctAnswer": "**B.** To estimate generalization performance by rotating validation subsets",
+        "explanation": "* In $k$-fold cross-validation, the training dataset is partitioned into $k$ equal-sized subsets. The model is trained $k$ times; each time, $k-1$ folds are used for training and the remaining 1 fold is held out as the validation set.\n  * The average validation score across all $k$ iterations provides a robust, low-variance estimate of the model's generalization capability.\n\n---"
+      },
+      {
+        "id": "exam_5_q10",
+        "number": 10,
+        "points": 2,
+        "text": "Which situation is an example of data leakage?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** Fitting a scaler only on the training set and applying it to validation data",
+          "**B.** Splitting the data before model training",
+          "**C.** Selecting hyperparameters using cross-validation on the training data",
+          "**D.** Fitting preprocessing transformations using the full dataset before the train/test split",
+          "**E.** Reporting test performance once after choosing the final model"
+        ],
+        "correctAnswer": "**D.** Fitting preprocessing transformations using the full dataset before the train/test split",
+        "explanation": "* Data leakage occurs when information from outside the training dataset is used to build/configure the model.\n  * Fitting preprocessors (like imputers, scalers, or PCA) on the *entire* dataset before splitting means the training parameters incorporate information (like the mean, range, or class distributions) from the test set, leading to overly optimistic test metrics.\n\n---"
+      },
+      {
+        "id": "exam_5_q11",
+        "number": 11,
+        "points": 2,
+        "text": "When imputing missing values before model evaluation, which practice is most appropriate?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** Fit the imputer on the test set only",
+          "**B.** Fit the imputer on the full dataset before splitting",
+          "**C.** Fit the imputer on the training set, then transform validation/test sets",
+          "**D.** Delete the target labels before imputation",
+          "**E.** Replace all missing values with random labels"
+        ],
+        "correctAnswer": "**C.** Fit the imputer on the training set, then transform validation/test sets",
+        "explanation": "* Imputation values (such as feature means or medians) must be calculated strictly from the training set to prevent data leakage.\n  * The validation and test sets must then be filled (transformed) using those exact parameters learned from the training set.\n\n---"
+      },
+      {
+        "id": "exam_5_q12",
+        "number": 12,
+        "points": 2,
+        "text": "In PCA, the first principal component is the direction that:",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** Minimizes the variance of the projected data",
+          "**B.** Maximizes the variance of the projected data",
+          "**C.** Maximizes classification accuracy directly",
+          "**D.** Always equals the original first feature",
+          "**E.** Always has all entries equal to zero"
+        ],
+        "correctAnswer": "**B.** Maximizes the variance of the projected data",
+        "explanation": "* Principal Component Analysis (PCA) projects high-dimensional data onto orthogonal axes.\n  * The first principal component is the unit vector that points in the direction of maximum variance in the data, preserving the maximum amount of information when the dimensionality is reduced.\n\n---"
+      },
+      {
+        "id": "exam_5_q13",
+        "number": 13,
+        "points": 2,
+        "text": "Why is standardization often applied before PCA when features have different units or scales?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** PCA is a distance-free method and cannot use real-valued data",
+          "**B.** Features with larger numerical variance may dominate the principal components",
+          "**C.** PCA requires all values to be binary",
+          "**D.** PCA uses decision-tree splits",
+          "**E.** PCA turns all models into logistic regression"
+        ],
+        "correctAnswer": "**B.** Features with larger numerical variance may dominate the principal components",
+        "explanation": "* PCA finds directions that maximize variance.\n  * If features have different scales (e.g., size in square feet vs number of bedrooms), features with naturally larger numeric variances will dominate the covariance matrix and bias the principal components along their axes. Standardizing the features to have zero mean and unit variance ensures each feature contributes equally.\n\n---"
+      },
+      {
+        "id": "exam_5_q14",
+        "number": 14,
+        "points": 2,
+        "text": "If a centered data matrix \\(X\\) has shape \\((n, d)\\), where \\(n\\) is the number of samples and \\(d\\) is the number of features, what is the shape of the feature covariance matrix \\(X^T X/(n-1)\\)?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** \\((n, n)\\)",
+          "**B.** \\((d, d)\\)",
+          "**C.** \\((n, d)\\)",
+          "**D.** \\((d, n)\\)",
+          "**E.** \\((1, d)\\)"
+        ],
+        "correctAnswer": "**B.** \\((d, d)\\)",
+        "explanation": "* The data matrix $X$ has dimension $(n \\times d)$, which means its transpose $X^T$ has dimension $(d \\times n)$.\n  * Matrix multiplication of $X^T$ and $X$ yields:\n    $$(d \\times n) \\times (n \\times d) = (d \\times d)$$\n  * The resulting covariance matrix measures the pairwise covariance between each of the $d$ features, making it a $d \\times d$ square matrix.\n\n---"
+      },
+      {
+        "id": "exam_5_q15",
+        "number": 15,
+        "points": 2,
+        "text": "K-Means clustering primarily minimizes:",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** The number of decision-tree leaves",
+          "**B.** The total within-cluster squared distance to cluster centroids",
+          "**C.** The cross-entropy of class labels",
+          "**D.** The \\(L_1\\) penalty on regression coefficients",
+          "**E.** The AUROC score"
+        ],
+        "correctAnswer": "**B.** The total within-cluster squared distance to cluster centroids",
+        "explanation": "* K-Means clustering optimizes the partition of $n$ observations into $K$ clusters to minimize the within-cluster sum of squares (WCSS), also known as inertia:\n    $$\\text{WCSS} = \\sum_{j=1}^{K} \\sum_{x \\in S_j} \\|x - \\mu_j\\|^2$$\n  * where $\\mu_j$ is the centroid of cluster $S_j$.\n\n---"
+      },
+      {
+        "id": "exam_5_q16",
+        "number": 16,
+        "points": 2,
+        "text": "Which limitation is most associated with K-Means?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** It cannot use numerical features",
+          "**B.** It is sensitive to initialization and assumes clusters are reasonably compact around centroids",
+          "**C.** It always finds the true number of clusters",
+          "**D.** It directly outputs precision and recall",
+          "**E.** It is a supervised learning algorithm"
+        ],
+        "correctAnswer": "**B.** It is sensitive to initialization and assumes clusters are reasonably compact around centroids",
+        "explanation": "* K-Means converges to a local minimum which depends heavily on the initial placement of cluster centroids (often mitigated by algorithms like K-Means++).\n  * Additionally, since it relies on Euclidean distance, it implicitly assumes clusters are spherical/compact and struggles with complex shapes (e.g., concentric circles or highly elongated shapes).\n\n---"
+      },
+      {
+        "id": "exam_5_q17",
+        "number": 17,
+        "points": 2,
+        "text": "In hierarchical clustering, complete linkage defines the distance between two clusters as:",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** The minimum pairwise distance between their points",
+          "**B.** The maximum pairwise distance between their points",
+          "**C.** The distance between the first two points in the dataset",
+          "**D.** The absolute value of the logistic regression coefficient",
+          "**E.** The mean squared error of the training labels"
+        ],
+        "correctAnswer": "**B.** The maximum pairwise distance between their points",
+        "explanation": "* **Complete linkage** defines the distance between two clusters $A$ and $B$ as the maximum distance between any single point in $A$ and any single point in $B$:\n    $$D(A, B) = \\max_{a \\in A, b \\in B} d(a, b)$$\n  * This linkage criterion tends to produce compact, spherical clusters.\n\n---"
+      },
+      {
+        "id": "exam_5_q18",
+        "number": 18,
+        "points": 2,
+        "text": "A common weakness of single linkage hierarchical clustering is that it can:",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** Create a chaining effect by joining clusters through close intermediate points",
+          "**B.** Require class labels for every sample",
+          "**C.** Force every cluster to have exactly the same size",
+          "**D.** Use cross-entropy instead of distance",
+          "**E.** Remove all outliers before clustering"
+        ],
+        "correctAnswer": "**A.** Create a chaining effect by joining clusters through close intermediate points",
+        "explanation": "* **Single linkage** defines the distance between clusters as the minimum distance between any point in $A$ and any point in $B$:\n    $$D(A, B) = \\min_{a \\in A, b \\in B} d(a, b)$$\n  * A classic drawback is **chaining**, where two distinct, distant clusters are merged together because of a continuous trail of intermediate points lying close to one another.\n\n---"
+      },
+      {
+        "id": "exam_5_q19",
+        "number": 19,
+        "points": 2,
+        "text": "Which statement about decision trees is most accurate?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** They can model nonlinear decision boundaries by recursively splitting feature space",
+          "**B.** They can only fit straight-line boundaries",
+          "**C.** They require gradient descent to split nodes",
+          "**D.** They are identical to KNN when \\(k=1\\)",
+          "**E.** They cannot be used for classification"
+        ],
+        "correctAnswer": "**A.** They can model nonlinear decision boundaries by recursively splitting feature space",
+        "explanation": "* Decision trees partition the feature space recursively using axis-aligned orthogonal splits.\n  * Because splits can be nested to arbitrary depths, they can approximate highly complex, non-linear decision boundaries. They do not require gradient descent (splits are chosen greedily using metrics like Gini or entropy).\n\n---"
+      },
+      {
+        "id": "exam_5_q20",
+        "number": 20,
+        "points": 2,
+        "text": "What does AUROC measure?",
+        "type": "multiple-choice",
+        "options": [
+          "**A.** The probability that a randomly chosen positive example receives a higher score than a randomly chosen negative example",
+          "**B.** The fraction of correctly classified examples at one fixed threshold only",
+          "**C.** The number of clusters produced by K-Means",
+          "**D.** The mean value of the input features",
+          "**E.** The determinant of the covariance matrix"
+        ],
+        "correctAnswer": "**A.** The probability that a randomly chosen positive example receives a higher score than a randomly chosen negative example",
+        "explanation": "* The Area Under the Receiver Operating Characteristic curve (AUROC) evaluates a classifier's ability to rank items.\n  * It is mathematically equivalent to the probability that the classifier will assign a higher positive-class probability to a randomly chosen positive instance than to a randomly chosen negative instance.\n\n---"
+      },
+      {
+        "id": "exam_5_q21",
+        "number": 21,
+        "points": 4,
+        "text": "A KNN classifier has the following training points:\n\n| Point | Coordinates | Label |\n|---|---:|---:|\n| A | \\((1,1)\\) | 0 |\n| B | \\((2,1)\\) | 0 |\n| C | \\((5,5)\\) | 1 |\n| D | \\((6,5)\\) | 1 |\n\nFor a new point \\(x=(3,2)\\), using Euclidean distance and \\(k=3\\), what label will KNN predict? Show the nearest three neighbors.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "Predicted label = 0; nearest three neighbors are B, A, and C",
+        "explanation": "* Calculate Euclidean distances from $x(3,2)$ to each point:\n    * $d(x, A) = \\sqrt{(3-1)^2 + (2-1)^2} = \\sqrt{4 + 1} = \\sqrt{5} \\approx 2.236$\n    * $d(x, B) = \\sqrt{(3-2)^2 + (2-1)^2} = \\sqrt{1 + 1} = \\sqrt{2} \\approx 1.414$\n    * $d(x, C) = \\sqrt{(3-5)^2 + (2-5)^2} = \\sqrt{4 + 9} = \\sqrt{13} \\approx 3.606$\n    * $d(x, D) = \\sqrt{(3-6)^2 + (2-5)^2} = \\sqrt{9 + 9} = \\sqrt{18} \\approx 4.243$\n  * The three nearest neighbors sorted by distance are **B** (dist 1.414, label 0), **A** (dist 2.236, label 0), and **C** (dist 3.606, label 1).\n  * A majority vote among these three neighbors (two 0s and one 1) yields prediction **0**.\n\n---"
+      },
+      {
+        "id": "exam_5_q22",
+        "number": 22,
+        "points": 4,
+        "text": "For linear regression \\(f_{w,b}(x)=wx+b\\), suppose \\(w=1.2\\), \\(b=0.5\\), and the training data are:\n\n\\[\n(1,2),\\quad (2,3),\\quad (3,5)\n\\]\n\nCompute the cost:\n\n\\[\nJ(w,b)=\\frac{1}{2m}\\sum_{i=1}^{m}(f_{w,b}(x^{(i)})-y^{(i)})^2\n\\]\n\nRound to three decimal places.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "0.152",
+        "explanation": "* Predictions:\n    * $f(1) = 1.2(1) + 0.5 = 1.7$\n    * $f(2) = 1.2(2) + 0.5 = 2.9$\n    * $f(3) = 1.2(3) + 0.5 = 4.1$\n  * Errors ($f(x^{(i)}) - y^{(i)}$):\n    * $e_1 = 1.7 - 2 = -0.3 \\implies e_1^2 = 0.09$\n    * $e_2 = 2.9 - 3 = -0.1 \\implies e_2^2 = 0.01$\n    * $e_3 = 4.1 - 5 = -0.9 \\implies e_3^2 = 0.81$\n  * Sum of squared errors:\n    $$\\sum_{i=1}^{3} (f(x^{(i)}) - y^{(i)})^2 = 0.09 + 0.01 + 0.81 = 0.91$$\n  * Cost $J(w,b)$ with $m=3$:\n    $$J(w,b) = \\frac{0.91}{2(3)} = \\frac{0.91}{6} \\approx 0.15167 \\approx 0.152$$\n\n---"
+      },
+      {
+        "id": "exam_5_q23",
+        "number": 23,
+        "points": 4,
+        "text": "For one training example in linear regression, let \\(x=4\\), \\(y=10\\), \\(w=1\\), \\(b=1\\), and \\(\\alpha=0.1\\). Using squared-error gradient descent,\n\n\\[\n\\frac{\\partial J}{\\partial w}=(f-y)x,\\qquad \\frac{\\partial J}{\\partial b}=f-y\n\\]\n\ncompute the updated \\(w\\) and \\(b\\) after one step.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "w_new = 3.0, b_new = 1.5",
+        "explanation": "* The model prediction is:\n    $$f = wx + b = 1(4) + 1 = 5$$\n  * The error is:\n    $$f - y = 5 - 10 = -5$$\n  * Calculate gradients:\n    * $\\frac{\\partial J}{\\partial w} = (f-y)x = -5(4) = -20$\n    * $\\frac{\\partial J}{\\partial b} = f-y = -5$\n  * Update weights with learning rate $\\alpha = 0.1$:\n    * $w_{\\text{new}} = w - \\alpha \\frac{\\partial J}{\\partial w} = 1 - 0.1(-20) = 1 + 2.0 = 3.0$\n    * $b_{\\text{new}} = b - \\alpha \\frac{\\partial J}{\\partial b} = 1 - 0.1(-5) = 1 + 0.5 = 1.5$\n\n---"
+      },
+      {
+        "id": "exam_5_q24",
+        "number": 24,
+        "points": 4,
+        "text": "Complete the scikit-learn pipeline for ridge regression with feature standardization.\n\n```python\nfrom sklearn.pipeline import Pipeline\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.linear_model import Ridge\n\nmodel = Pipeline([\n    (\"scaler\", ______________________),\n    (\"ridge\", _______________________)\n])\n\nmodel.fit(X_train, y_train)\ny_pred = model.predict(X_test)\n```",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "`StandardScaler(); Ridge(alpha=1.0)` (or simply `StandardScaler(); Ridge()`)",
+        "explanation": "* The pipeline steps are lists of tuples `(name, transformer_or_estimator)`.\n  * The first blank expects the feature scaling object: `StandardScaler()`.\n  * The second blank expects the ridge regression estimator: `Ridge(alpha=1.0)` (or `Ridge()`).\n  * Written as semicolons: `StandardScaler(); Ridge(alpha=1.0)`.\n\n---"
+      },
+      {
+        "id": "exam_5_q25",
+        "number": 25,
+        "points": 4,
+        "text": "Complete the code to run cross-validated lasso regression, retrieve the selected alpha, and count the number of nonzero coefficients.\n\n```python\nimport numpy as np\nfrom sklearn.linear_model import LassoCV\n\nlasso = LassoCV(alphas=np.logspace(-3, 1, 20), cv=5, random_state=0)\n_____________________________\nbest_alpha = _____________________________\nnum_nonzero = ____________________________\n```\n\nWrite the three missing statements separated by semicolons.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "`lasso.fit(X_train, y_train); lasso.alpha_; np.sum(lasso.coef_ != 0)`",
+        "explanation": "* **First statement:** Fit the LassoCV model on the training data:\n    `lasso.fit(X_train, y_train)`\n  * **Second statement:** The selected regularizer strength $\\alpha$ is stored in the `.alpha_` attribute:\n    `lasso.alpha_`\n  * **Third statement:** The coefficients are in `lasso.coef_`. The number of non-zero entries is calculated by checking the inequality and summing the boolean matches:\n    `np.sum(lasso.coef_ != 0)` (or `np.count_nonzero(lasso.coef_)`)\n\n---"
+      },
+      {
+        "id": "exam_5_q26",
+        "number": 26,
+        "points": 4,
+        "text": "For logistic regression with one example, let the feature vector already include the intercept term:\n\n\\[\nx=[1,2],\\quad \\theta=[0,0],\\quad y=1,\\quad \\alpha=0.5\n\\]\n\nThe prediction is \\(h_\\theta(x)=\\sigma(\\theta^T x)\\), and the gradient is:\n\n\\[\n(h_\\theta(x)-y)x\n\\]\n\nCompute the updated parameter vector \\(\\theta\\) after one gradient descent step.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "\\theta_new = [0.25, 0.5]",
+        "explanation": "* Calculate raw logit:\n    $$z = \\theta^T x = 0(1) + 0(2) = 0$$\n  * Predict probability using the sigmoid function:\n    $$h_\\theta(x) = \\sigma(0) = 0.5$$\n  * Compute the gradient:\n    $$\\nabla J = (h_\\theta(x) - y)x = (0.5 - 1)[1, 2] = -0.5[1, 2] = [-0.5, -1.0]$$\n  * Update parameters with learning rate $\\alpha = 0.5$:\n    $$\\theta_{\\text{new}} = \\theta - \\alpha \\nabla J = [0, 0] - 0.5[-0.5, -1.0] = [0, 0] + [0.25, 0.50] = [0.25, 0.5]$$\n\n---"
+      },
+      {
+        "id": "exam_5_q27",
+        "number": 27,
+        "points": 4,
+        "text": "For a logistic regression prediction \\(p=0.8\\), compute the binary cross-entropy loss for:\n1. \\(y=1\\)\n2. \\(y=0\\)\n\nUse natural logarithms and round to three decimal places.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "For y=1: 0.223; For y=0: 1.609",
+        "explanation": "* Binary cross-entropy loss is given by:\n    $$L = -[y \\ln(p) + (1-y) \\ln(1-p)]$$\n  * **Case 1: $y=1$**\n    $$L = -\\ln(0.8) \\approx 0.22314 \\approx 0.223$$\n  * **Case 2: $y=0$**\n    $$L = -\\ln(1 - 0.8) = -\\ln(0.2) \\approx 1.60944 \\approx 1.609$$\n\n---"
+      },
+      {
+        "id": "exam_5_q28",
+        "number": 28,
+        "points": 4,
+        "text": "A binary classifier produces the following confusion matrix counts:\n\n\\[\nTP=42,\\quad FP=8,\\quad FN=18,\\quad TN=132\n\\]\n\nCompute accuracy, precision, recall, and F1-score. Round each to three decimal places.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "Accuracy = 0.870; Precision = 0.840; Recall = 0.700; F1 = 0.764",
+        "explanation": "* Total samples: $TP + FP + FN + TN = 42 + 8 + 18 + 132 = 200$\n  * **Accuracy:** $\\frac{TP + TN}{\\text{Total}} = \\frac{42 + 132}{200} = \\frac{174}{200} = 0.870$\n  * **Precision:** $\\frac{TP}{TP + FP} = \\frac{42}{42 + 8} = \\frac{42}{50} = 0.840$\n  * **Recall:** $\\frac{TP}{TP + FN} = \\frac{42}{42 + 18} = \\frac{42}{60} = 0.700$\n  * **F1-score:** $\\frac{2 \\times \\text{Precision} \\times \\text{Recall}}{\\text{Precision} + \\text{Recall}} = \\frac{2 \\times 0.840 \\times 0.700}{0.840 + 0.700} = \\frac{1.176}{1.540} \\approx 0.7636 \\approx 0.764$\n\n---"
+      },
+      {
+        "id": "exam_5_q29",
+        "number": 29,
+        "points": 4,
+        "text": "A model gives scores to positive and negative examples:\n\n\\[\n\\text{Positive scores}=[0.9,0.7,0.4],\\qquad\n\\text{Negative scores}=[0.8,0.3]\n\\]\n\nCompute AUROC using pairwise ranking. There are no ties.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "AUROC = 4/6 ≈ 0.667",
+        "explanation": "* There are $3$ positive samples and $2$ negative samples, making $3 \\times 2 = 6$ total positive-negative pairs.\n  * Compare the predicted scores for each pair ($S_{\\text{pos}} > S_{\\text{neg}}$):\n    * Positive score 0.9 vs Negatives: $0.9 > 0.8$ (Win), $0.9 > 0.3$ (Win) $\\implies 2$ wins.\n    * Positive score 0.7 vs Negatives: $0.7 < 0.8$ (Loss), $0.7 > 0.3$ (Win) $\\implies 1$ win.\n    * Positive score 0.4 vs Negatives: $0.4 < 0.8$ (Loss), $0.4 > 0.3$ (Win) $\\implies 1$ win.\n  * Total Wins = $2 + 1 + 1 = 4$.\n  * AUROC = $\\frac{\\text{Total Wins}}{\\text{Total Pairs}} = \\frac{4}{6} \\approx 0.667$.\n\n---"
+      },
+      {
+        "id": "exam_5_q30",
+        "number": 30,
+        "points": 4,
+        "text": "A mean-centered data point is:\n\n\\[\nx=(2,1)\n\\]\n\nThe first principal component is the unit vector:\n\n\\[\nu=\\left(\\frac{1}{\\sqrt{5}},\\frac{2}{\\sqrt{5}}\\right)\n\\]\n\nCompute:\n1. The one-dimensional PCA score \\(x\\cdot u\\)\n2. The one-component reconstruction \\((x\\cdot u)u\\)\n\nRound decimals to three places where needed.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "PCA score: 4/sqrt(5) ≈ 1.789; One-component reconstruction: (0.8, 1.6)",
+        "explanation": "* **PCA projection score:**\n    $$x \\cdot u = 2 \\left(\\frac{1}{\\sqrt{5}}\\right) + 1 \\left(\\frac{2}{\\sqrt{5}}\\right) = \\frac{4}{\\sqrt{5}} \\approx 1.789$$\n  * **One-component reconstruction:**\n    $$(x \\cdot u)u = \\frac{4}{\\sqrt{5}} \\left[\\frac{1}{\\sqrt{5}}, \\frac{2}{\\sqrt{5}}\\right] = \\left[\\frac{4}{5}, \\frac{8}{5}\\right] = (0.8, 1.6)$$\n\n---"
+      },
+      {
+        "id": "exam_5_q31",
+        "number": 31,
+        "points": 4,
+        "text": "A PCA model has eigenvalues:\n\n\\[\n9,\\quad 4,\\quad 1,\\quad 1\n\\]\n\nWhat proportion of total variance is explained by the first two principal components? Round to three decimal places.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "0.867",
+        "explanation": "* Total variance is the sum of all eigenvalues:\n    $$\\text{Total Var} = 9 + 4 + 1 + 1 = 15$$\n  * Variance explained by the first two principal components is:\n    $$\\text{Explained Var} = 9 + 4 = 13$$\n  * Proportion of explained variance:\n    $$\\frac{13}{15} \\approx 0.86667 \\approx 0.867$$\n\n---"
+      },
+      {
+        "id": "exam_5_q32",
+        "number": 32,
+        "points": 4,
+        "text": "During K-Means, one cluster currently contains the points:\n\n\\[\n(1,2),\\quad (3,4),\\quad (5,4)\n\\]\n\nCompute the updated centroid and the within-cluster sum of squared errors for this cluster. Round the SSE to two decimal places.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "Updated centroid: (3, 10/3) ≈ (3, 3.333); Within-cluster SSE: 10.67",
+        "explanation": "* **Updated Centroid:** Average coordinates of the cluster:\n    * $\\mu_x = \\frac{1 + 3 + 5}{3} = \\frac{9}{3} = 3$\n    * $\\mu_y = \\frac{2 + 4 + 4}{3} = \\frac{10}{3} \\approx 3.333$\n  * **Within-cluster SSE:**\n    * $\\text{Dist}_1^2 = (1-3)^2 + (2-\\frac{10}{3})^2 = 4 + (-\\frac{4}{3})^2 = 4 + \\frac{16}{9} = \\frac{52}{9}$\n    * $\\text{Dist}_2^2 = (3-3)^2 + (4-\\frac{10}{3})^2 = 0 + (\\frac{2}{3})^2 = \\frac{4}{9}$\n    * $\\text{Dist}_3^2 = (5-3)^2 + (4-\\frac{10}{3})^2 = 4 + (\\frac{2}{3})^2 = 4 + \\frac{4}{9} = \\frac{40}{9}$\n    * $\\text{SSE} = \\frac{52 + 4 + 40}{9} = \\frac{96}{9} = \\frac{32}{3} \\approx 10.667 \\approx 10.67$\n\n---"
+      },
+      {
+        "id": "exam_5_q33",
+        "number": 33,
+        "points": 4,
+        "text": "You have four one-dimensional points \\(A,B,C,D\\) with pairwise distances:\n\n\\[\nd(A,B)=2,\\quad d(A,C)=6,\\quad d(A,D)=10,\\quad d(B,C)=5,\\quad d(B,D)=9,\\quad d(C,D)=4\n\\]\n\nUsing agglomerative hierarchical clustering with complete linkage:\n1. Which two singleton clusters merge first?\n2. Which two clusters merge second?\n3. What is the complete-linkage distance between the two final clusters?",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "First merge: A and B; Second merge: C and D; Final complete-linkage distance: 10",
+        "explanation": "* **First merge:** Find the smallest pairwise distance. $d(A, B) = 2$ is the minimum, so $A$ and $B$ merge to form cluster $\\{A, B\\}$.\n  * **Second merge:** Find the next smallest distance. The remaining distances are:\n    * $D(\\{A,B\\}, C) = \\max(d(A,C), d(B,C)) = \\max(6, 5) = 6$\n    * $D(\\{A,B\\}, D) = \\max(d(A,D), d(B,D)) = \\max(10, 9) = 10$\n    * $d(C, D) = 4$\n    * The smallest distance is $d(C,D) = 4$, so $C$ and $D$ merge to form cluster $\\{C, D\\}$.\n  * **Third step (final distance):** The distance between the remaining two clusters $\\{A, B\\}$ and $\\{C, D\\}$ under complete linkage is:\n    $$D(\\{A, B\\}, \\{C, D\\}) = \\max(d(A,C), d(A,D), d(B,C), d(B,D)) = \\max(6, 10, 5, 9) = 10$$\n\n---"
+      },
+      {
+        "id": "exam_5_q34",
+        "number": 34,
+        "points": 4,
+        "text": "A decision tree considers a binary split. The parent node has 10 positive and 10 negative samples. The proposed split gives:\n* Left child: 8 positive, 2 negative\n* Right child: 2 positive, 8 negative\n\nCompute the parent Gini impurity, the weighted child Gini impurity, and the Gini decrease.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "Parent Gini: 0.500; Weighted child Gini: 0.320; Gini decrease: 0.180",
+        "explanation": "* **Parent Gini:**\n    $$I_G(P) = 1 - \\left[\\left(\\frac{10}{20}\\right)^2 + \\left(\\frac{10}{20}\\right)^2\\right] = 1 - [0.25 + 0.25] = 0.500$$\n  * **Left Child Gini:**\n    $$I_G(L) = 1 - \\left[\\left(\\frac{8}{10}\\right)^2 + \\left(\\frac{2}{10}\\right)^2\\right] = 1 - [0.64 + 0.04] = 0.320$$\n  * **Right Child Gini:**\n    $$I_G(R) = 1 - \\left[\\left(\\frac{2}{10}\\right)^2 + \\left(\\frac{8}{10}\\right)^2\\right] = 1 - [0.04 + 0.64] = 0.320$$\n  * **Weighted Child Gini:**\n    $$\\text{Child Gini} = \\frac{10}{20}(0.320) + \\frac{10}{20}(0.320) = 0.320$$\n  * **Gini Decrease:**\n    $$\\Delta I_G = I_G(P) - \\text{Child Gini} = 0.500 - 0.320 = 0.180$$\n\n---"
+      },
+      {
+        "id": "exam_5_q35",
+        "number": 35,
+        "points": 4,
+        "text": "Two models have the following 5-fold validation F1 scores:\n\n\\[\n\\text{Ridge-like model}: [0.70,0.72,0.71,0.73,0.74]\n\\]\n\n\\[\n\\text{Lasso-like model}: [0.68,0.80,0.66,0.81,0.65]\n\\]\n\nCompute the mean validation F1 for both models. If the means are tied, which model is more stable and why?",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "Both models have mean F1 = 0.720. The ridge-like model is more stable because its fold scores vary much less.",
+        "explanation": "* **Mean Ridge:** $\\frac{0.70 + 0.72 + 0.71 + 0.73 + 0.74}{5} = \\frac{3.60}{5} = 0.720$\n  * **Mean Lasso:** $\\frac{0.68 + 0.80 + 0.66 + 0.81 + 0.65}{5} = \\frac{3.60}{5} = 0.720$\n  * While both models have the same average F1 score ($0.720$), the Ridge-like model's scores are very stable (ranging from $0.70$ to $0.74$, standard deviation $\\approx 0.014$), whereas the Lasso-like model's scores fluctuate widely (ranging from $0.65$ to $0.81$, standard deviation $\\approx 0.071$). Therefore, the Ridge-like model is more stable and is preferred."
       }
     ]
   }

@@ -30,7 +30,13 @@ export default function ReviewPage() {
 
   const questions = exam.questions;
   const percentage = Math.round((attempt.score / attempt.totalPoints) * 100);
-  const isPassed = percentage >= 70; // 70% passing threshold for CAIO
+  
+  let gradeStatus: 'pass' | 'borderline' | 'fail' = 'fail';
+  if (percentage >= 50) {
+    gradeStatus = 'pass';
+  } else if (percentage >= 35) {
+    gradeStatus = 'borderline';
+  }
 
   const formatTimeSpent = (sec: number) => {
     const m = Math.floor(sec / 60);
@@ -98,8 +104,14 @@ export default function ReviewPage() {
                 cy="60"
               />
               <circle
-                className={`progress-ring-fill ${isPassed ? 'pass' : 'fail'}`}
-                stroke={isPassed ? 'var(--color-success)' : 'var(--color-error)'}
+                className={`progress-ring-fill ${gradeStatus}`}
+                stroke={
+                  gradeStatus === 'pass' 
+                    ? 'var(--color-success)' 
+                    : gradeStatus === 'borderline' 
+                      ? 'var(--color-warning)' 
+                      : 'var(--color-error)'
+                }
                 strokeWidth="8"
                 strokeDasharray={`${2 * Math.PI * 50}`}
                 strokeDashoffset={`${2 * Math.PI * 50 * (1 - Math.min(percentage, 100) / 100)}`}
@@ -114,8 +126,12 @@ export default function ReviewPage() {
           </div>
           
           <div className="grade-details">
-            <div className={`grade-badge ${isPassed ? 'pass' : 'fail'}`}>
-              {isPassed ? 'PASSED (Target Met)' : 'FAILING (Review Required)'}
+            <div className={`grade-badge ${gradeStatus}`}>
+              {gradeStatus === 'pass' 
+                ? 'PASSED (Safe Pass)' 
+                : gradeStatus === 'borderline' 
+                  ? 'BORDERLINE (Study Required)' 
+                  : 'FAILING (Review Required)'}
             </div>
             <h2>{exam.name}</h2>
             <div className="attempt-info-row">
@@ -366,6 +382,10 @@ export default function ReviewPage() {
         .grade-badge.pass {
           background-color: var(--color-success-bg);
           color: var(--color-success);
+        }
+        .grade-badge.borderline {
+          background-color: var(--color-warning-bg);
+          color: var(--color-warning);
         }
         .grade-badge.fail {
           background-color: var(--color-error-bg);
