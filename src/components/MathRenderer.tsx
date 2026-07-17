@@ -94,10 +94,10 @@ export function MathRenderer({ text }: MathRendererProps) {
 }
 
 function TextWithMath({ text }: { text: string }) {
-  // Regex to split block math ($$...$$), inline math ($...$), and linebreaks
-  // Block math: \$\$(.*?)\$\$
-  // Inline math: \$(.*?)\$
-  const regex = /(\$\$[\s\S]*?\$\$|\$[\s\S]*?\$|\n)/g;
+  // Regex to split block math ($$...$$ and \[...\]), inline math ($...$ and \(...\)), and linebreaks
+  // Block math: \$\$(.*?)\$\$ or \\\[(.*?)\\\]
+  // Inline math: \$(.*?)\$ or \\\((.*?)\\\)
+  const regex = /(\$\$[\s\S]*?\$\$|\\\[[\s\S]*?\\\]|\$[\s\S]*?\$|\\\([\s\S]*?\\\)|\n)/g;
   const tokens = text.split(regex);
 
   return (
@@ -111,8 +111,24 @@ function TextWithMath({ text }: { text: string }) {
           } catch (e) {
             return <code key={i}>{token}</code>;
           }
+        } else if (token.startsWith('\\[') && token.endsWith('\\]')) {
+          const formula = token.substring(2, token.length - 2);
+          try {
+            const html = katex.renderToString(formula, { displayMode: true, throwOnError: false });
+            return <span key={i} dangerouslySetInnerHTML={{ __html: html }} />;
+          } catch (e) {
+            return <code key={i}>{token}</code>;
+          }
         } else if (token.startsWith('$') && token.endsWith('$')) {
           const formula = token.substring(1, token.length - 1);
+          try {
+            const html = katex.renderToString(formula, { displayMode: false, throwOnError: false });
+            return <span key={i} dangerouslySetInnerHTML={{ __html: html }} />;
+          } catch (e) {
+            return <code key={i}>{token}</code>;
+          }
+        } else if (token.startsWith('\\(') && token.endsWith('\\)')) {
+          const formula = token.substring(2, token.length - 2);
           try {
             const html = katex.renderToString(formula, { displayMode: false, throwOnError: false });
             return <span key={i} dangerouslySetInnerHTML={{ __html: html }} />;
