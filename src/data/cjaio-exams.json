@@ -1,0 +1,862 @@
+[
+  {
+    "id": "cjaio_set_1",
+    "name": "CJAIO Part 1 - Practice Set 1",
+    "competition": "CJAIO",
+    "durationMinutes": 60,
+    "source": "CJAIO_Part1_Practice_Set_1_Questions.pdf",
+    "instructions": "Q1-12: select one answer. Q13-18: select all correct answers; all and only the correct options earn the question points. Q19-26: show your work or code. Q20-26 are submitted for teacher marking and may receive partial credit. Answer keys are independently prepared.",
+    "questions": [
+      {
+        "id": "cjaio_set_1_q1",
+        "number": 1,
+        "points": 2,
+        "text": "What is printed by the following code?\n```python\nnums = [6, 1, 8, 3, 7]\nprint(nums[2:5:2])\n```",
+        "type": "multiple-choice",
+        "options": [
+          "A. [6, 8]",
+          "B. [8, 7]",
+          "C. [8, 3, 7]",
+          "D. [1, 3]",
+          "E. An error occurs."
+        ],
+        "correctAnswer": "B. [8, 7]",
+        "explanation": "The slice uses indices 2 and 4; the stop index 5 is excluded.",
+        "grading": "automatic",
+        "section": "A - Single choice"
+      },
+      {
+        "id": "cjaio_set_1_q2",
+        "number": 2,
+        "points": 2,
+        "text": "Which task is most naturally a regression problem?",
+        "type": "multiple-choice",
+        "options": [
+          "A. Predicting whether a message is spam",
+          "B. Predicting the number of visitors to a website tomorrow",
+          "C. Predicting whether an image contains a dog",
+          "D. Grouping songs into clusters",
+          "E. Predicting whether a payment is fraudulent"
+        ],
+        "correctAnswer": "B. Predicting the number of visitors to a website tomorrow",
+        "explanation": "Visitor count is a numerical quantity, so this is regression.",
+        "grading": "automatic",
+        "section": "A - Single choice"
+      },
+      {
+        "id": "cjaio_set_1_q3",
+        "number": 3,
+        "points": 2,
+        "text": "What is printed by the following program?\n```python\ns = \"PYTHON\"\nresult = \"\"\n\nfor i in range(1, len(s), 2):\n    result += s[i]\n\nprint(result)\n```",
+        "type": "multiple-choice",
+        "options": [
+          "A. PTO",
+          "B. YHN",
+          "C. PYT",
+          "D. YHO",
+          "E. THON"
+        ],
+        "correctAnswer": "B. YHN",
+        "explanation": "Indices 1, 3, 5 select Y, H, N.",
+        "grading": "automatic",
+        "section": "A - Single choice"
+      },
+      {
+        "id": "cjaio_set_1_q4",
+        "number": 4,
+        "points": 2,
+        "text": "What is printed by the following program?\n```python\ndata = [\"red\", \"blue\", \"red\", \"green\", \"blue\", \"red\", \"green\"]\nfreq = {}\n\nfor x in data:\n    freq[x] = freq.get(x, 0) + 1\n\nprint(freq[\"red\"] + 2 * freq[\"green\"])\n```",
+        "type": "multiple-choice",
+        "options": [
+          "A. 5",
+          "B. 6",
+          "C. 7",
+          "D. 8",
+          "E. 9"
+        ],
+        "correctAnswer": "C. 7",
+        "explanation": "red occurs 3 times and green 2 times: 3 + 2*2 = 7.",
+        "grading": "automatic",
+        "section": "A - Single choice"
+      },
+      {
+        "id": "cjaio_set_1_q5",
+        "number": 5,
+        "points": 2,
+        "text": "A bag contains 3 white balls and 5 black balls. Two balls are selected without replacement.\nWhat is the probability that exactly one selected ball is white?",
+        "type": "multiple-choice",
+        "options": [
+          "A. 3/14",
+          "B. 5/14",
+          "C. 15/28",
+          "D. 1/2",
+          "E. 5/8"
+        ],
+        "correctAnswer": "C. 15/28",
+        "explanation": "White then black or black then white: (3/8)(5/7) + (5/8)(3/7) = 15/28.",
+        "grading": "automatic",
+        "section": "A - Single choice"
+      },
+      {
+        "id": "cjaio_set_1_q6",
+        "number": 6,
+        "points": 2,
+        "text": "For the dataset 4, 5, 7, 8, 26, which statement is correct?",
+        "type": "multiple-choice",
+        "options": [
+          "A. Mean = 7 and median = 10",
+          "B. Mean = 10 and median = 7",
+          "C. Mean = 10 and median = 8",
+          "D. Mean = 7 and median = 8",
+          "E. Mean = 8 and median = 10"
+        ],
+        "correctAnswer": "B. Mean = 10 and median = 7",
+        "explanation": "Sum = 50, so mean = 10. The sorted middle value is 7.",
+        "grading": "automatic",
+        "section": "A - Single choice"
+      },
+      {
+        "id": "cjaio_set_1_q7",
+        "number": 7,
+        "points": 2,
+        "text": "What is printed by the following code?\n```python\na = [3, 6, 9, 14, 18, 22]\ntarget = 13\nleft = 0\nright = len(a) - 1\n\nwhile left <= right:\n    mid = (left + right) // 2\n    if a[mid] < target:\n        left = mid + 1\n    else:\n        right = mid - 1\n\nprint(left)\n```",
+        "type": "multiple-choice",
+        "options": [
+          "A. 1",
+          "B. 2",
+          "C. 3",
+          "D. 4",
+          "E. 5"
+        ],
+        "correctAnswer": "C. 3",
+        "explanation": "This is lower-bound search. The first value at least 13 is 14 at index 3.",
+        "grading": "automatic",
+        "section": "A - Single choice"
+      },
+      {
+        "id": "cjaio_set_1_q8",
+        "number": 8,
+        "points": 2,
+        "text": "What is the final value of total?\n```python\ntotal = 0\n\nfor i in range(1, 7):\n    for j in range(1, i + 1):\n        if (i * j) % 4 == 0:\n            total += 1\n```",
+        "type": "multiple-choice",
+        "options": [
+          "A. 6",
+          "B. 7",
+          "C. 8",
+          "D. 9",
+          "E. 10"
+        ],
+        "correctAnswer": "D. 9",
+        "explanation": "Qualifying counts for i=1 through 6 are 0, 1, 0, 4, 1, 3: total 9.",
+        "grading": "automatic",
+        "section": "A - Single choice"
+      },
+      {
+        "id": "cjaio_set_1_q9",
+        "number": 9,
+        "points": 2,
+        "text": "What is printed?\n```python\na = [[1, 2], [3, 4]]\nb = a[:]\n\nb[0][1] = 9\nb.append([5, 6])\n\nprint(a, b)\n```",
+        "type": "multiple-choice",
+        "options": [
+          "A. [[1, 2], [3, 4]] [[1, 9], [3, 4], [5, 6]]",
+          "B. [[1, 9], [3, 4]] [[1, 9], [3, 4], [5, 6]]",
+          "C. [[1, 9], [3, 4], [5, 6]] [[1, 9], [3, 4], [5, 6]]",
+          "D. [[1, 2], [3, 4], [5, 6]] [[1, 9], [3, 4], [5, 6]]",
+          "E. An error occurs."
+        ],
+        "correctAnswer": "B. [[1, 9], [3, 4]] [[1, 9], [3, 4], [5, 6]]",
+        "explanation": "The shallow copy shares inner rows. Editing the first row affects both lists; appending affects only b.",
+        "grading": "automatic",
+        "section": "A - Single choice"
+      },
+      {
+        "id": "cjaio_set_1_q10",
+        "number": 10,
+        "points": 2,
+        "text": "A K-nearest-neighbors classifier uses Euclidean distance and k = 3. A new point is P = (3, 2).\nWhich class is predicted?\nPoint Class\n(2, 2) A\n(4, 2) B\n(3, 4) B\n(1, 2) A\n(3, 1) A",
+        "type": "multiple-choice",
+        "options": [
+          "A. Class A",
+          "B. Class B",
+          "C. A tie between A and B",
+          "D. It cannot be determined",
+          "E. KNN cannot be used with two features"
+        ],
+        "correctAnswer": "A. Class A",
+        "explanation": "The three neighbors at distance 1 have classes A, B, A. Majority: A.",
+        "grading": "automatic",
+        "section": "A - Single choice"
+      },
+      {
+        "id": "cjaio_set_1_q11",
+        "number": 11,
+        "points": 2,
+        "text": "A decision-tree split produces a left child with 3 positive and 0 negative examples, and a right\nchild with 2 positive and 3 negative examples. Using Gini = 1 - p1^2 - p2^2, what is the\nweighted Gini impurity after the split?",
+        "type": "multiple-choice",
+        "options": [
+          "A. 0",
+          "B. 3/20",
+          "C. 1/4",
+          "D. 3/10",
+          "E. 12/25"
+        ],
+        "correctAnswer": "D. 3/10",
+        "explanation": "Right Gini = 1-(2/5)^2-(3/5)^2 = 12/25. Weighted Gini = (3/8)*0 + (5/8)*(12/25) = 3/10.",
+        "grading": "automatic",
+        "section": "A - Single choice"
+      },
+      {
+        "id": "cjaio_set_1_q12",
+        "number": 12,
+        "points": 2,
+        "text": "What is printed by the following program?\n```python\nnums = [4, 2, 5, 1]\nmoves = 0\n\nfor i in range(1, len(nums)):\n    key = nums[i]\n    j = i - 1\n    while j >= 0 and nums[j] > key:\n        nums[j + 1] = nums[j]\n        moves += 1\n        j -= 1\n    nums[j + 1] = key\n\nprint(moves, nums[0] + nums[-1])\n```",
+        "type": "multiple-choice",
+        "options": [
+          "A. 3 6",
+          "B. 4 6",
+          "C. 4 7",
+          "D. 5 6",
+          "E. 5 7"
+        ],
+        "correctAnswer": "B. 4 6",
+        "explanation": "Insertion sort shifts 1, 0, and 3 items: 4 moves. Final list [1,2,4,5], first plus last = 6.",
+        "grading": "automatic",
+        "section": "A - Single choice"
+      },
+      {
+        "id": "cjaio_set_1_q13",
+        "number": 13,
+        "points": 4,
+        "text": "Which statements about Python are correct?",
+        "type": "multi-select",
+        "options": [
+          "A. list(range(2, 9, 3)) produces [2, 5, 8].",
+          "B. \"AI\" * 2 evaluates to \"AIAI\".",
+          "C. Dictionary keys are unique.",
+          "D. len(set([2, 2, 3])) is 3.",
+          "E. If b = a.copy() for a list a, appending to b also appends to a."
+        ],
+        "correctAnswer": "[\"A\",\"B\",\"C\"]",
+        "explanation": "A, B, C are true. A set removes duplicates, and appending to a copied outer list does not append to the original.",
+        "grading": "automatic",
+        "section": "B - Select all that apply"
+      },
+      {
+        "id": "cjaio_set_1_q14",
+        "number": 14,
+        "points": 4,
+        "text": "Which actions may be appropriate when cleaning a real-world dataset?",
+        "type": "multi-select",
+        "options": [
+          "A. Check for duplicate records.",
+          "B. Investigate why some values are missing.",
+          "C. Automatically replace every outlier with the mean.",
+          "D. Convert measurements to consistent units.",
+          "E. Standardize inconsistent date formats."
+        ],
+        "correctAnswer": "[\"A\",\"B\",\"D\",\"E\"]",
+        "explanation": "Check duplicates and missingness; standardize units and date formats. Investigate outliers instead of automatically replacing them.",
+        "grading": "automatic",
+        "section": "B - Select all that apply"
+      },
+      {
+        "id": "cjaio_set_1_q15",
+        "number": 15,
+        "points": 4,
+        "text": "For the dataset 1, 3, 5, 7, 9, which statements are correct?",
+        "type": "multi-select",
+        "options": [
+          "A. The median is 6.",
+          "B. The mean is 5.",
+          "C. The range is 8.",
+          "D. Adding 4 to every value leaves the range unchanged.",
+          "E. Multiplying every value by 2 leaves the mean unchanged."
+        ],
+        "correctAnswer": "[\"B\",\"C\",\"D\"]",
+        "explanation": "Mean = 5; range = 8. Adding a constant preserves range. Median is 5; doubling values doubles the mean.",
+        "grading": "automatic",
+        "section": "B - Select all that apply"
+      },
+      {
+        "id": "cjaio_set_1_q16",
+        "number": 16,
+        "points": 4,
+        "text": "Which statements about algorithms and data structures are correct?",
+        "type": "multi-select",
+        "options": [
+          "A. Binary search can discard roughly half of the remaining search range after a comparison when the data is ordered.",
+          "B. A queue normally follows first-in-first-out behavior.",
+          "C. A stack removes the oldest item first.",
+          "D. The number of pairs (i, j) satisfying 0 <= i < j < n is n(n - 1)/2.",
+          "E. Linear search is always faster than binary search on a sorted list."
+        ],
+        "correctAnswer": "[\"A\",\"B\",\"D\"]",
+        "explanation": "Binary search halves ordered search ranges; queues use FIFO; there are n(n-1)/2 index pairs. Stacks use LIFO, and linear search is not always faster.",
+        "grading": "automatic",
+        "section": "B - Select all that apply"
+      },
+      {
+        "id": "cjaio_set_1_q17",
+        "number": 17,
+        "points": 4,
+        "text": "Which statements about machine learning are correct?",
+        "type": "multi-select",
+        "options": [
+          "A. Feature scaling can affect KNN because KNN uses distances.",
+          "B. K-Means is a supervised classification algorithm.",
+          "C. A decision tree can overfit its training data.",
+          "D. The sigmoid function in logistic regression can output a negative probability.",
+          "E. After the sigmoid function, logistic regression produces a value between 0 and 1."
+        ],
+        "correctAnswer": "[\"A\",\"C\",\"E\"]",
+        "explanation": "Distance-based KNN is affected by scaling; trees can overfit; sigmoid outputs are between 0 and 1. K-Means is unsupervised.",
+        "grading": "automatic",
+        "section": "B - Select all that apply"
+      },
+      {
+        "id": "cjaio_set_1_q18",
+        "number": 18,
+        "points": 4,
+        "text": "A student is building a classifier from a dataset with missing values, duplicate records, and a\nhighly imbalanced target. Which practices are appropriate?",
+        "type": "multi-select",
+        "options": [
+          "A. Split the data before fitting preprocessing steps such as imputation or scaling.",
+          "B. Repeatedly use the test set to choose model settings.",
+          "C. Check whether duplicate copies of the same record appear in both training and test sets.",
+          "D. Use metrics beyond accuracy when one class is much more common than the other.",
+          "E. Removing one sensitive feature always guarantees a fair model."
+        ],
+        "correctAnswer": "[\"A\",\"C\",\"D\"]",
+        "explanation": "Fit preprocessing on training data, prevent duplicate leakage, and use metrics beyond accuracy. Test-set tuning leaks information; removing a sensitive feature cannot guarantee fairness.",
+        "grading": "automatic",
+        "section": "B - Select all that apply"
+      },
+      {
+        "id": "cjaio_set_1_q19",
+        "number": 19,
+        "points": 5,
+        "text": "What is printed by the following code?\n```python\nvalues = [2, 7, 4, 9, 6]\nscore = 0\n\nfor i in range(len(values)):\n    if values[i] % 2 == 0:\n        score += values[i] // 2\n    else:\n        score -= i\n\nprint(score)\n```",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "2",
+        "explanation": "The score changes by +1, -1, +2, -3, +3, ending at 2.",
+        "grading": "automatic",
+        "section": "C - Short Answer I"
+      },
+      {
+        "id": "cjaio_set_1_q20",
+        "number": 20,
+        "points": 5,
+        "text": "Complete the two blanks so that the program removes duplicates while preserving the first\noccurrence of each value. Then give the final value printed.\n```python\ndata = [5, 3, 5, 8, 3, 9]\nseen = set()\nresult = []\n\nfor x in data:\n    if __________________________:\n        result.append(x)\n        __________________________\n\nprint(sum(result))\n```",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "Blanks: x not in seen; seen.add(x). Output: 25.",
+        "explanation": "Award credit for checking membership, recording newly seen values inside the if block, and the retained list [5,3,8,9] with sum 25. Equivalent correct code is acceptable.",
+        "grading": "manual",
+        "section": "C - Short Answer I"
+      },
+      {
+        "id": "cjaio_set_1_q21",
+        "number": 21,
+        "points": 5,
+        "text": "Trace the binary search. Find the final values of left, right, and checks.\n```python\na = [1, 5, 9, 13, 17, 21, 25, 30]\ntarget = 20\nleft = 0\nright = len(a) - 1\nchecks = 0\n\nwhile left <= right:\n    mid = (left + right) // 2\n    checks += 1\n\n    if a[mid] == target:\n        break\n    elif a[mid] < target:\n        left = mid + 1\n    else:\n        right = mid - 1\n```",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "left = 5, right = 4, checks = 3",
+        "explanation": "Midpoint indices are 3, 5, 4, with values 13, 21, 17. Boundaries then cross; the target is absent. Award credit for a correct trace and final values.",
+        "grading": "manual",
+        "section": "C - Short Answer I"
+      },
+      {
+        "id": "cjaio_set_1_q22",
+        "number": 22,
+        "points": 5,
+        "text": "Two linear-regression models are evaluated on the data below. Calculate each model's three\npredictions and its mean squared error (MSE). Which model has the lower MSE?\nData: (x, y) = (1, 3), (2, 6), (3, 8)\nModel A: y_hat = 2x + 1\nModel B: y_hat = 2.5x + 0.5\nUse MSE = [sum of (y - y_hat)^2] / n.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "A predictions: 3, 5, 7; MSE = 2/3. B predictions: 3, 5.5, 8; MSE = 1/12. Model B is better on these data.",
+        "explanation": "A squared errors: 0,1,1. B squared errors: 0,0.25,0. Divide each sum by 3. Award credit for predictions, squared-error averaging, and comparison.",
+        "grading": "manual",
+        "section": "C - Short Answer I"
+      },
+      {
+        "id": "cjaio_set_1_q23",
+        "number": 23,
+        "points": 8,
+        "text": "K-Means uses two initial centers C1 = (0, 1) and C2 = (7, 5) for the five points:\n(0, 1), (1, 1), (5, 4), (6, 4), (7, 5)\n(a) Assign each point to its nearest center using Euclidean distance. You may compare squared\ndistances. [4 marks]\n(b) Calculate the new center C1. [2 marks]\n(c) Calculate the new center C2. [2 marks]",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "Cluster 1: (0,1), (1,1). Cluster 2: (5,4), (6,4), (7,5). New centers: (0.5,1) and (6,13/3).",
+        "explanation": "Squared distances to C1/C2: (0,65), (1,52), (34,5), (45,2), (65,0). Assignment: 4 marks. Each coordinate-wise updated center: 2 marks.",
+        "grading": "manual",
+        "section": "D - Short Answer II"
+      },
+      {
+        "id": "cjaio_set_1_q24",
+        "number": 24,
+        "points": 8,
+        "text": "A logistic-regression model computes\nz = 0.9x1 - 0.5x2 - 0.4\np = 1 / (1 + e^(-z)).\nFor x1 = 2 and x2 = 1, use e^(-0.9) approximately 0.407.\n(a) Calculate z. [2 marks]\n(b) Calculate p to three decimal places. [3 marks]\n(c) What class is predicted using threshold 0.5? [1 mark]\n(d) What class is predicted using threshold 0.75? [2 marks]",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "z = 0.9; p = 0.711; class 1 at threshold 0.5; class 0 at threshold 0.75.",
+        "explanation": "z=1.8-0.5-0.4=0.9 (2 marks). Using the supplied exponential, p=1/1.407=0.710732... (3 marks). Threshold decisions: 1 and 2 marks respectively.",
+        "grading": "manual",
+        "section": "D - Short Answer II"
+      },
+      {
+        "id": "cjaio_set_1_q25",
+        "number": 25,
+        "points": 8,
+        "text": "The list below contains several increasing runs:\n```python\ndata = [3, 5, 7, 2, 4, 6, 8, 1]\n```\nWrite Python code using loops and conditionals that prints the length of the longest contiguous\nstrictly increasing run. For example, 2, 4, 6, 8 is one such run. Your program must print the\ncorrect result for the given data. [8 marks]",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "Output: 4. Example solution for the supplied nonempty data:\n```python\ncurrent = best = 1\nfor i in range(1, len(data)):\n    if data[i] > data[i - 1]:\n        current += 1\n    else:\n        current = 1\n    if current > best:\n        best = current\nprint(best)\n```",
+        "explanation": "Accept any correct loop/conditional solution. Track current run and best run; reset on a non-increase and update the maximum. Strict > is required; contiguous runs cannot skip elements. Assess logic and code, rather than comparing variable names or text.",
+        "grading": "manual",
+        "section": "D - Short Answer II"
+      },
+      {
+        "id": "cjaio_set_1_q26",
+        "number": 26,
+        "points": 8,
+        "text": "A KNN classifier has two features with known ranges:\n0 <= x1 <= 20\n0 <= x2 <= 2000\nUse min-max scaling: x_scaled = (x - min) / (max - min).\nThe new point is P = (10, 500). The labeled points are:\nA = (8, 900), Class A\nB = (18, 520), Class B\nC = (12, 100), Class A\nD = (4, 490), Class B\n(a) Scale P and the four labeled points. [3 marks]\n(b) Using k = 3 and squared Euclidean distance on the scaled features, identify the three nearest\nneighbors and predict the class of P. [3 marks]\n(c) If the same 3-NN calculation were done on the unscaled features, what class would be\npredicted? Briefly explain why the result changes. [2 marks]",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "Scaled P=(0.5,0.25); A=(0.4,0.45); B=(0.9,0.26); C=(0.6,0.05); D=(0.2,0.245). Scaled neighbors A,C,D -> Class A. Raw neighbors D,B,either A or C -> Class B.",
+        "explanation": "Scaling: 3 marks. Scaled squared distances A=.05, B=.1601, C=.05, D=.090025; neighbors and vote: 3 marks. Raw squared distances A=C=160004, B=464, D=136. The third-neighbor tie has the same class either way. Raw Class B and explanation of large-scale feature dominance: 2 marks.",
+        "grading": "manual",
+        "section": "D - Short Answer II"
+      }
+    ]
+  },
+  {
+    "id": "cjaio_set_2",
+    "name": "CJAIO Part 1 - Practice Set 2",
+    "competition": "CJAIO",
+    "durationMinutes": 60,
+    "source": "CJAIO_Part1_Practice_Set_2_Questions.pdf",
+    "instructions": "Q1-12: select one answer. Q13-18: select all correct answers; all and only the correct options earn the question points. Q19-26: show your work or code. Q20-26 are submitted for teacher marking and may receive partial credit. Answer keys are independently prepared.",
+    "questions": [
+      {
+        "id": "cjaio_set_2_q1",
+        "number": 1,
+        "points": 2,
+        "text": "What is printed by the following code?\n```python\nnums = [3, 8, 5, 2, 9]\nprint(nums[1:4])\n```",
+        "type": "multiple-choice",
+        "options": [
+          "A. [8, 5, 2]",
+          "B. [3, 8, 5]",
+          "C. [8, 5, 2, 9]",
+          "D. [5, 2, 9]",
+          "E. An error occurs."
+        ],
+        "correctAnswer": "A. [8, 5, 2]",
+        "explanation": "The slice selects indices 1, 2, 3, excluding stop index 4.",
+        "grading": "automatic",
+        "section": "A - Single choice"
+      },
+      {
+        "id": "cjaio_set_2_q2",
+        "number": 2,
+        "points": 2,
+        "text": "Which task is most naturally a regression problem?",
+        "type": "multiple-choice",
+        "options": [
+          "A. Predicting whether an email is spam",
+          "B. Predicting tomorrow's temperature in degrees Celsius",
+          "C. Predicting whether a photo contains a bicycle",
+          "D. Grouping customers into three clusters",
+          "E. Predicting whether a transaction is fraudulent"
+        ],
+        "correctAnswer": "B. Predicting tomorrow's temperature in degrees Celsius",
+        "explanation": "Temperature is a numerical quantity, so this is regression.",
+        "grading": "automatic",
+        "section": "A - Single choice"
+      },
+      {
+        "id": "cjaio_set_2_q3",
+        "number": 3,
+        "points": 2,
+        "text": "What is printed by the following code?\n```python\ns = \"DATA\"\nresult = \"\"\n\nfor i in range(len(s)):\n    if i % 2 == 0:\n        result += s[i]\n    else:\n        result += str(i)\n\nprint(result)\n```",
+        "type": "multiple-choice",
+        "options": [
+          "A. D1T3",
+          "B. DA13",
+          "C. D1A3",
+          "D. DT",
+          "E. DATA"
+        ],
+        "correctAnswer": "A. D1T3",
+        "explanation": "At even indices append the character; at odd indices append the index: D1T3.",
+        "grading": "automatic",
+        "section": "A - Single choice"
+      },
+      {
+        "id": "cjaio_set_2_q4",
+        "number": 4,
+        "points": 2,
+        "text": "What is printed by the following program?\n```python\ndata = [\"A\", \"B\", \"A\", \"C\", \"B\", \"A\"]\nfreq = {}\n\nfor x in data:\n    freq[x] = freq.get(x, 0) + 1\n\nprint(freq[\"A\"] * freq[\"B\"] - freq[\"C\"])\n```",
+        "type": "multiple-choice",
+        "options": [
+          "A. 3",
+          "B. 4",
+          "C. 5",
+          "D. 6",
+          "E. 7"
+        ],
+        "correctAnswer": "C. 5",
+        "explanation": "Counts are A:3, B:2, C:1. 3*2-1 = 5.",
+        "grading": "automatic",
+        "section": "A - Single choice"
+      },
+      {
+        "id": "cjaio_set_2_q5",
+        "number": 5,
+        "points": 2,
+        "text": "A bag contains 4 red balls and 3 blue balls. Two balls are selected without replacement. What\nis the probability that both selected balls are red?",
+        "type": "multiple-choice",
+        "options": [
+          "A. 1/7",
+          "B. 2/7",
+          "C. 3/7",
+          "D. 1/2",
+          "E. 4/7"
+        ],
+        "correctAnswer": "B. 2/7",
+        "explanation": "Without replacement: (4/7)(3/6) = 2/7.",
+        "grading": "automatic",
+        "section": "A - Single choice"
+      },
+      {
+        "id": "cjaio_set_2_q6",
+        "number": 6,
+        "points": 2,
+        "text": "A sensor dataset records some temperatures in Celsius and others in Fahrenheit in the same\ncolumn. What is the best first step before computing summary statistics?",
+        "type": "multiple-choice",
+        "options": [
+          "A. Delete every Fahrenheit record",
+          "B. Convert all measurements to one consistent unit",
+          "C. Replace all values by the mean",
+          "D. Sort the column from smallest to largest",
+          "E. Convert the temperature column into text"
+        ],
+        "correctAnswer": "B. Convert all measurements to one consistent unit",
+        "explanation": "Convert temperatures to consistent units before calculating summary statistics.",
+        "grading": "automatic",
+        "section": "A - Single choice"
+      },
+      {
+        "id": "cjaio_set_2_q7",
+        "number": 7,
+        "points": 2,
+        "text": "What is printed by the following code?\n```python\na = [2, 5, 8, 12, 15, 21]\ntarget = 11\nleft = 0\nright = len(a) - 1\n\nwhile left <= right:\n    mid = (left + right) // 2\n    if a[mid] < target:\n        left = mid + 1\n    else:\n        right = mid - 1\n\nprint(left)\n```",
+        "type": "multiple-choice",
+        "options": [
+          "A. 2",
+          "B. 3",
+          "C. 4",
+          "D. 5",
+          "E. 6"
+        ],
+        "correctAnswer": "B. 3",
+        "explanation": "The first value at least 11 is 12, at index 3.",
+        "grading": "automatic",
+        "section": "A - Single choice"
+      },
+      {
+        "id": "cjaio_set_2_q8",
+        "number": 8,
+        "points": 2,
+        "text": "What is the final value of total?\n```python\ntotal = 0\n\nfor i in range(1, 6):\n    for j in range(i):\n        if (i + j) % 3 == 0:\n            total += i\n```",
+        "type": "multiple-choice",
+        "options": [
+          "A. 14",
+          "B. 15",
+          "C. 17",
+          "D. 19",
+          "E. 20"
+        ],
+        "correctAnswer": "D. 19",
+        "explanation": "Pairs (2,1), (3,0), (4,2), (5,1), (5,4) add 2+3+4+5+5 = 19.",
+        "grading": "automatic",
+        "section": "A - Single choice"
+      },
+      {
+        "id": "cjaio_set_2_q9",
+        "number": 9,
+        "points": 2,
+        "text": "What is printed?\n```python\na = [1, 2]\nb = [a, a[:]]\n\nb[0].append(3)\nb[1][0] = 9\n\nprint(a, b)\n```",
+        "type": "multiple-choice",
+        "options": [
+          "A. [1, 2] [[1, 2, 3], [9, 2]]",
+          "B. [1, 2, 3] [[1, 2, 3], [9, 2]]",
+          "C. [9, 2, 3] [[9, 2, 3], [9, 2]]",
+          "D. [1, 2, 3] [[1, 2, 3], [9, 2, 3]]",
+          "E. An error occurs."
+        ],
+        "correctAnswer": "B. [1, 2, 3] [[1, 2, 3], [9, 2]]",
+        "explanation": "b[0] refers to a, while b[1] is a separate copied list. Only the first shares the append.",
+        "grading": "automatic",
+        "section": "A - Single choice"
+      },
+      {
+        "id": "cjaio_set_2_q10",
+        "number": 10,
+        "points": 2,
+        "text": "A K-nearest-neighbors classifier uses Euclidean distance and k = 3. A new point is P = (2, 2).\nWhich class is predicted?\nPoint Class\n(1, 2) A\n(2, 4) B\n(3, 2) B\n(0, 0) A\n(4, 3) B",
+        "type": "multiple-choice",
+        "options": [
+          "A. Class A",
+          "B. Class B",
+          "C. A tie between A and B",
+          "D. It cannot be determined without retraining",
+          "E. KNN cannot be used with two features"
+        ],
+        "correctAnswer": "B. Class B",
+        "explanation": "Nearest squared distances are 1, 1, 4, with labels A, B, B. Majority: B.",
+        "grading": "automatic",
+        "section": "A - Single choice"
+      },
+      {
+        "id": "cjaio_set_2_q11",
+        "number": 11,
+        "points": 2,
+        "text": "A decision-tree split produces two children of equal size. The left child contains 4 positive and\n0 negative examples. The right child contains 1 positive and 3 negative examples. Using Gini = 1\n- p1^2 - p2^2, what is the weighted Gini impurity after the split?",
+        "type": "multiple-choice",
+        "options": [
+          "A. 0",
+          "B. 1/8",
+          "C. 3/16",
+          "D. 1/4",
+          "E. 3/8"
+        ],
+        "correctAnswer": "C. 3/16",
+        "explanation": "Right Gini = 1-(1/4)^2-(3/4)^2 = 3/8. Equal child weights give 3/16.",
+        "grading": "automatic",
+        "section": "A - Single choice"
+      },
+      {
+        "id": "cjaio_set_2_q12",
+        "number": 12,
+        "points": 2,
+        "text": "What is printed by the following sorting program?\n```python\nnums = [5, 2, 4, 1]\nswaps = 0\n\nfor i in range(len(nums) - 1):\n    for j in range(len(nums) - 1 - i):\n        if nums[j] > nums[j + 1]:\n            nums[j], nums[j + 1] = nums[j + 1], nums[j]\n            swaps += 1\n\nprint(swaps, nums[1] + nums[-1])\n```",
+        "type": "multiple-choice",
+        "options": [
+          "A. 4 7",
+          "B. 5 6",
+          "C. 5 7",
+          "D. 6 7",
+          "E. 6 9"
+        ],
+        "correctAnswer": "C. 5 7",
+        "explanation": "Bubble sort makes 3+1+1 = 5 swaps. Final list [1,2,4,5], second plus last = 7.",
+        "grading": "automatic",
+        "section": "A - Single choice"
+      },
+      {
+        "id": "cjaio_set_2_q13",
+        "number": 13,
+        "points": 4,
+        "text": "Which statements about Python are correct?",
+        "type": "multi-select",
+        "options": [
+          "A. list(range(1, 6, 2)) produces [1, 3, 5].",
+          "B. Dictionary keys must be unique.",
+          "C. A Python set keeps duplicate copies of the same value.",
+          "D. \"abc\"[::-1] evaluates to \"cba\".",
+          "E. If b = a for a list a, appending to b can never affect a."
+        ],
+        "correctAnswer": "[\"A\",\"B\",\"D\"]",
+        "explanation": "A, B, D are true. Sets do not keep duplicates; b=a aliases the same list.",
+        "grading": "automatic",
+        "section": "B - Select all that apply"
+      },
+      {
+        "id": "cjaio_set_2_q14",
+        "number": 14,
+        "points": 4,
+        "text": "Which actions may be appropriate when cleaning a real-world dataset?",
+        "type": "multi-select",
+        "options": [
+          "A. Check for duplicate records.",
+          "B. Investigate why values are missing.",
+          "C. Replace every unusual numerical value with the mean automatically.",
+          "D. Convert measurements to consistent units.",
+          "E. Delete every row containing any outlier."
+        ],
+        "correctAnswer": "[\"A\",\"B\",\"D\"]",
+        "explanation": "Check duplicates/missingness and standardize units. Do not automatically replace or delete every unusual numerical value.",
+        "grading": "automatic",
+        "section": "B - Select all that apply"
+      },
+      {
+        "id": "cjaio_set_2_q15",
+        "number": 15,
+        "points": 4,
+        "text": "For the dataset 2, 4, 6, 8, which statements are correct?",
+        "type": "multi-select",
+        "options": [
+          "A. The median is 4.",
+          "B. The mean is 5.",
+          "C. The range is 6.",
+          "D. Adding 3 to every value leaves the range unchanged.",
+          "E. Multiplying every value by 2 leaves the mean unchanged."
+        ],
+        "correctAnswer": "[\"B\",\"C\",\"D\"]",
+        "explanation": "Mean = 5, median = 5, range = 6. Translation preserves range; doubling values doubles mean.",
+        "grading": "automatic",
+        "section": "B - Select all that apply"
+      },
+      {
+        "id": "cjaio_set_2_q16",
+        "number": 16,
+        "points": 4,
+        "text": "Which statements about algorithms are correct?",
+        "type": "multi-select",
+        "options": [
+          "A. Standard binary search requires the data to be ordered appropriately.",
+          "B. In the worst case, linear search may inspect every element.",
+          "C. Selection sort always makes exactly n^2 comparisons on n elements.",
+          "D. A queue normally follows first-in-first-out behavior.",
+          "E. A recursive solution is always faster than an iterative solution."
+        ],
+        "correctAnswer": "[\"A\",\"B\",\"D\"]",
+        "explanation": "Binary search needs ordered data; linear search may inspect all items; queues use FIFO. Standard selection sort uses n(n-1)/2 comparisons; recursion need not be faster.",
+        "grading": "automatic",
+        "section": "B - Select all that apply"
+      },
+      {
+        "id": "cjaio_set_2_q17",
+        "number": 17,
+        "points": 4,
+        "text": "Which statements about machine learning are correct?",
+        "type": "multi-select",
+        "options": [
+          "A. Feature scaling can affect KNN because KNN uses distances.",
+          "B. K-Means requires a class label for every training example.",
+          "C. A decision tree can overfit its training data.",
+          "D. 100% training accuracy guarantees 100% test accuracy.",
+          "E. Linear regression is normally used to predict numerical values."
+        ],
+        "correctAnswer": "[\"A\",\"C\",\"E\"]",
+        "explanation": "Scaling affects KNN; trees can overfit; linear regression predicts numerical values. K-Means needs no class labels, and training accuracy does not guarantee test accuracy.",
+        "grading": "automatic",
+        "section": "B - Select all that apply"
+      },
+      {
+        "id": "cjaio_set_2_q18",
+        "number": 18,
+        "points": 4,
+        "text": "A student is building a classifier from data containing missing values, duplicate rows, and an\nimbalanced target. Which practices are appropriate?",
+        "type": "multi-select",
+        "options": [
+          "A. Split into training and test sets before fitting preprocessing steps such as scaling or imputation.",
+          "B. Fit the scaler on the full dataset because scaling does not use class labels.",
+          "C. Check that duplicate copies of the same record do not appear in both training and test sets.",
+          "D. Use metrics beyond accuracy when one class is much more common than the other.",
+          "E. Repeatedly choose the model that scores highest on the test set until the score is satisfactory."
+        ],
+        "correctAnswer": "[\"A\",\"C\",\"D\"]",
+        "explanation": "Fit preprocessing after splitting; prevent duplicate leakage; inspect metrics beyond accuracy. Even label-free scaling can leak test-set information.",
+        "grading": "automatic",
+        "section": "B - Select all that apply"
+      },
+      {
+        "id": "cjaio_set_2_q19",
+        "number": 19,
+        "points": 5,
+        "text": "What is printed by the following code?\n```python\ndata = [6, 3, 8, 5, 10]\ntotal = 0\n\nfor i in range(len(data)):\n    if data[i] % 2 == 0:\n        total += data[i] - i\n\nprint(total)\n```",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "18",
+        "explanation": "The even entries contribute 6-0, 8-2, 10-4: total 18.",
+        "grading": "automatic",
+        "section": "C - Short Answer I"
+      },
+      {
+        "id": "cjaio_set_2_q20",
+        "number": 20,
+        "points": 5,
+        "text": "Complete the two blanks so that the program counts how many values are strictly greater\nthan the average. Then give the final value printed.\n```python\nnums = [4, 7, 10, 5, 9]\n\naverage = ______________________________\ncount = 0\n\nfor x in nums:\n    if ______________________________:\n        count += 1\n\nprint(count)\n```",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "Blanks: sum(nums) / len(nums); x > average. Output: 2.",
+        "explanation": "The average is 7. Only 10 and 9 are strictly greater. Award credit for the mean, strict comparison, and output. Equivalent expressions are acceptable.",
+        "grading": "manual",
+        "section": "C - Short Answer I"
+      },
+      {
+        "id": "cjaio_set_2_q21",
+        "number": 21,
+        "points": 5,
+        "text": "Trace the binary search. Find the final values of left, right, and checks.\n```python\na = [2, 5, 8, 12, 16, 23, 38]\ntarget = 15\nleft = 0\nright = len(a) - 1\nchecks = 0\n\nwhile left <= right:\n    mid = (left + right) // 2\n    checks += 1\n\n    if a[mid] == target:\n        break\n    elif a[mid] < target:\n        left = mid + 1\n    else:\n        right = mid - 1\n```",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "left = 4, right = 3, checks = 3",
+        "explanation": "Midpoint indices are 3,5,4 with values 12,23,16. Boundaries cross after three checks. Award credit for a correct trace and final values.",
+        "grading": "manual",
+        "section": "C - Short Answer I"
+      },
+      {
+        "id": "cjaio_set_2_q22",
+        "number": 22,
+        "points": 5,
+        "text": "Two linear-regression models are evaluated on the data below. Calculate the predictions and\nthe mean squared error (MSE) for each model, then state which model has the lower MSE.\nData: (x, y) = (1, 3), (2, 4), (3, 8)\nModel A: y_hat = 2x + 1\nModel B: y_hat = 2.5x\nUse MSE = [sum of (y - y_hat)^2] / n.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "A predictions: 3,5,7; MSE=2/3. B predictions: 2.5,5,7.5; MSE=1/2. Model B is better on these data.",
+        "explanation": "A squared errors: 0,1,1. B squared errors: .25,1,.25. Divide each total by 3. Award credit for predictions, errors, averaging, and comparison.",
+        "grading": "manual",
+        "section": "C - Short Answer I"
+      },
+      {
+        "id": "cjaio_set_2_q23",
+        "number": 23,
+        "points": 8,
+        "text": "K-Means uses two initial centers C1 = (1, 1) and C2 = (7, 5) for the five points:\n(1, 1), (2, 1), (6, 4), (7, 5), (5, 4)\n(a) Assign each point to its nearest center using Euclidean distance. You may compare squared\ndistances. [4 marks]\n(b) Calculate the new center C1. [2 marks]\n(c) Calculate the new center C2. [2 marks]",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "Cluster 1: (1,1), (2,1). Cluster 2: (6,4), (7,5), (5,4). New centers: (1.5,1) and (6,13/3).",
+        "explanation": "Squared distances to C1/C2: (0,52), (1,41), (34,2), (52,0), (25,5). Assignment: 4 marks. Each new coordinate-wise center: 2 marks.",
+        "grading": "manual",
+        "section": "D - Short Answer II"
+      },
+      {
+        "id": "cjaio_set_2_q24",
+        "number": 24,
+        "points": 8,
+        "text": "A logistic-regression model computes\nz = 0.8x1 - 0.6x2 + 0.2\np = 1 / (1 + e^(-z))\nFor x1 = 2 and x2 = 1, use e^(-1.2) approximately 0.301.\n(a) Calculate z. [2 marks]\n(b) Calculate p to three decimal places. [3 marks]\n(c) What class is predicted using threshold 0.5? [1 mark]\n(d) What class is predicted using threshold 0.8? [2 marks]",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "z=1.2; p=0.769 using the supplied approximation; class 1 at threshold 0.5; class 0 at threshold 0.8.",
+        "explanation": "z=1.6-.6+.2=1.2 (2 marks). With the supplied exponential .301, p=1/1.301=.768639... -> .769 (3 marks). Threshold decisions: 1 and 2 marks. A more precise exponential gives approximately .768525, rounding to .769 as well.",
+        "grading": "manual",
+        "section": "D - Short Answer II"
+      },
+      {
+        "id": "cjaio_set_2_q25",
+        "number": 25,
+        "points": 8,
+        "text": "The list below contains repeated values. Write Python code that finds the most frequent\nvalue. If two or more values have the same highest frequency, print the smallest such value. You\nmay use loops, dictionaries, and conditionals, but not collections.Counter.\n```python\ndata = [4, 2, 4, 3, 2, 2, 4, 5, 5]\n```\nYour program must print the correct result for this data. [8 marks]",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "Output: 2. Example solution:\n```python\nfreq = {}\nfor x in data:\n    freq[x] = freq.get(x, 0) + 1\nbest = None\nfor x in freq:\n    if best is None or freq[x] > freq[best]:\n        best = x\n    elif freq[x] == freq[best] and x < best:\n        best = x\nprint(best)\n```",
+        "explanation": "Counts are 4:3, 2:3, 3:1, 5:2. Accept equivalent loop/dictionary/conditional code without collections.Counter. Assess counting, maximum selection, explicit smallest-value tie handling, and output.",
+        "grading": "manual",
+        "section": "D - Short Answer II"
+      },
+      {
+        "id": "cjaio_set_2_q26",
+        "number": 26,
+        "points": 8,
+        "text": "A KNN classifier has two features with known ranges:\n0 <= x1 <= 10\n0 <= x2 <= 1000\nUse min-max scaling: x_scaled = (x - min) / (max - min).\nThe new point is P = (5, 500). The labeled points are:\nA = (4, 700), Class A\nB = (9, 510), Class B\nC = (6, 520), Class B\nD = (2, 480), Class A\n(a) Scale P and the four labeled points. [3 marks]\n(b) Using k = 3 and squared Euclidean distance on the scaled features, identify the three nearest\nneighbors and predict the class of P. [3 marks]\n(c) If the same 3-NN calculation were done on the unscaled features, what class would be\npredicted? Briefly explain why the result changes. [2 marks]",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "Scaled P=(0.5,0.5); A=(0.4,0.7); B=(0.9,0.51); C=(0.6,0.52); D=(0.2,0.48). Scaled neighbors C,A,D -> Class A. Raw neighbors B,C,D -> Class B.",
+        "explanation": "Scaling: 3 marks. Scaled squared distances A=.05, B=.1601, C=.0104, D=.0904; neighbors and vote: 3 marks. Raw distances squared A=40001, B=116, C=401, D=409. Raw Class B and explanation of large-scale feature dominance: 2 marks.",
+        "grading": "manual",
+        "section": "D - Short Answer II"
+      }
+    ]
+  }
+]

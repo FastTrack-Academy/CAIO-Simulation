@@ -17,8 +17,9 @@ interface StudentContextType {
   createStudentProfile: (name: string) => void;
   switchStudent: (id: string) => void;
   attempts: ExamAttempt[];
+  saveError: string | null;
   getStudentAttempts: (studentId: string) => ExamAttempt[];
-  saveAttempt: (attempt: ExamAttempt) => void;
+  saveAttempt: (attempt: ExamAttempt) => Promise<boolean>;
   deleteAttempt: (attemptId: string) => void;
   questionBook: QuestionBook;
   toggleSaveQuestion: (studentId: string, questionId: string) => void;

@@ -1,9 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Student, ExamAttempt, QuestionBook, StudentStats } from '../types';
-import examsData from '../data/exams.json';
+import examsData from '../data/all-exams';
+import { getQuestionGrade, getAttemptGrade } from '../lib/grading';
 import { supabase } from '../lib/supabase';
+import { toAttemptRow } from '../lib/attempt-persistence';
 import { User, Session } from '@supabase/supabase-js';
 
 export function useStudentState() {
@@ -18,6 +20,8 @@ export function useStudentState() {
     incorrectQuestions: []
   });
   const [isLoaded, setIsLoaded] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
+  const saveQueue = useRef<Promise<unknown>>(Promise.resolve());
 
   // Authenticate user with password
   const signIn = async (email: string, password: string) => {
@@ -189,6 +193,7 @@ export function useStudentState() {
     }
 
     const loadUserData = async () => {
+      setIsLoaded(false);
       try {
         // Fetch or create profile
         let { data: profile, error: profileErr } = await supabase
@@ -238,7 +243,7 @@ export function useStudentState() {
           flagged: a.flagged,
           timeSpent: a.time_spent,
           timeLeft: a.time_left,
-          completedAt: a.completed_at,
+          completedAt: a.completed_at ?? '',
           isCompleted: a.is_completed
         }));
         setAttempts(formattedAttempts);
@@ -282,28 +287,20 @@ export function useStudentState() {
   };
 
   const saveAttempt = async (attempt: ExamAttempt) => {
-    // 1. Optimistic UI update
-    const filtered = attempts.filter(a => a.id !== attempt.id);
-    const updated = [...filtered, attempt];
-    setAttempts(updated);
+    // Existing tests stay responsive. A new test becomes resumable only once
+    // its initial database write succeeds.
+    if (!attempt.isCompleted) {
+      setAttempts(previous => previous.map(existing => existing.id === attempt.id ? attempt : existing));
+    }
 
-    // 2. Sync to DB
-    try {
-      const dbRow = {
-        id: attempt.id,
-        student_id: attempt.studentId,
-        exam_id: attempt.examId,
-        score: attempt.score,
-        total_points: attempt.totalPoints,
-        answers: attempt.answers,
-        flagged: attempt.flagged,
-        time_spent: attempt.timeSpent,
-        time_left: attempt.timeLeft,
-        completed_at: attempt.completedAt,
-        is_completed: attempt.isCompleted
-      };
-
-      await supabase.from('attempts').upsert(dbRow);
+    const persist = async () => {
+      const { error } = await supabase.from('attempts').upsert(toAttemptRow(attempt));
+      if (error) throw error;
+      setAttempts(previous => {
+        if (attempt.isCompleted) return [...previous.filter(a => a.id !== attempt.id), attempt];
+        // Don't replace more recent optimistic edits with an older queued save.
+        return previous.some(existing => existing.id === attempt.id) ? previous : [...previous, attempt];
+      });
 
       // If attempt is completed, update incorrect questions list in database
       if (attempt.isCompleted && attempt.studentId) {
@@ -313,9 +310,9 @@ export function useStudentState() {
           const correctIds: string[] = [];
 
           exam.questions.forEach(q => {
-            const studentAns = attempt.answers[q.id] || '';
-            const isCorrect = checkAnswer(studentAns, q.correctAnswer, q.type as any);
-            if (!isCorrect) {
+            const grade = getQuestionGrade(q, attempt.answers);
+            if (grade.status === 'pending') return;
+            if (grade.status !== 'correct') {
               incorrectIds.push(q.id);
             } else {
               correctIds.push(q.id);
@@ -340,8 +337,22 @@ export function useStudentState() {
           }).eq('student_id', attempt.studentId);
         }
       }
+    };
+    // Serialize writes so a slower autosave cannot overwrite a later response
+    // or turn a submitted attempt back into an in-progress attempt.
+    const pending = saveQueue.current.catch(() => undefined).then(persist);
+    saveQueue.current = pending;
+    try {
+      await pending;
+      setSaveError(null);
+      return true;
     } catch (err) {
-      console.error('Error saving attempt to database:', err);
+      const failure = err as { code?: string; message?: string; details?: string; hint?: string };
+      console.error('Error saving attempt to database:', JSON.stringify({
+        code: failure?.code, message: failure?.message, details: failure?.details, hint: failure?.hint,
+      }));
+      setSaveError('Progress could not be saved. Check your connection, keep this page open, and try again before leaving.');
+      return false;
     }
   };
 
@@ -407,8 +418,12 @@ export function useStudentState() {
     const studentAttempts = attempts.filter(a => a.studentId === studentId && a.isCompleted);
 
     const examsTaken = studentAttempts.length;
-    const averageScore = examsTaken > 0
-      ? Math.round(studentAttempts.reduce((acc, curr) => acc + (curr.score / curr.totalPoints) * 100, 0) / examsTaken)
+    const markedAttempts = studentAttempts.filter(attempt => {
+      const exam = examsData.find(exam => exam.id === attempt.examId);
+      return !exam || getAttemptGrade(exam, attempt.answers).pendingCount === 0;
+    });
+    const averageScore = markedAttempts.length > 0
+      ? Math.round(markedAttempts.reduce((acc, curr) => acc + (curr.score / curr.totalPoints) * 100, 0) / markedAttempts.length)
       : 0;
     const totalTimeSpent = studentAttempts.reduce((acc, curr) => acc + curr.timeSpent, 0);
 
@@ -432,6 +447,7 @@ export function useStudentState() {
     activeStudent,
     createStudentProfile: async () => {}, // No-op since we do standard auth now
     attempts,
+    saveError,
     getStudentAttempts,
     saveAttempt,
     deleteAttempt,
@@ -442,95 +458,4 @@ export function useStudentState() {
   };
 }
 
-// Helper to extract possible correct options from a text-input answer pattern
-function extractOptions(correctAnswer: string): string[] {
-  const options: string[] = [];
-  
-  // 1. Try to find all backticked snippets: e.g. `code`
-  const regex = /`([^`]+)`/g;
-  let match;
-  while ((match = regex.exec(correctAnswer)) !== null) {
-    options.push(match[1].trim());
-  }
-  
-  // 2. If no backticked snippets were found, split by "or", "/", or ";"
-  if (options.length === 0) {
-    const parts = correctAnswer.split(/\s+or\s+|\s*\/\s*|\s*;\s*/i);
-    parts.forEach(p => {
-      if (p.trim()) {
-        options.push(p.trim());
-      }
-    });
-  }
-  
-  return options;
-}
-
-// Utility to match answers
-export function checkAnswer(studentAnswer: string, correctAnswer: string, type: 'multiple-choice' | 'text-input'): boolean {
-  if (!studentAnswer) return false;
-  
-  if (type === 'multiple-choice') {
-    // Normalise options e.g. "D. Recall" or "Option 3" vs student choice
-    // Clean correct answers and student answers for comparison
-    const cleanCorrect = cleanAnswerString(correctAnswer);
-    const cleanStudent = cleanAnswerString(studentAnswer);
-
-    // If exact match
-    if (cleanCorrect === cleanStudent) return true;
-    
-    // Check if the studentAnswer starts with the correct option letter
-    // E.g., Correct answer starts with "D" and student answer is "D" or "Option D"
-    // Extract letter prefix from "D. Recall" -> D
-    const correctLetter = getOptionLetter(cleanCorrect);
-    const studentLetter = getOptionLetter(cleanStudent);
-    if (correctLetter && studentLetter && correctLetter === studentLetter) return true;
-
-    // Check option word index match
-    if (correctAnswer.toLowerCase().includes(studentAnswer.toLowerCase()) || 
-        studentAnswer.toLowerCase().includes(correctAnswer.toLowerCase())) {
-      return true;
-    }
-  } else {
-    // Text input matching
-    const cleanStudent = cleanTextInput(studentAnswer);
-    const options = extractOptions(correctAnswer);
-
-    // Check if the student's answer matches any of the parsed options
-    const isMatch = options.some(opt => {
-      const cleanOpt = cleanTextInput(opt);
-      
-      // Exact or loose match (whitespace stripped, semi-colon checks)
-      if (cleanOpt === cleanStudent) return true;
-      
-      // If correct is code statement and user answer has slight quote differences
-      if (cleanOpt.replace(/['"]/g, '') === cleanStudent.replace(/['"]/g, '')) return true;
-      
-      return false;
-    });
-
-    if (isMatch) return true;
-  }
-
-  return false;
-}
-
-function cleanAnswerString(str: string): string {
-  // Strip markdown bold characters
-  return str.replace(/\*\*/g, '').trim();
-}
-
-function getOptionLetter(str: string): string | null {
-  // Matches "A", "Option A", "A. Accuracy", "Option 1"
-  const match = str.match(/^(?:option\s+)?([a-e1-5])\b/i);
-  return match ? match[1].toUpperCase() : null;
-}
-
-function cleanTextInput(str: string): string {
-  return str.trim()
-    .toLowerCase()
-    .replace(/`/g, '')   // remove backticks
-    .replace(/\s+/g, '') // remove all whitespaces for coding lines comparison
-    .replace(/;/g, '')   // remove semicolons
-    .replace(/['"]/g, '"'); // normalize quotes to double quotes
-}
+export { checkAnswer } from '../lib/grading';

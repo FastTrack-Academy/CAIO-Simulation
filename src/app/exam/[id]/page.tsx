@@ -1,27 +1,55 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter, useParams } from 'next/navigation';
+import Link from 'next/link';
 import { Clock, Flag, ChevronLeft, ChevronRight, AlertTriangle, CheckSquare, Save } from 'lucide-react';
-import { useStudent, checkAnswer } from '@/context/StudentContext';
+import { useStudent } from '@/context/StudentContext';
+import { getAttemptGrade, isOptionSelected, parseSelections } from '@/lib/grading';
 import { MathRenderer } from '@/components/MathRenderer';
-import examsData from '@/data/exams.json';
+import { DifficultyBadge } from '@/components/DifficultyBadge';
+import { Modal } from '@/components/Modal';
+import { displayExamName } from '@/lib/exam-display';
+import examsData from '@/data/all-exams';
+import type { ExamAttempt } from '@/types';
 
 export default function ExamPage() {
   const router = useRouter();
   const params = useParams();
   const attemptId = params.id as string;
 
-  const { activeStudent, attempts, saveAttempt, toggleSaveQuestion, questionBook, isLoaded } = useStudent();
+  const { activeStudent, attempts, saveAttempt, toggleSaveQuestion, questionBook, isLoaded, saveError } = useStudent();
   const [currentIdx, setCurrentIdx] = useState(0);
   const [confirmSubmitOpen, setConfirmSubmitOpen] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   // Load the attempt
   const attempt = attempts.find(a => a.id === attemptId);
   const exam = examsData.find(e => e?.id === attempt?.examId);
+  const questionMapRef = useRef<HTMLDetailsElement>(null);
+  useEffect(() => {
+    if (window.matchMedia('(max-width: 650px)').matches) questionMapRef.current?.removeAttribute('open');
+  }, [attempt?.id]);
 
   // Timer Ref to avoid multiple running intervals
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const gradeAndSaveAttempt = useCallback(async (finishedAttempt: ExamAttempt) => {
+    if (submitting || !exam) return;
+    if (timerRef.current) clearInterval(timerRef.current);
+    setSubmitting(true);
+    const gradedAttempt = { ...finishedAttempt, score: getAttemptGrade(exam, finishedAttempt.answers).score };
+
+    // Save to localStorage/state through context
+    const saved = await saveAttempt(gradedAttempt);
+    if (!saved) {
+      setSubmitting(false);
+      return;
+    }
+
+    // Navigate to results
+    router.replace(`/exam/${attemptId}/review`);
+  }, [attemptId, exam, router, saveAttempt, submitting]);
 
   // Prevent accessing completed exams in active test interface
   useEffect(() => {
@@ -37,12 +65,12 @@ export default function ExamPage() {
 
   // Keep track of remaining time and tick down
   useEffect(() => {
-    if (!attempt || attempt.isCompleted) return;
+    if (!attempt || attempt.isCompleted || submitting) return;
 
     timerRef.current = setInterval(() => {
       if (attempt.timeLeft <= 1) {
         clearInterval(timerRef.current!);
-        handleAutoSubmit();
+        void gradeAndSaveAttempt({ ...attempt, isCompleted: true, completedAt: new Date().toISOString(), timeLeft: 0 });
       } else {
         // Save timeLeft decrement back to global state
         const updatedAttempt = {
@@ -57,7 +85,7 @@ export default function ExamPage() {
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [attempt, saveAttempt]);
+  }, [attempt, saveAttempt, submitting, gradeAndSaveAttempt]);
 
   if (!isLoaded || !attempt || !exam || !activeStudent) {
     return (
@@ -78,9 +106,9 @@ export default function ExamPage() {
     const hrs = Math.floor(seconds / 3600);
     const mins = Math.floor((seconds % 3600) / 60);
     const secs = seconds % 60;
-    
+
     const pad = (n: number) => n.toString().padStart(2, '0');
-    
+
     if (hrs > 0) {
       return `${pad(hrs)}:${pad(mins)}:${pad(secs)}`;
     }
@@ -88,9 +116,16 @@ export default function ExamPage() {
   };
 
   const handleSelectOption = (option: string) => {
+    let answer = option;
+    if (currentQuestion.type === 'multi-select') {
+      const selected = parseSelections(attempt.answers[currentQuestion.id] || '');
+      const letter = String.fromCharCode(65 + currentQuestion.options.indexOf(option));
+      const next = selected.includes(letter) ? selected.filter(value => value !== letter) : [...selected, letter].sort();
+      answer = next.length ? JSON.stringify(next) : '';
+    }
     const updatedAnswers = {
       ...attempt.answers,
-      [currentQuestion.id]: option
+      [currentQuestion.id]: answer
     };
     const updatedAttempt = {
       ...attempt,
@@ -116,23 +151,12 @@ export default function ExamPage() {
     const updatedFlagged = isFlagged
       ? attempt.flagged.filter(id => id !== currentQuestion.id)
       : [...attempt.flagged, currentQuestion.id];
-    
+
     const updatedAttempt = {
       ...attempt,
       flagged: updatedFlagged
     };
     saveAttempt(updatedAttempt);
-  };
-
-  const handleAutoSubmit = () => {
-    // Perform auto grading
-    const finalAttempt = {
-      ...attempt,
-      isCompleted: true,
-      completedAt: new Date().toISOString(),
-      timeLeft: 0
-    };
-    gradeAndSaveAttempt(finalAttempt);
   };
 
   const handleManualSubmit = () => {
@@ -144,25 +168,6 @@ export default function ExamPage() {
     gradeAndSaveAttempt(finalAttempt);
   };
 
-  const gradeAndSaveAttempt = (finishedAttempt: typeof attempt) => {
-    let finalScore = 0;
-    
-    questions.forEach(q => {
-      const studentAns = finishedAttempt.answers[q.id] || '';
-      const isCorrect = checkAnswer(studentAns, q.correctAnswer, q.type as any);
-      if (isCorrect) {
-        finalScore += q.points;
-      }
-    });
-
-    finishedAttempt.score = finalScore;
-    
-    // Save to localStorage/state through context
-    saveAttempt(finishedAttempt);
-    
-    // Navigate to results
-    router.replace(`/exam/${attemptId}/review`);
-  };
 
   const unansweredCount = questions.filter(q => !attempt.answers[q.id]).length;
 
@@ -171,28 +176,31 @@ export default function ExamPage() {
       {/* Test Control Header */}
       <div className="exam-status-bar glass-card">
         <div className="exam-bar-left">
-          <span className="exam-name-title">{exam.name}</span>
-          <span className="question-counter">Question {currentIdx + 1} of {questions.length}</span>
+          <Link href={exam.competition === 'CJAIO' ? '/cjaio' : '/'} className="exam-back-link"><ChevronLeft size={15} />Back to practice</Link>
+          <div className="exam-heading-line"><h1 className="exam-name-title">{displayExamName(exam.name)}</h1><DifficultyBadge difficulty={exam.difficulty} /></div>
         </div>
-        
+
         <div className={`timer-widget ${attempt.timeLeft < 300 ? 'timer-danger' : ''}`}>
           <Clock size={16} />
           <span className="timer-countdown">{formatTime(attempt.timeLeft)}</span>
         </div>
-        
-        <button 
+
+        <button
           className="btn-primary submit-exam-btn"
+          disabled={submitting}
           onClick={() => setConfirmSubmitOpen(true)}
         >
-          Submit Exam
+          Submit exam
         </button>
       </div>
+
+      {exam.instructions && <details className="practice-instructions"><summary>Paper instructions</summary><p>{exam.instructions}</p></details>}
 
       <div className="exam-main-layout">
         {/* Left Side Sidebar Index Selector */}
         <aside className="exam-sidebar glass-card">
-          <div className="sidebar-index-title">Questions Map</div>
-          
+          <details className="question-map-details" ref={questionMapRef} open>
+          <summary>Questions <span className="map-count">{currentIdx + 1} / {questions.length}</span></summary>
           <div className="questions-grid">
             {questions.map((q, idx) => {
               const hasAnswer = !!attempt.answers[q.id];
@@ -203,12 +211,14 @@ export default function ExamPage() {
               if (isActive) cellClass += ' active';
               else if (isFlagged) cellClass += ' flagged';
               else if (hasAnswer) cellClass += ' answered';
-              
+
               return (
-                <button 
+                <button
                   key={q.id}
                   className={cellClass}
                   onClick={() => setCurrentIdx(idx)}
+                  title={`Question ${q.number}`}
+                  aria-current={isActive ? 'step' : undefined}
                 >
                   {q.number}
                 </button>
@@ -234,27 +244,31 @@ export default function ExamPage() {
               <span>Unanswered</span>
             </div>
           </div>
+          <p className="autosave-note">Your progress saves automatically.</p>
+          </details>
         </aside>
 
         {/* Central Core Question Area */}
         <div className="question-content-container">
           <div className="question-card glass-card">
             <div className="question-card-header">
-              <div className="point-badge">{currentQuestion.points} points</div>
+              <div className="question-heading-meta"><span className="question-counter">Question {currentIdx + 1} of {questions.length}</span><span className="point-badge">{currentQuestion.points} points · {currentQuestion.type === 'multi-select' ? 'Select all' : currentQuestion.type === 'text-input' ? 'Written answer' : 'Single choice'}</span></div>
               <div className="action-row">
-                <button 
+                <button
                   onClick={() => toggleSaveQuestion(activeStudent.id, currentQuestion.id)}
                   className={`save-book-btn ${isSavedInBook ? 'saved' : ''}`}
+                  aria-label={isSavedInBook ? 'Unsave question' : 'Save Question'}
                 >
                   <Save size={16} />
-                  <span>{isSavedInBook ? 'Saved' : 'Save Question'}</span>
+                  <span>{isSavedInBook ? 'Saved' : 'Save'}</span>
                 </button>
-                <button 
-                  onClick={handleToggleFlag} 
+                <button
+                  onClick={handleToggleFlag}
                   className={`flag-btn ${isQuestionFlagged ? 'flagged' : ''}`}
+                  aria-label={isQuestionFlagged ? 'Unflag question' : 'Flag Question'}
                 >
                   <Flag size={16} />
-                  <span>{isQuestionFlagged ? 'Flagged' : 'Flag Question'}</span>
+                  <span>{isQuestionFlagged ? 'Flagged' : 'Flag'}</span>
                 </button>
               </div>
             </div>
@@ -265,38 +279,36 @@ export default function ExamPage() {
 
             {/* Answer inputs depending on type */}
             <div className="answer-section">
-              {currentQuestion.type === 'multiple-choice' ? (
-                <div className="options-list">
+              {currentQuestion.type !== 'text-input' ? (
+                <div className={`options-list ${currentQuestion.type === 'multi-select' ? 'multi-select' : ''}`} role={currentQuestion.type === 'multi-select' ? 'group' : 'radiogroup'} aria-label="Answer choices">
+                  {currentQuestion.type === 'multi-select' && <p>Select all correct answers.</p>}
                   {currentQuestion.options.map((opt, oIdx) => {
-                    const isSelected = attempt.answers[currentQuestion.id] === opt;
+                    const isSelected = isOptionSelected(currentQuestion, attempt.answers[currentQuestion.id] || '', oIdx);
                     return (
-                      <div 
-                        key={oIdx} 
-                        className={`option-row ${isSelected ? 'selected' : ''}`}
-                        onClick={() => handleSelectOption(opt)}
-                      >
-                        <div className="option-radio">
-                          {isSelected && <div className="radio-inner"></div>}
-                        </div>
-                        <div className="option-text-holder">
-                          <MathRenderer text={opt} />
-                        </div>
+                      <div key={oIdx} className={`option-row ${isSelected ? 'selected' : ''}`}
+                        onClick={event => { if (!(event.target as HTMLElement).closest('button, a, input, textarea')) handleSelectOption(opt); }}>
+                        <input className="option-control" type={currentQuestion.type === 'multi-select' ? 'checkbox' : 'radio'}
+                          name={currentQuestion.id} checked={isSelected} disabled={submitting}
+                          aria-labelledby={`${currentQuestion.id}-option-${oIdx}`}
+                          onChange={() => handleSelectOption(opt)} />
+                        <div className="option-text-holder" id={`${currentQuestion.id}-option-${oIdx}`}><MathRenderer text={opt} /></div>
                       </div>
                     );
                   })}
                 </div>
               ) : (
                 <div className="text-answer-box">
-                  <label htmlFor="coding-answer">Type your response statement (e.g. code sequence):</label>
+                  <label htmlFor="coding-answer">Write your answer{currentQuestion.grading === 'manual' ? ', calculations, or Python code' : ''}:</label>
                   <textarea
                     id="coding-answer"
                     placeholder="Provide your code line or missing statements here..."
                     value={attempt.answers[currentQuestion.id] || ''}
                     onChange={(e) => handleTextChange(e.target.value)}
                     className="coding-input"
+                    disabled={submitting}
                   />
                   <p className="coding-hint">
-                    Make sure to write clean code matching standard syntax rules (e.g., matching parentheses, brackets, arguments). Semicolons and whitespaces will be matched loosely.
+                    {currentQuestion.grading === 'manual' ? 'Show your work for each part. Your teacher can mark this response later and award partial credit.' : 'Enter the requested answer. Check your calculations and Python syntax.'}
                   </p>
                 </div>
               )}
@@ -305,29 +317,29 @@ export default function ExamPage() {
 
           {/* Navigation buttons */}
           <div className="navigation-footer">
-            <button 
+            <button
               className="btn-secondary nav-nav-btn"
               disabled={currentIdx === 0}
               onClick={() => setCurrentIdx(prev => prev - 1)}
             >
               <ChevronLeft size={16} />
-              <span>Previous Question</span>
+              <span>Previous</span>
             </button>
 
             {currentIdx < questions.length - 1 ? (
-              <button 
+              <button
                 className="btn-secondary nav-nav-btn"
                 onClick={() => setCurrentIdx(prev => prev + 1)}
               >
-                <span>Next Question</span>
+                <span>Next question</span>
                 <ChevronRight size={16} />
               </button>
             ) : (
-              <button 
+              <button
                 className="btn-primary nav-nav-btn submit-final"
                 onClick={() => setConfirmSubmitOpen(true)}
               >
-                <span>Finish & Submit</span>
+                <span>Finish &amp; submit</span>
                 <CheckSquare size={16} />
               </button>
             )}
@@ -337,15 +349,15 @@ export default function ExamPage() {
 
       {/* Confirmation Modal */}
       {confirmSubmitOpen && (
-        <div className="modal-backdrop">
-          <div className="confirm-modal glass-card">
+        <Modal labelledBy="submit-modal-title" onClose={() => setConfirmSubmitOpen(false)}>
             <div className="modal-header">
               <AlertTriangle size={24} className="warning-icon" />
-              <h3>Confirm Exam Submission</h3>
+              <h3 id="submit-modal-title">Submit your practice?</h3>
             </div>
-            
+
             <div className="modal-body">
-              <p>Are you sure you want to conclude and submit your practice exam?</p>
+              {saveError && <p className="error-message" role="alert">{saveError}</p>}
+              <p>Your answers will be saved and objective questions marked. Written responses can be marked by your teacher.</p>
               {unansweredCount > 0 ? (
                 <div className="unanswered-warning">
                   <AlertTriangle size={14} />
@@ -355,454 +367,24 @@ export default function ExamPage() {
                 <p className="all-answered-green">All questions have been answered. Ready to grade!</p>
               )}
             </div>
-            
+
             <div className="modal-actions">
-              <button 
-                className="btn-secondary" 
+              <button
+                className="btn-secondary"
                 onClick={() => setConfirmSubmitOpen(false)}
               >
-                Cancel & Return
+                Keep practising
               </button>
-              <button 
-                className="btn-primary submit-confirm" 
+              <button
+                className="btn-primary submit-confirm"
+                disabled={submitting}
                 onClick={handleManualSubmit}
               >
-                Submit and Mark Exam
+                {submitting ? 'Saving submission...' : 'Submit practice'}
               </button>
             </div>
-          </div>
-        </div>
+        </Modal>
       )}
-
-      <style jsx>{`
-        .exam-engine-page {
-          display: flex;
-          flex-direction: column;
-          gap: 1.5rem;
-          height: calc(100vh - 120px);
-          min-height: 500px;
-        }
-        
-        .exam-status-bar {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: 1rem 1.5rem;
-          background: rgba(22, 28, 45, 0.85);
-          border-color: rgba(99, 102, 241, 0.15);
-        }
-        .exam-bar-left {
-          display: flex;
-          flex-direction: column;
-        }
-        .exam-name-title {
-          font-size: 1rem;
-          font-weight: 800;
-          color: var(--text-primary);
-        }
-        .question-counter {
-          font-size: 0.75rem;
-          color: var(--text-secondary);
-        }
-        
-        .timer-widget {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          padding: 0.5rem 1rem;
-          border-radius: var(--radius-full);
-          background: rgba(255, 255, 255, 0.03);
-          border: 1px solid rgba(255, 255, 255, 0.05);
-          color: var(--color-secondary);
-          font-family: var(--font-mono);
-          font-weight: 700;
-        }
-        .timer-widget.timer-danger {
-          color: var(--color-error);
-          background: var(--color-error-bg);
-          border-color: rgba(239, 68, 68, 0.3);
-          animation: pulse 1s infinite alternate;
-        }
-        @keyframes pulse {
-          to { transform: scale(1.02); }
-        }
-        .timer-countdown {
-          font-size: 1.1rem;
-        }
-        .submit-exam-btn {
-          padding: 0.5rem 1.25rem;
-          border-radius: var(--radius-md);
-          font-size: 0.875rem;
-        }
-
-        .exam-main-layout {
-          display: grid;
-          grid-template-columns: 240px 1fr;
-          gap: 1.5rem;
-          flex: 1;
-          height: calc(100% - 80px);
-          overflow: hidden;
-        }
-        @media (max-width: 850px) {
-          .exam-main-layout {
-            grid-template-columns: 1fr;
-            overflow-y: auto;
-            height: auto;
-          }
-          .exam-engine-page {
-            height: auto;
-          }
-        }
-        
-        .exam-sidebar {
-          padding: 1.25rem;
-          display: flex;
-          flex-direction: column;
-          gap: 1rem;
-          height: 100%;
-          overflow-y: auto;
-        }
-        .sidebar-index-title {
-          font-size: 0.75rem;
-          font-weight: 700;
-          color: var(--text-muted);
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-        }
-        .questions-grid {
-          display: grid;
-          grid-template-columns: repeat(5, 1fr);
-          gap: 0.5rem;
-        }
-        .grid-cell {
-          aspect-ratio: 1;
-          width: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border-radius: var(--radius-sm);
-          font-size: 0.875rem;
-          font-weight: 700;
-          cursor: pointer;
-          background: rgba(255, 255, 255, 0.02);
-          border: 1px solid rgba(255, 255, 255, 0.05);
-          color: var(--text-secondary);
-          transition: all 0.15s ease;
-        }
-        .grid-cell:hover {
-          border-color: rgba(255, 255, 255, 0.2);
-          color: var(--text-primary);
-        }
-        .grid-cell.active {
-          border-color: var(--color-primary);
-          box-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
-          color: var(--color-primary-light);
-          background: rgba(99, 102, 241, 0.05);
-        }
-        .grid-cell.answered {
-          background-color: var(--color-primary);
-          border-color: var(--color-primary-dark);
-          color: white;
-        }
-        .grid-cell.flagged {
-          border-color: var(--color-warning);
-          background: var(--color-warning-bg);
-          color: var(--color-warning);
-        }
-        
-        .grid-legend {
-          display: flex;
-          flex-direction: column;
-          gap: 0.5rem;
-          margin-top: auto;
-          padding-top: 1rem;
-          border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        .legend-item {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          font-size: 0.75rem;
-          color: var(--text-muted);
-        }
-        .legend-color {
-          width: 12px;
-          height: 12px;
-          border-radius: 3px;
-        }
-        .legend-color.active {
-          border: 1px solid var(--color-primary);
-          background: rgba(99, 102, 241, 0.05);
-        }
-        .legend-color.answered {
-          background-color: var(--color-primary);
-        }
-        .legend-color.flagged {
-          background: var(--color-warning-bg);
-          border: 1px solid var(--color-warning);
-        }
-        .legend-color.default {
-          background: rgba(255, 255, 255, 0.02);
-          border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        
-        .question-content-container {
-          display: flex;
-          flex-direction: column;
-          gap: 1.5rem;
-          height: 100%;
-          overflow: hidden;
-        }
-        @media (max-width: 850px) {
-          .question-content-container {
-            height: auto;
-          }
-        }
-        
-        .question-card {
-          padding: 2rem;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          gap: 1.5rem;
-          overflow-y: auto;
-        }
-        .question-card-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding-bottom: 1rem;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        .point-badge {
-          font-size: 0.75rem;
-          font-weight: 700;
-          color: var(--text-secondary);
-          padding: 0.25rem 0.5rem;
-          background: rgba(255, 255, 255, 0.03);
-          border-radius: var(--radius-sm);
-        }
-        .action-row {
-          display: flex;
-          gap: 0.75rem;
-        }
-        .flag-btn, .save-book-btn {
-          display: flex;
-          align-items: center;
-          gap: 0.4rem;
-          background: none;
-          border: none;
-          color: var(--text-muted);
-          font-size: 0.8rem;
-          font-weight: 600;
-          cursor: pointer;
-          padding: 0.25rem 0.5rem;
-          border-radius: var(--radius-sm);
-          transition: all 0.2s ease;
-        }
-        .flag-btn:hover {
-          color: var(--color-warning);
-          background: var(--color-warning-bg);
-        }
-        .flag-btn.flagged {
-          color: var(--color-warning);
-          background: var(--color-warning-bg);
-        }
-        .save-book-btn:hover {
-          color: var(--color-secondary);
-          background: rgba(6, 182, 212, 0.1);
-        }
-        .save-book-btn.saved {
-          color: var(--color-secondary);
-          background: rgba(6, 182, 212, 0.1);
-        }
-        
-        .question-body-section {
-          font-size: 1.05rem;
-          color: var(--text-primary);
-        }
-        
-        .answer-section {
-          margin-top: auto;
-          padding-top: 1rem;
-        }
-        
-        .options-list {
-          display: flex;
-          flex-direction: column;
-          gap: 0.75rem;
-        }
-        .option-row {
-          display: flex;
-          align-items: center;
-          gap: 1rem;
-          padding: 1rem;
-          border-radius: var(--radius-md);
-          background: rgba(255, 255, 255, 0.02);
-          border: 1px solid rgba(255, 255, 255, 0.05);
-          cursor: pointer;
-          transition: all 0.2s ease;
-        }
-        .option-row:hover {
-          border-color: rgba(99, 102, 241, 0.2);
-          background: rgba(255, 255, 255, 0.04);
-        }
-        .option-row.selected {
-          border-color: var(--color-primary);
-          background: rgba(99, 102, 241, 0.05);
-        }
-        .option-radio {
-          width: 18px;
-          height: 18px;
-          border-radius: 50%;
-          border: 2px solid var(--text-muted);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-shrink: 0;
-          transition: all 0.2s ease;
-        }
-        .option-row.selected .option-radio {
-          border-color: var(--color-primary-light);
-        }
-        .radio-inner {
-          width: 10px;
-          height: 10px;
-          border-radius: 50%;
-          background-color: var(--color-primary-light);
-        }
-        .option-text-holder {
-          flex: 1;
-        }
-
-        .text-answer-box {
-          display: flex;
-          flex-direction: column;
-          gap: 0.75rem;
-        }
-        .text-answer-box label {
-          font-size: 0.875rem;
-          font-weight: 600;
-          color: var(--text-secondary);
-        }
-        .coding-input {
-          width: 100%;
-          min-height: 120px;
-          padding: 1rem;
-          background-color: #0f1322;
-          border: 1px solid rgba(255, 255, 255, 0.08);
-          border-radius: var(--radius-md);
-          color: #e2e8f0;
-          font-family: var(--font-mono);
-          font-size: 0.9rem;
-          resize: vertical;
-        }
-        .coding-input:focus {
-          outline: none;
-          border-color: var(--color-primary);
-          box-shadow: 0 0 10px rgba(99, 102, 241, 0.2);
-        }
-        .coding-hint {
-          font-size: 0.75rem;
-          color: var(--text-muted);
-          line-height: 1.4;
-        }
-
-        .navigation-footer {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        }
-        .nav-nav-btn {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          padding: 0.75rem 1.25rem;
-          border-radius: var(--radius-md);
-          font-size: 0.875rem;
-        }
-        .nav-nav-btn.submit-final {
-          background-color: var(--color-success);
-          color: white;
-          border: none;
-        }
-        .nav-nav-btn.submit-final:hover {
-          box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
-          background-color: #059669;
-        }
-
-        /* Modal styling */
-        .modal-backdrop {
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: rgba(0, 0, 0, 0.75);
-          backdrop-filter: blur(4px);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          z-index: 100;
-        }
-        .confirm-modal {
-          width: 440px;
-          padding: 2rem;
-          display: flex;
-          flex-direction: column;
-          gap: 1.5rem;
-          background: #111524;
-          box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
-        }
-        .modal-header {
-          display: flex;
-          align-items: center;
-          gap: 0.75rem;
-        }
-        .warning-icon {
-          color: var(--color-warning);
-        }
-        .modal-header h3 {
-          font-size: 1.25rem;
-          color: var(--text-primary);
-        }
-        .modal-body {
-          color: var(--text-secondary);
-          font-size: 0.95rem;
-          line-height: 1.5;
-        }
-        .unanswered-warning {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          margin-top: 1rem;
-          padding: 0.75rem;
-          background: var(--color-warning-bg);
-          border: 1px solid rgba(245, 158, 11, 0.2);
-          border-radius: var(--radius-sm);
-          color: var(--color-warning);
-          font-size: 0.85rem;
-        }
-        .all-answered-green {
-          color: var(--color-success);
-          font-weight: 600;
-          margin-top: 1rem;
-        }
-        .modal-actions {
-          display: flex;
-          justify-content: flex-end;
-          gap: 1rem;
-          margin-top: 0.5rem;
-        }
-        .submit-confirm {
-          background-color: var(--color-success);
-          border: none;
-        }
-        .submit-confirm:hover {
-          background-color: #059669;
-          box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
-        }
-      `}</style>
     </div>
   );
 }

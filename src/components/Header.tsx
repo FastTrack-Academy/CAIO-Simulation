@@ -1,358 +1,82 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BookOpen, User, CheckSquare, BarChart2, LogOut, ChevronDown, Shield } from 'lucide-react';
-import { Student } from '../types';
-import { useStudent } from '../context/StudentContext';
+import { FileText, BookOpen, BarChart2, LogOut, Shield, Menu, X, ChevronRight } from 'lucide-react';
+import type { Student } from '@/types';
+import { useStudent } from '@/context/StudentContext';
+import { useCompetition } from '@/context/CompetitionContext';
+import exams from '@/data/all-exams';
 
-interface HeaderProps {
-  activeStudent: Student | null;
-  students: Student[];
-  switchStudent: (id: string) => void;
-  createStudentProfile: (name: string) => void;
-}
-
-export function Header({
-  activeStudent,
-  students,
-  switchStudent,
-  createStudentProfile
-}: HeaderProps) {
+export function Header({ activeStudent }: { activeStudent: Student }) {
   const pathname = usePathname();
-  const { signOut, user } = useStudent();
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [newProfileName, setNewProfileName] = useState('');
-  const [showCreateForm, setShowCreateForm] = useState(false);
-
-  const getInitials = (name: string) => {
-    return name
-      .split(' ')
-      .map(part => part[0])
-      .join('')
-      .toUpperCase()
-      .substring(0, 2);
-  };
-
-  const handleCreateProfileSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newProfileName.trim()) return;
-    createStudentProfile(newProfileName.trim());
-    setNewProfileName('');
-    setShowCreateForm(false);
-    setDropdownOpen(false);
-  };
-
+  const { signOut, user, attempts } = useStudent();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const sidebarRef = useRef<HTMLElement>(null);
+  const closeMenu = useCallback(() => { setMenuOpen(false); menuButtonRef.current?.focus(); }, []);
+  const attempt = attempts.find(attempt => pathname?.split('/')[2] === attempt.id);
+  const routeCompetition = pathname === '/' ? 'CAIO' : pathname === '/cjaio' ? 'CJAIO'
+    : exams.find(exam => exam.id === attempt?.examId)?.competition;
+  const { competition: selectedCompetition, selectCompetition } = useCompetition();
+  const competition = routeCompetition ?? selectedCompetition;
+  const practiceHref = competition === 'CJAIO' ? '/cjaio' : '/';
+  const isPractice = pathname === '/' || pathname === '/cjaio' || pathname.startsWith('/exam/');
+  const pageTitle = pathname.startsWith('/admin') ? 'Admin Console'
+    : pathname === '/dashboard' ? 'Dashboard' : pathname === '/question-book' ? 'Question Book'
+    : pathname.endsWith('/review') ? 'Review' : 'Practice';
+  const initials = activeStudent.name.split(' ').filter(Boolean).map(part => part[0]).join('').slice(0, 2).toUpperCase();
   const navLinks = [
-    { href: '/', label: 'Exams', icon: BookOpen },
-    { href: '/dashboard', label: 'Dashboard', icon: BarChart2 },
-    { href: '/question-book', label: 'Question Book', icon: CheckSquare }
+    { href: practiceHref, label: 'Practice', icon: FileText, active: isPractice },
+    { href: '/dashboard', label: 'Dashboard', icon: BarChart2, active: pathname === '/dashboard' },
+    { href: '/question-book', label: 'Question Book', icon: BookOpen, active: pathname === '/question-book' },
+    ...(user?.email === 'haoyanjiang0709@gmail.com' ? [{ href: '/admin', label: 'Admin Console', icon: Shield, active: pathname.startsWith('/admin') }] : []),
   ];
 
-  if (user?.email === 'haoyanjiang0709@gmail.com') {
-    navLinks.push({ href: '/admin', label: 'Admin Console', icon: Shield });
-  }
+  useEffect(() => {
+    if (!menuOpen) return;
+    sidebarRef.current?.querySelector<HTMLAnchorElement>('.workspace-nav-link')?.focus();
+    const closeOnEscape = (event: KeyboardEvent) => { if (event.key === 'Escape') closeMenu(); };
+    document.addEventListener('keydown', closeOnEscape);
+    return () => document.removeEventListener('keydown', closeOnEscape);
+  }, [menuOpen, closeMenu]);
 
   return (
-    <header className="main-header">
-      <div className="header-container">
-        <Link href="/" className="logo-section">
-          <div className="logo-icon">AI</div>
-          <div className="logo-text">
-            <span className="logo-title">CAIO Prep</span>
-            <span className="logo-subtitle">Study Hub</span>
-          </div>
+    <>
+      {menuOpen && <button type="button" className="nav-backdrop" aria-label="Close navigation" onClick={closeMenu} />}
+      <aside ref={sidebarRef} className={`workspace-sidebar ${menuOpen ? 'is-open' : ''}`} id="workspace-navigation">
+        <Link href={practiceHref} className="workspace-brand" onClick={() => setMenuOpen(false)}>
+          <span className="brand-mark">AI</span>
+          <span><strong>AI Olympiad</strong><small>Practice studio</small></span>
         </Link>
-
-        <nav className="nav-links">
-          {navLinks.map(link => {
-            const Icon = link.icon;
-            const isActive = pathname === link.href || (link.href !== '/' && pathname?.startsWith(link.href));
-            return (
-              <Link 
-                key={link.href} 
-                href={link.href} 
-                className={`nav-link-item ${isActive ? 'active' : ''}`}
-              >
-                <Icon size={16} />
-                <span>{link.label}</span>
-              </Link>
-            );
-          })}
+        <button type="button" className="mobile-nav-close icon-button" aria-label="Close navigation" onClick={closeMenu}><X size={20} /></button>
+        <nav className="workspace-navigation" aria-label="Study navigation">
+          {navLinks.map(({ href, label, icon: Icon, active }) => (
+            <Link key={label} href={href} className={`workspace-nav-link ${active ? 'is-active' : ''}`} aria-current={active ? 'page' : undefined}
+              onClick={() => { selectCompetition(competition); setMenuOpen(false); }}>
+              <Icon size={19} strokeWidth={1.7} /><span>{label}</span>
+            </Link>
+          ))}
         </nav>
-
-        <div className="profile-section">
-          <div 
-            className="active-profile-trigger" 
-            onClick={() => setDropdownOpen(!dropdownOpen)}
-          >
-            <div 
-              className="avatar-circle" 
-              style={{ backgroundColor: activeStudent?.avatarColor || '#6366f1' }}
-            >
-              {activeStudent ? getInitials(activeStudent.name) : 'ST'}
-            </div>
-            <span className="student-name-display">{activeStudent?.name || 'Loading Student...'}</span>
-            <ChevronDown size={14} className={`chevron-icon ${dropdownOpen ? 'rotated' : ''}`} />
-          </div>
-
-          {dropdownOpen && (
-            <div className="profile-dropdown glass-card">
-              <div className="dropdown-title">Account Details</div>
-              
-              <div className="user-details-box">
-                <span className="user-email-label">Logged in as:</span>
-                <span className="user-email-value">{user?.email || 'Active Candidate'}</span>
-              </div>
-              
-              <button 
-                className="sign-out-btn" 
-                onClick={() => {
-                  signOut();
-                  setDropdownOpen(false);
-                }}
-              >
-                <LogOut size={14} />
-                <span>Sign Out</span>
-              </button>
-            </div>
-          )}
+        <div className="sidebar-profile">
+          <span className="profile-avatar" aria-hidden="true">{initials}</span>
+          <div className="sidebar-profile-text"><strong title={activeStudent.name}>{activeStudent.name}</strong><small title={user?.email}>{user?.email}</small></div>
+          <button className="icon-button" type="button" onClick={() => { void signOut(); }} aria-label="Sign out" title="Sign out"><LogOut size={18} /></button>
         </div>
-      </div>
-
-      <style jsx>{`
-        .main-header {
-          position: sticky;
-          top: 0;
-          z-index: 50;
-          background: rgba(10, 13, 22, 0.75);
-          backdrop-filter: blur(12px);
-          -webkit-backdrop-filter: blur(12px);
-          border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-          padding: 0.75rem 0;
-        }
-        .header-container {
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 0 1.5rem;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        }
-        .logo-section {
-          display: flex;
-          align-items: center;
-          gap: 0.75rem;
-        }
-        .logo-icon {
-          width: 32px;
-          height: 32px;
-          border-radius: 8px;
-          background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-weight: 800;
-          font-size: 0.875rem;
-          letter-spacing: 0.05em;
-          color: white;
-          box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
-        }
-        .logo-text {
-          display: flex;
-          flex-direction: column;
-        }
-        .logo-title {
-          font-weight: 800;
-          font-size: 1rem;
-          color: var(--text-primary);
-          line-height: 1.1;
-        }
-        .logo-subtitle {
-          font-size: 0.7rem;
-          color: var(--text-muted);
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-        }
-        .nav-links {
-          display: flex;
-          gap: 1.5rem;
-        }
-        .nav-link-item {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          color: var(--text-secondary);
-          font-size: 0.875rem;
-          font-weight: 500;
-          padding: 0.5rem 0.75rem;
-          border-radius: var(--radius-sm);
-          transition: all 0.2s ease;
-        }
-        .nav-link-item:hover {
-          color: var(--text-primary);
-          background: rgba(255, 255, 255, 0.03);
-        }
-        .nav-link-item.active {
-          color: var(--color-primary-light);
-          background: rgba(99, 102, 241, 0.08);
-        }
-        .profile-section {
-          position: relative;
-        }
-        .active-profile-trigger {
-          display: flex;
-          align-items: center;
-          gap: 0.6rem;
-          padding: 0.4rem 0.8rem;
-          border-radius: var(--radius-full);
-          background: rgba(255, 255, 255, 0.03);
-          border: 1px solid rgba(255, 255, 255, 0.05);
-          cursor: pointer;
-          transition: all 0.2s ease;
-        }
-        .active-profile-trigger:hover {
-          background: rgba(255, 255, 255, 0.06);
-          border-color: rgba(255, 255, 255, 0.15);
-        }
-        .avatar-circle {
-          width: 24px;
-          height: 24px;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 0.7rem;
-          font-weight: 700;
-          color: white;
-        }
-        .avatar-circle.small {
-          width: 20px;
-          height: 20px;
-          font-size: 0.6rem;
-        }
-        .student-name-display {
-          font-size: 0.875rem;
-          font-weight: 600;
-          color: var(--text-primary);
-        }
-        .chevron-icon {
-          color: var(--text-muted);
-          transition: transform 0.2s ease;
-        }
-        .chevron-icon.rotated {
-          transform: rotate(180deg);
-        }
-        .profile-dropdown {
-          position: absolute;
-          top: calc(100% + 8px);
-          right: 0;
-          width: 240px;
-          padding: 0.75rem;
-          z-index: 100;
-          background: #111524;
-          box-shadow: 0 10px 25px -5px rgba(0,0,0,0.5);
-        }
-        .dropdown-title {
-          font-size: 0.75rem;
-          font-weight: 700;
-          color: var(--text-muted);
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-          padding-bottom: 0.5rem;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-          margin-bottom: 0.5rem;
-        }
-        .user-details-box {
-          display: flex;
-          flex-direction: column;
-          gap: 0.2rem;
-          padding: 0.5rem;
-          border-radius: var(--radius-sm);
-          background: rgba(255, 255, 255, 0.02);
-          border: 1px solid rgba(255, 255, 255, 0.05);
-          margin-bottom: 0.75rem;
-        }
-        .user-email-label {
-          font-size: 0.75rem;
-          color: var(--text-muted);
-        }
-        .user-email-value {
-          font-size: 0.8rem;
-          font-weight: 500;
-          color: var(--text-secondary);
-          word-break: break-all;
-        }
-        .sign-out-btn {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 0.4rem;
-          width: 100%;
-          padding: 0.5rem;
-          border-radius: var(--radius-sm);
-          background: rgba(239, 68, 68, 0.1);
-          border: 1px solid rgba(239, 68, 68, 0.2);
-          color: #f87171;
-          font-size: 0.8rem;
-          font-weight: 600;
-          cursor: pointer;
-          transition: all 0.2s ease;
-        }
-        .sign-out-btn:hover {
-          background: rgba(239, 68, 68, 0.2);
-          color: #f87171;
-          border-color: rgba(239, 68, 68, 0.3);
-        }
-        .create-profile-form {
-          margin-top: 0.5rem;
-          display: flex;
-          flex-direction: column;
-          gap: 0.4rem;
-        }
-        .create-profile-form input {
-          width: 100%;
-          padding: 0.4rem 0.6rem;
-          background: var(--bg-primary);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          border-radius: var(--radius-sm);
-          color: var(--text-primary);
-          font-size: 0.8rem;
-        }
-        .create-profile-form input:focus {
-          outline: none;
-          border-color: var(--color-primary);
-        }
-        .form-actions {
-          display: flex;
-          justify-content: flex-end;
-          gap: 0.4rem;
-        }
-        .create-profile-form button {
-          padding: 0.25rem 0.5rem;
-          border-radius: var(--radius-sm);
-          font-size: 0.75rem;
-          font-weight: 600;
-          cursor: pointer;
-        }
-        .cancel-btn {
-          background: none;
-          border: none;
-          color: var(--text-muted);
-        }
-        .cancel-btn:hover {
-          color: var(--text-primary);
-        }
-        .save-btn {
-          background: var(--color-primary);
-          border: none;
-          color: white;
-        }
-        .save-btn:hover {
-          background: var(--color-primary-light);
-        }
-      `}</style>
-    </header>
+      </aside>
+      <header className="workspace-topbar">
+        <div className="topbar-location">
+          <button ref={menuButtonRef} type="button" className="mobile-nav-toggle icon-button" aria-label="Open navigation" aria-expanded={menuOpen} aria-controls="workspace-navigation" onClick={() => setMenuOpen(true)}><Menu size={21} /></button>
+          <span>{pageTitle}</span>{(isPractice || pathname.startsWith('/admin/attempt/')) && <><ChevronRight size={13} className="breadcrumb-divider" /><span className="breadcrumb-competition">{competition}</span></>}
+        </div>
+        <nav className="competition-switch" aria-label="Choose competition">
+          {(['CAIO', 'CJAIO'] as const).map(value => (
+            <Link key={value} href={value === 'CJAIO' ? '/cjaio' : '/'} className={competition === value ? 'is-active' : ''}
+              aria-current={competition === value ? 'page' : undefined} onClick={() => { selectCompetition(value); setMenuOpen(false); }}>{value}</Link>
+          ))}
+        </nav>
+      </header>
+    </>
   );
 }

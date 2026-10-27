@@ -3,16 +3,23 @@ export interface Question {
   number: number;
   points: number;
   text: string;
-  type: 'multiple-choice' | 'text-input';
+  type: 'multiple-choice' | 'multi-select' | 'text-input';
   options: string[];
   correctAnswer: string;
   explanation: string;
+  grading?: 'automatic' | 'manual';
+  section?: string;
 }
 
 export interface Exam {
   id: string;
   name: string;
   difficulty?: string;
+  description?: string;
+  competition?: 'CAIO' | 'CJAIO';
+  durationMinutes?: number;
+  instructions?: string;
+  source?: string;
   questions: Question[];
 }
 
