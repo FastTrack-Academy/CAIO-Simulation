@@ -37,7 +37,8 @@ export function getQuestionGrade(question: Question, answers: ExamAttempt['answe
     if (typeof mark === 'number' && mark >= 0 && mark <= question.points) {
       return { status: mark === question.points ? 'correct' : mark === 0 ? 'incorrect' : 'partial', score: mark } as const;
     }
-    if (answer.trim()) return { status: 'pending', score: 0 } as const;
+    const answered = question.type === 'multi-select' ? parseSelections(answer).length > 0 : Boolean(answer.trim());
+    if (answered) return { status: 'pending', score: 0 } as const;
     return { status: 'incorrect', score: 0 } as const;
   }
   const correct = checkAnswer(answer, question.correctAnswer, question.type);

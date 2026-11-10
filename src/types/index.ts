@@ -14,6 +14,7 @@ export interface Question {
 export interface Exam {
   id: string;
   name: string;
+  year?: number;
   difficulty?: string;
   description?: string;
   competition?: 'CAIO' | 'CJAIO';

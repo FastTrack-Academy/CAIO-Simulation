@@ -9,6 +9,7 @@ import { MathRenderer } from '@/components/MathRenderer';
 import { supabase } from '@/lib/supabase';
 import exams from '@/data/all-exams';
 import { getAttemptGrade, getQuestionGrade, MANUAL_MARKS_KEY, readManualMarks } from '@/lib/grading';
+import { displayCorrectAnswer } from '@/lib/exam-display';
 import type { ExamAttempt } from '@/types';
 
 export default function MarkAttemptPage() {
@@ -122,11 +123,12 @@ export default function MarkAttemptPage() {
             <section className="glass-card marking-question" key={question.id}>
               <h3>Question {question.number} · {question.points} points</h3>
               <MathRenderer text={question.text} />
+              {question.options.map((option, index) => <MathRenderer key={index} text={option} />)}
               <h4>Student response</h4>
               <pre className="student-response">{attempt.answers[question.id] || '(No response)'}</pre>
               <details>
                 <summary>Model answer and marking guidance</summary>
-                <MathRenderer text={question.correctAnswer} />
+                <MathRenderer text={displayCorrectAnswer(question)} />
                 <MathRenderer text={question.explanation} />
               </details>
               {question.grading === 'manual' ? (

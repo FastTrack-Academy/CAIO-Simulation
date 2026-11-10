@@ -1,0 +1,1748 @@
+[
+  {
+    "id": "caio_2026_a",
+    "name": "2026-27 CAIO National Qualifier - Paper A",
+    "year": 2026,
+    "competition": "CAIO",
+    "durationMinutes": 90,
+    "source": "2026-27-caio-national-qualifier-practical-competition-a.pdf",
+    "description": "Part 1 - AI Fundamentals Challenge. 35 questions, 100 marks. Independently prepared solutions.",
+    "instructions": "Answer all 35 questions. Q1-15: choose one answer (2 marks each). Q16-25: select ALL correct options; full marks only for the complete correct set (2 marks each). Q26-35: five blanks per question (5 marks each); submit labeled answers (a)-(e) in the text box for teacher marking. A non-programmable calculator may be used. Ambiguous source questions are identified and teacher-marked. The 90-minute timer is the existing CAIO platform practice setting; these PDFs specify no duration. Solutions and the 1-point-per-blank practice rubric are independently prepared, not an official answer key.",
+    "questions": [
+      {
+        "id": "caio_2026_a_q1",
+        "number": 1,
+        "points": 2,
+        "text": "Consider the following Python code:\n\n```python\nimport numpy as np\nA = np.arange(6).reshape(2, 3)\nB = A[:, 1:]\nB[0, 0] = 100\nC = A.flatten()\nprint(A[0, 1], B[0, 0], C[1], A.sum())\n```\nWhat is the printed output?",
+        "type": "multiple-choice",
+        "options": [
+          "A. 100 100 100 114",
+          "B. 1 100 1 114",
+          "C. 100 100 1 15",
+          "D. 1 100 100 114",
+          "E. 100 100 100 15"
+        ],
+        "correctAnswer": "A. 100 100 100 114",
+        "explanation": "Basic slicing returns a view, so B changes A[0,1] to 100. flatten copies A after that change. The original sum 15 increases by 99 to 114.",
+        "grading": "automatic",
+        "section": "Data Preparation"
+      },
+      {
+        "id": "caio_2026_a_q2",
+        "number": 2,
+        "points": 2,
+        "text": "Consider the following Python code:\n\n```python\nimport pandas as pd\ndf = pd.DataFrame({'k': ['x','y','x','y'], 'v': [10, 20, 30, 40]})\ng = df.groupby('k', as_index=False)['v'].mean()\nprint(g.loc[g['k']=='x', 'v'].values[0], g['v'].sum())\n```\nWhat is the printed output?",
+        "type": "multiple-choice",
+        "options": [
+          "A. 20.0 50.0",
+          "B. 20 50",
+          "C. 10.0 50.0",
+          "D. 30.0 50.0",
+          "E. 20.0 100.0"
+        ],
+        "correctAnswer": "A. 20.0 50.0",
+        "explanation": "The x group mean is (10+30)/2=20.0; the y group mean is 30.0. Their sum is 50.0.",
+        "grading": "automatic",
+        "section": "Data Preparation"
+      },
+      {
+        "id": "caio_2026_a_q3",
+        "number": 3,
+        "points": 2,
+        "text": "For one-dimensional linear regression the loss is\nL(w, b) = 1/(2n) Σᵢ (yᵢ − (wxᵢ + b))²\nThe gradient of L with respect to w is:",
+        "type": "multiple-choice",
+        "options": [
+          "A. (2/n)Σᵢ xᵢ(yᵢ−(wxᵢ+b))",
+          "B. −(1/n)Σᵢ xᵢ(yᵢ−(wxᵢ+b))",
+          "C. (1/n)Σᵢ (yᵢ−(wxᵢ+b))",
+          "D. −(2/n)Σᵢ xᵢ(yᵢ−(wxᵢ+b))",
+          "E. (1/n)Σᵢ xᵢ(yᵢ−(wxᵢ+b))"
+        ],
+        "correctAnswer": "B. −(1/n)Σᵢ xᵢ(yᵢ−(wxᵢ+b))",
+        "explanation": "Differentiating the squared residual cancels the factor 1/2 and introduces -x_i: dL/dw = -(1/n) sum x_i(y_i-wx_i-b).",
+        "grading": "automatic",
+        "section": "Supervised Learning"
+      },
+      {
+        "id": "caio_2026_a_q4",
+        "number": 4,
+        "points": 2,
+        "text": "Let X be an n×d design matrix with n < d (more features than samples) and rank(X) = n.\nWhich statement is TRUE?",
+        "type": "multiple-choice",
+        "options": [
+          "A. XᵀX is invertible, so ŵ = (XᵀX)⁻¹Xᵀy is the unique solution.",
+          "B. XᵀX is singular; infinitely many w fit the training data exactly, so ridge regularization or the pseudoinverse is needed.",
+          "C. The normal equation has no solution in this case.",
+          "D. The least-squares solution is unique because n equations determine d unknowns.",
+          "E. y must be centered to zero mean before the normal equation can be applied."
+        ],
+        "correctAnswer": "B. XᵀX is singular; infinitely many w fit the training data exactly, so ridge regularization or the pseudoinverse is needed.",
+        "explanation": "Rank(X^T X)=n<d, so it is singular. Full row rank makes every y attainable; the nullspace has dimension d-n. The pseudoinverse selects the minimum-norm fit, while ridge selects a regularized fit. These are ways to select a solution, not the only ways to find one.",
+        "grading": "automatic",
+        "section": "Supervised Learning"
+      },
+      {
+        "id": "caio_2026_a_q5",
+        "number": 5,
+        "points": 2,
+        "text": "With ridge-regularized loss J(w) = (1/n)‖Xw−y‖² + (λ/2)‖w‖²,\nthe vectorized gradient-descent update is:",
+        "type": "multiple-choice",
+        "options": [
+          "A. w := w − α·(2/n)Xᵀ(Xw−y) + λw",
+          "B. w := w − α[(2/n)Xᵀ(Xw−y) + λw]",
+          "C. w := w − α[(1/n)Xᵀ(Xw−y) + (λ/2)w]",
+          "D. w := w + α[(2/n)Xᵀ(Xw−y) + λw]",
+          "E. w := w − α[(2/n)(Xw−y)Xᵀ + λw]"
+        ],
+        "correctAnswer": "B. w := w − α[(2/n)Xᵀ(Xw−y) + λw]",
+        "explanation": "The data gradient is (2/n)X^T(Xw-y); the penalty gradient is lambda*w. Gradient descent subtracts alpha times their sum.",
+        "grading": "automatic",
+        "section": "Supervised Learning"
+      },
+      {
+        "id": "caio_2026_a_q6",
+        "number": 6,
+        "points": 2,
+        "text": "For ridge regression ŵ_ridge = (XᵀX + λI)⁻¹Xᵀy with λ > 0,\nas λ → ∞:",
+        "type": "multiple-choice",
+        "options": [
+          "A. ŵ_ridge approaches the zero vector.",
+          "B. ŵ_ridge approaches the ordinary least-squares solution.",
+          "C. the training error approaches zero.",
+          "D. the model becomes equivalent to k-nearest neighbors.",
+          "E. ‖ŵ_ridge‖ grows without bound."
+        ],
+        "correctAnswer": "A. ŵ_ridge approaches the zero vector.",
+        "explanation": "With every component of w penalized, (X^T X+lambda I)^-1 tends to zero as lambda tends to infinity, so the fitted weights tend to zero.",
+        "grading": "automatic",
+        "section": "Supervised Learning"
+      },
+      {
+        "id": "caio_2026_a_q7",
+        "number": 7,
+        "points": 2,
+        "text": "A model has 2% training error and 18% cross-validation error, and the validation curve\nstays flat as the training size grows.\nWhat is the most appropriate next step?",
+        "type": "multiple-choice",
+        "options": [
+          "A. Add higher-degree polynomial features.",
+          "B. Decrease the regularization parameter λ.",
+          "C. Increase λ (or remove features) to reduce model complexity.",
+          "D. Collect twice as much training data.",
+          "E. Run gradient descent for more iterations."
+        ],
+        "correctAnswer": "C. Increase λ (or remove features) to reduce model complexity.",
+        "explanation": "Low training error and much larger validation error indicate high variance. Since the validation curve has plateaued, reducing complexity is the best listed intervention.",
+        "grading": "automatic",
+        "section": "Evaluation of ML Models"
+      },
+      {
+        "id": "caio_2026_a_q8",
+        "number": 8,
+        "points": 2,
+        "text": "A decision tree grown to full depth reaches 100% training accuracy but only 70% test\naccuracy.\nWhich change is LEAST likely to improve test accuracy?",
+        "type": "multiple-choice",
+        "options": [
+          "A. Pruning the tree with cost-complexity pruning.",
+          "B. Setting max_depth to a smaller value.",
+          "C. Requiring min_samples_leaf ≥ 10.",
+          "D. Growing the tree even deeper.",
+          "E. Collecting more training data."
+        ],
+        "correctAnswer": "D. Growing the tree even deeper.",
+        "explanation": "The tree already overfits. More depth cannot simplify it and, at full depth, may change nothing. Pruning, larger leaves, shallower depth, or more data may help.",
+        "grading": "automatic",
+        "section": "Supervised Learning"
+      },
+      {
+        "id": "caio_2026_a_q9",
+        "number": 9,
+        "points": 2,
+        "text": "Which statement about the k-means algorithm is TRUE?",
+        "type": "multiple-choice",
+        "options": [
+          "A. It always finds the globally optimal clustering.",
+          "B. The number of clusters k must be chosen in advance, and different random initializations can converge to different local optima.",
+          "C. It works well when clusters are elongated or non-spherical.",
+          "D. Its result is insensitive to feature scaling.",
+          "E. It automatically determines the best number of clusters."
+        ],
+        "correctAnswer": "B. The number of clusters k must be chosen in advance, and different random initializations can converge to different local optima.",
+        "explanation": "k-means needs k in advance and is sensitive to initialization. Lloyd iterations can reach different local optima; scaling and cluster geometry matter.",
+        "grading": "automatic",
+        "section": "Unsupervised Learning"
+      },
+      {
+        "id": "caio_2026_a_q10",
+        "number": 10,
+        "points": 2,
+        "text": "You fit a Gaussian to each feature for anomaly detection and pick the threshold ε by\nmaximizing F1 on a cross-validation set (flag x as anomaly if p(x) < ε).\nIf ε is set far too large, what happens?",
+        "type": "multiple-choice",
+        "options": [
+          "A. Only the most extreme anomalies are flagged; recall collapses.",
+          "B. Many normal points are flagged as anomalies, so precision drops.",
+          "C. The fitted Gaussian parameters μ and σ² change.",
+          "D. Recall decreases while precision increases.",
+          "E. Nothing changes; ε only affects training time."
+        ],
+        "correctAnswer": "B. Many normal points are flagged as anomalies, so precision drops.",
+        "explanation": "Increasing epsilon expands the region p(x)<epsilon. Many normal points become false positives, typically reducing precision while increasing recall.",
+        "grading": "automatic",
+        "section": "Unsupervised Learning"
+      },
+      {
+        "id": "caio_2026_a_q11",
+        "number": 11,
+        "points": 2,
+        "text": "A binary classifier's confusion matrix: TP = 80, FP = 20, FN = 30, TN = 870.\nWhat are precision, recall, and F1 (rounded to two decimals)?",
+        "type": "multiple-choice",
+        "options": [
+          "A. Precision 0.80, Recall 0.73, F1 ≈ 0.76",
+          "B. Precision 0.73, Recall 0.80, F1 ≈ 0.76",
+          "C. Precision 0.80, Recall 0.73, F1 ≈ 0.66",
+          "D. Precision 0.89, Recall 0.80, F1 ≈ 0.84",
+          "E. Precision 0.80, Recall 0.97, F1 ≈ 0.88"
+        ],
+        "correctAnswer": "A. Precision 0.80, Recall 0.73, F1 ≈ 0.76",
+        "explanation": "Precision=80/100=0.80; recall=80/110=0.7273; F1=2TP/(2TP+FP+FN)=160/210=0.7619.",
+        "grading": "automatic",
+        "section": "Evaluation of ML Models"
+      },
+      {
+        "id": "caio_2026_a_q12",
+        "number": 12,
+        "points": 2,
+        "text": "Consider a trained hard-margin support vector machine.\nRemoving which training points can change the learned decision boundary?",
+        "type": "multiple-choice",
+        "options": [
+          "A. Only the support vectors.",
+          "B. All training points influence it equally.",
+          "C. Only the misclassified points.",
+          "D. No single training point can change it.",
+          "E. Only the points farthest from the boundary."
+        ],
+        "correctAnswer": "A. Only the support vectors.",
+        "explanation": "Support vectors are the active margin constraints. Removing one can change the optimum; removing a non-support point leaves the optimum feasible. Not every support-vector removal must change it.",
+        "grading": "automatic",
+        "section": "Kernel Methods"
+      },
+      {
+        "id": "caio_2026_a_q13",
+        "number": 13,
+        "points": 2,
+        "text": "For the RBF kernel k(x, z) = exp(−γ‖x−z‖²),\nincreasing γ typically:",
+        "type": "multiple-choice",
+        "options": [
+          "A. makes the boundary smoother and reduces overfitting.",
+          "B. makes the boundary more complex and localized; the risk of overfitting grows.",
+          "C. turns the kernel into a linear kernel.",
+          "D. makes training faster.",
+          "E. always reduces the number of support vectors."
+        ],
+        "correctAnswer": "B. makes the boundary more complex and localized; the risk of overfitting grows.",
+        "explanation": "A larger gamma makes similarity decay over shorter distances, allowing a more localized and complex decision boundary.",
+        "grading": "automatic",
+        "section": "Kernel Methods"
+      },
+      {
+        "id": "caio_2026_a_q14",
+        "number": 14,
+        "points": 2,
+        "text": "True cheapest costs to the goal: h*(S) = 8, h*(A) = 5, h*(B) = 6.\nWhich heuristic is admissible (never overestimates)?",
+        "type": "multiple-choice",
+        "options": [
+          "A. h(S)=9, h(A)=4, h(B)=6",
+          "B. h(S)=8, h(A)=5, h(B)=7",
+          "C. h(S)=7, h(A)=5, h(B)=5",
+          "D. h(S)=8, h(A)=6, h(B)=6",
+          "E. h(S)=10, h(A)=5, h(B)=6"
+        ],
+        "correctAnswer": "C. h(S)=7, h(A)=5, h(B)=5",
+        "explanation": "Only C is no larger than the true cost at every supplied node: 7<=8, 5<=5, 5<=6. As usual h(goal)=0.",
+        "grading": "automatic",
+        "section": "AI Search"
+      },
+      {
+        "id": "caio_2026_a_q15",
+        "number": 15,
+        "points": 2,
+        "text": "Knowledge base KB = { P → Q, ¬Q }.\nWhich formula is logically entailed by KB?",
+        "type": "multiple-choice",
+        "options": [
+          "A. P",
+          "B. Q",
+          "C. ¬P",
+          "D. P ∧ Q",
+          "E. P ∨ Q"
+        ],
+        "correctAnswer": "C. ¬P",
+        "explanation": "Modus tollens: P implies Q, and Q is false, so P is false.",
+        "grading": "automatic",
+        "section": "Logical Reasoning"
+      },
+      {
+        "id": "caio_2026_a_q16",
+        "number": 16,
+        "points": 2,
+        "text": "Select ALL correct options. You receive full marks only if every correct option — and no incorrect option\n— is selected.\nWhich of the following snippets execute WITHOUT raising an error?",
+        "type": "multi-select",
+        "options": [
+          "A. np.array([1, 2, 3]) + np.array([[1], [2]])",
+          "B. pd.DataFrame({'a': [1, 2]})['b']",
+          "C. np.zeros((2, 3)).reshape(3, 2)",
+          "D. np.arange(5)[[0, 2, 4]]",
+          "E. pd.DataFrame({'a': [1, 2, 3]})['a'][5]"
+        ],
+        "correctAnswer": "[\"A\", \"C\", \"D\"]",
+        "explanation": "A broadcasts shapes (3,) and (2,1) to (2,3). C preserves six elements; D uses valid indices. B requests a missing column and E a missing index label, both raising KeyError.",
+        "grading": "automatic",
+        "section": "Data Preparation"
+      },
+      {
+        "id": "caio_2026_a_q17",
+        "number": 17,
+        "points": 2,
+        "text": "Select ALL correct options. You receive full marks only if every correct option — and no incorrect option\n— is selected.\nWhich statements about gradient descent and diagnostics are TRUE?",
+        "type": "multi-select",
+        "options": [
+          "A. Batch gradient descent computes the gradient over the entire training set at each step.",
+          "B. The noisy updates of SGD can help it escape shallow local minima more easily than batch GD.",
+          "C. Vectorizing across examples mainly reduces the number of iterations needed to converge.",
+          "D. A large, persistent gap between training and cross-validation error indicates high variance.",
+          "E. Decreasing the learning rate α always speeds up convergence."
+        ],
+        "correctAnswer": "[\"A\", \"B\", \"D\"]",
+        "explanation": "Batch GD uses all examples. SGD noise can help escape shallow minima. A persistent generalization gap suggests high variance. Vectorization speeds each iteration, not necessarily the number of iterations; smaller steps need not converge faster.",
+        "grading": "automatic",
+        "section": "Supervised Learning"
+      },
+      {
+        "id": "caio_2026_a_q18",
+        "number": 18,
+        "points": 2,
+        "text": "Select ALL correct options. You receive full marks only if every correct option — and no incorrect option\n— is selected.\nWhich statements about L1 vs L2 regularization are TRUE?",
+        "type": "multi-select",
+        "options": [
+          "A. L1 regularization tends to produce sparse weight vectors (many exact zeros).",
+          "B. L2 regularization shrinks weights toward zero but rarely sets them exactly to zero.",
+          "C. The L1 penalty is differentiable at w = 0.",
+          "D. Ridge regression has a closed-form solution, while lasso generally does not.",
+          "E. Increasing λ always reduces the training error."
+        ],
+        "correctAnswer": "[\"A\", \"B\", \"D\"]",
+        "explanation": "L1 promotes sparsity and is not differentiable at zero. L2 usually shrinks rather than zeros weights. Ridge has a general closed form; lasso generally requires optimization. Stronger penalties need not reduce unpenalized training error.",
+        "grading": "automatic",
+        "section": "Supervised Learning"
+      },
+      {
+        "id": "caio_2026_a_q19",
+        "number": 19,
+        "points": 2,
+        "text": "Select ALL correct options. You receive full marks only if every correct option — and no incorrect option\n— is selected.\nWhich statements about tree-based models are TRUE?",
+        "type": "multi-select",
+        "options": [
+          "A. Random forests reduce variance by averaging trees trained on bootstrap samples with random feature subsets.",
+          "B. Gradient boosting primarily reduces bias by sequentially fitting the residual errors.",
+          "C. Increasing max_depth of a single decision tree tends to increase variance.",
+          "D. In XGBoost, a larger learning rate η always improves generalization.",
+          "E. Pruning a decision tree increases its complexity."
+        ],
+        "correctAnswer": "[\"A\", \"B\", \"C\"]",
+        "explanation": "Random forests average randomized trees to reduce variance. Boosting fits successive residuals (or negative loss gradients), often reducing bias. Deep trees have higher variance. Larger learning rates do not always generalize better; pruning reduces complexity.",
+        "grading": "automatic",
+        "section": "Supervised Learning"
+      },
+      {
+        "id": "caio_2026_a_q20",
+        "number": 20,
+        "points": 2,
+        "text": "Select ALL correct options. You receive full marks only if every correct option — and no incorrect option\n— is selected.\nWhich statements about clustering are TRUE?",
+        "type": "multi-select",
+        "options": [
+          "A. k-means implicitly assumes roughly spherical clusters and is sensitive to feature scaling.",
+          "B. DBSCAN can discover arbitrarily shaped clusters and label sparse points as noise.",
+          "C. Agglomerative hierarchical clustering requires the number of clusters k up front, like k-means.",
+          "D. A Gaussian mixture model assigns every point to exactly one cluster.",
+          "E. k-means++ initialization reduces the risk of poor local optima compared with uniform random init."
+        ],
+        "correctAnswer": "[\"A\", \"B\", \"E\"]",
+        "explanation": "Euclidean k-means favors compact clusters and depends on scale; DBSCAN finds density-connected shapes and noise; k-means++ improves seeding. A hierarchy can be built without choosing a final cut. GMM responsibilities are soft probabilities.",
+        "grading": "automatic",
+        "section": "Unsupervised Learning"
+      },
+      {
+        "id": "caio_2026_a_q21",
+        "number": 21,
+        "points": 2,
+        "text": "Select ALL correct options. You receive full marks only if every correct option — and no incorrect option\n— is selected.\nWhich statements about evaluation metrics are TRUE?",
+        "type": "multi-select",
+        "options": [
+          "A. On a dataset with 99% negatives, always predicting 'negative' scores 99% accuracy.",
+          "B. Precision–recall curves are more informative than ROC curves for highly imbalanced data.",
+          "C. ROC-AUC is independent of the chosen classification threshold.",
+          "D. A higher R² on the training set always means better predictions on new data.",
+          "E. Micro-averaged F1 gives equal weight to each class regardless of its size."
+        ],
+        "correctAnswer": "[\"A\", \"B\", \"C\"]",
+        "explanation": "The all-negative classifier scores 99% accuracy. PR analysis focuses on the rare positive class. ROC-AUC summarizes a range of thresholds. Training R-squared does not ensure generalization; macro, not micro, averaging gives classes equal weight.",
+        "grading": "automatic",
+        "section": "Evaluation of ML Models"
+      },
+      {
+        "id": "caio_2026_a_q22",
+        "number": 22,
+        "points": 2,
+        "text": "Select ALL correct options. You receive full marks only if every correct option — and no incorrect option\n— is selected.\nWhich statements about SVMs and kernels are TRUE?",
+        "type": "multi-select",
+        "options": [
+          "A. The kernel trick computes inner products in the feature space without explicitly mapping the data.",
+          "B. The RBF kernel corresponds to an infinite-dimensional feature space.",
+          "C. Only the support vectors determine the SVM decision boundary.",
+          "D. SVMs are insensitive to feature scaling.",
+          "E. A linear kernel can separate every dataset that an RBF kernel can separate."
+        ],
+        "correctAnswer": "[\"A\", \"B\", \"C\"]",
+        "explanation": "Kernels supply implicit feature-space inner products; the RBF map is infinite dimensional. The SVM decision function uses nonzero dual coefficients at support vectors. Feature scales matter, and nonlinear separability need not imply linear separability.",
+        "grading": "automatic",
+        "section": "Kernel Methods"
+      },
+      {
+        "id": "caio_2026_a_q23",
+        "number": 23,
+        "points": 2,
+        "text": "Select ALL correct options. You receive full marks only if every correct option — and no incorrect option\n— is selected.\nWhich statements about search algorithms are TRUE?",
+        "type": "multi-select",
+        "options": [
+          "A. BFS is complete and optimal when all step costs are equal.",
+          "B. DFS uses O(bm) memory but is neither optimal nor complete in infinite spaces.",
+          "C. Uniform-cost search is optimal when all step costs are positive.",
+          "D. A* guarantees an optimal solution regardless of the heuristic used.",
+          "E. Greedy best-first search is optimal."
+        ],
+        "correctAnswer": "[\"A\", \"B\", \"C\"]",
+        "explanation": "Under the usual finite-branching assumptions BFS is complete and optimal for equal positive costs; DFS stores O(bm) frontier nodes and may follow an infinite branch. UCS is optimal when it returns a goal with positive costs; termination in infinite spaces additionally needs a positive lower bound on costs. A* needs appropriate heuristic conditions; greedy search is not generally optimal.",
+        "grading": "automatic",
+        "section": "AI Search"
+      },
+      {
+        "id": "caio_2026_a_q24",
+        "number": 24,
+        "points": 2,
+        "text": "Select ALL correct options. You receive full marks only if every correct option — and no incorrect option\n— is selected.\nWhich statements about recommender systems are TRUE?",
+        "type": "multi-select",
+        "options": [
+          "A. User-based collaborative filtering recommends items liked by users with similar tastes.",
+          "B. Item-based filtering is usually more scalable when users far outnumber items.",
+          "C. Collaborative filtering has no cold-start problem.",
+          "D. TF-IDF features of item descriptions can be used in content-based recommendation.",
+          "E. Pearson correlation always yields the same neighbor ranking as cosine similarity."
+        ],
+        "correctAnswer": "[\"A\", \"B\", \"D\"]",
+        "explanation": "User-based CF uses similar users. Item-based similarities can be cheaper when there are far fewer items than users. TF-IDF supports content matching. CF has cold-start issues; centering in Pearson correlation can change neighbor rankings relative to cosine.",
+        "grading": "automatic",
+        "section": "Recommender Systems"
+      },
+      {
+        "id": "caio_2026_a_q25",
+        "number": 25,
+        "points": 2,
+        "text": "Select ALL correct options. You receive full marks only if every correct option — and no incorrect option\n— is selected.\nWhich statements about reinforcement learning are TRUE?",
+        "type": "multi-select",
+        "options": [
+          "A. In ε-greedy action selection, the agent exploits the best-known action with probability 1−ε.",
+          "B. Q-learning is an off-policy temporal-difference method updating toward max_a Q(s′, a).",
+          "C. A discount factor γ close to 0 makes the agent far-sighted.",
+          "D. The Bellman optimality equation expresses V*(s) as the maximum expected return over actions.",
+          "E. Increasing the exploration rate ε always improves the agent's final return."
+        ],
+        "correctAnswer": "[\"A\", \"B\", \"D\"]",
+        "explanation": "The exploitation branch is taken with probability 1-epsilon (random exploration can also choose the best action). Q-learning uses an off-policy max target. Bellman optimality maximizes expected return. Small gamma is short-sighted; more exploration is not always better.",
+        "grading": "automatic",
+        "section": "Reinforcement Learning"
+      },
+      {
+        "id": "caio_2026_a_q26",
+        "number": 26,
+        "points": 5,
+        "text": "Data Cleaning and Aggregation (fill in the 5 blanks)\norders.csv columns: order_id, customer, date (string 'YYYY-MM-DD'),\namount (float, may be NaN), region. Complete the script:\n\n```python\nimport pandas as pd\ndf = pd.read_csv('orders.csv')\ndf['date'] = pd.______(df['date'])\ndf = df.dropna(______)\ndf['month'] = df['date'].dt.month\ng = df.______(['region', 'month'])['amount'].______()\ng = g.______(ascending=False)\n```\n\nWrite five answers labeled (a), (b), (c), (d), and (e), in order. Include any assumptions or calculations.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "(a) `to_datetime`\n(b) `subset=['amount']`\n(c) `groupby`\n(d) `sum`\n(e) `sort_values`",
+        "explanation": "Parse dates, retain rows with known amounts, group by region/month, sum amounts, and sort totals descending. The source never specifies the aggregation or exact missing-data subset: sum and amount are a reasonable model answer, not uniquely forced. Accept mean/count or another coherent aggregation with an explained interpretation; dropna() is also defensible. Do not require an unstated business rule.\n\nPlatform practice rubric: 1 point per correct blank, up to 5; accept equivalent code, set order, mathematical forms, and rounding consistent with the prompt. Apply the source-specific alternatives above. This per-blank rubric is independently prepared, not an official marking scheme.",
+        "grading": "manual",
+        "section": "Data Preparation"
+      },
+      {
+        "id": "caio_2026_a_q27",
+        "number": 27,
+        "points": 5,
+        "text": "Logistic Regression Without Data Leakage (fill in the 5 blanks)\nstudents.csv columns: hours, score, passed (1/0). Complete the script. Watch out:\nthe scaler must not see the test set.\n\n```python\nimport pandas as pd\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.metrics import accuracy_score\ndf = pd.read_csv('students.csv')\nX = df[['hours', 'score']]; y = df['passed']\nX_train, X_test, y_train, y_test = train_test_split(\n    X, y, test_size=0.2, random_state=42, stratify=______)\nscaler = StandardScaler()\nX_train_s = scaler.______(X_train)\nX_test_s = scaler.______(X_test)\nmodel = LogisticRegression()\nmodel.______(X_train_s, y_train)\nprint(______(y_test, model.predict(X_test_s)))\n```\n\nWrite five answers labeled (a), (b), (c), (d), and (e), in order. Include any assumptions or calculations.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "(a) `y`\n(b) `fit_transform`\n(c) `transform`\n(d) `fit`\n(e) `accuracy_score`",
+        "explanation": "Stratify using the labels. Fit the scaler only on training data, reuse it on test data, fit the classifier, and measure test predictions against y_test.\n\nPlatform practice rubric: 1 point per correct blank, up to 5; accept equivalent code, set order, mathematical forms, and rounding consistent with the prompt. Apply the source-specific alternatives above. This per-blank rubric is independently prepared, not an official marking scheme.",
+        "grading": "manual",
+        "section": "Supervised Learning"
+      },
+      {
+        "id": "caio_2026_a_q28",
+        "number": 28,
+        "points": 5,
+        "text": "Information Gain, Step by Step (fill in the 5 blanks; 2 decimals)\n12 samples: Positive 7, Negative 5. Split on X:\nLeft: P 5, N 1. Right: P 2, N 4. (log base 2)\nHints: log₂(7/12)=−0.778, log₂(5/12)=−1.263, log₂(5/6)=−0.263,\nlog₂(1/6)=−2.585, log₂(2/6)=−1.585, log₂(4/6)=−0.585.\n\n```text\nH(parent) ≈ ______\nH(left) ≈ ______\nH(right) ≈ ______\nweighted conditional entropy ≈ ______\ninformation gain ≈ ______\n```\n\nWrite five answers labeled (a), (b), (c), (d), and (e), in order. Include any assumptions or calculations.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "(a) `0.98`\n(b) `0.65`\n(c) `0.92`\n(d) `0.78`\n(e) `0.20`",
+        "explanation": "Using H(p)=-p log2(p)-(1-p)log2(1-p): parent=0.97987, left=0.65002, right=0.91830. Equal child sizes give conditional entropy 0.78416 and gain 0.19571. Round only at the end.\n\nPlatform practice rubric: 1 point per correct blank, up to 5; accept equivalent code, set order, mathematical forms, and rounding consistent with the prompt. Apply the source-specific alternatives above. This per-blank rubric is independently prepared, not an official marking scheme.",
+        "grading": "manual",
+        "section": "Supervised Learning"
+      },
+      {
+        "id": "caio_2026_a_q29",
+        "number": 29,
+        "points": 5,
+        "text": "Vectorized Gradient and Update (fill in the 5 blanks)\nComplete the vectorized gradient of J(w,b) = (1/2m)‖Xw+b·1−y‖²\n(X: m×n, y: m-vector) and one gradient-descent step with learning rate alpha.\n\n```python\nimport numpy as np\ndef compute_gradient(X, y, w, b):\n    m, n = X.shape\n    f_wb = ______\n    err = ______\n    dj_dw = ______\n    dj_db = ______\n    return dj_dw, dj_db\n# one GD step:\nw = ______\n```\n\nWrite five answers labeled (a), (b), (c), (d), and (e), in order. Include any assumptions or calculations.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "(a) `X @ w + b`\n(b) `f_wb - y`\n(c) `X.T @ err / m`\n(d) `np.sum(err) / m`\n(e) `w - alpha * compute_gradient(X, y, w, b)[0]`",
+        "explanation": "Predictions broadcast b across examples. Multiply residuals by X.T and average for the weight gradient; average residuals for the bias gradient. The source never calls compute_gradient outside the function: the self-contained fifth answer calls it. Accept w-alpha*dj_dw if the gradient is first obtained in the outer scope, but note that the supplied skeleton alone leaves dj_dw local and unavailable. The source asks only for the w update, not a b-update blank.\n\nPlatform practice rubric: 1 point per correct blank, up to 5; accept equivalent code, set order, mathematical forms, and rounding consistent with the prompt. Apply the source-specific alternatives above. This per-blank rubric is independently prepared, not an official marking scheme.",
+        "grading": "manual",
+        "section": "Supervised Learning"
+      },
+      {
+        "id": "caio_2026_a_q30",
+        "number": 30,
+        "points": 5,
+        "text": "Logistic Regression by Hand (fill in the 5 blanks)\nTrained model: w = [2, −1], b = −0.5. Hint: e^0.5 ≈ 1.649, e^3.5 ≈ 33.1.\nRound probabilities to two decimals.\n\n```text\nFor x = (1, 2): z = w·x + b = ______\nσ(z) ≈ ______\npredicted class (threshold 0.5) = ______\nFor x = (0, 3): z = ______ ; σ(z) ≈ ______\n```\n\nWrite five answers labeled (a), (b), (c), (d), and (e), in order. Include any assumptions or calculations.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "(a) `-0.5`\n(b) `0.38`\n(c) `0`\n(d) `-3.5`\n(e) `0.03`",
+        "explanation": "For (1,2), z=2-2-0.5=-0.5 and sigmoid=1/(1+1.649)=0.3775. For (0,3), z=-3.5 and sigmoid=1/(1+33.1)=0.0293. The first probability is below 0.5.\n\nPlatform practice rubric: 1 point per correct blank, up to 5; accept equivalent code, set order, mathematical forms, and rounding consistent with the prompt. Apply the source-specific alternatives above. This per-blank rubric is independently prepared, not an official marking scheme.",
+        "grading": "manual",
+        "section": "Supervised Learning"
+      },
+      {
+        "id": "caio_2026_a_q31",
+        "number": 31,
+        "points": 5,
+        "text": "One k-means Iteration (fill in the 5 blanks)\nPoints: (1,1), (1,2), (4,4), (5,4). Initial centroids μ₁=(1,1), μ₂=(5,5).\nDo ONE Lloyd iteration (assign, then recompute).\n\n```text\nnew μ₁ = (______, ______) # x, y\nnew μ₂ = (______, ______) # x, y\nAfter this iteration the algorithm has converged (yes/no): ______\n```\n\nWrite five answers labeled (a), (b), (c), (d), and (e), in order. Include any assumptions or calculations.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "(a) `1`\n(b) `1.5`\n(c) `4.5`\n(d) `4`\n(e) `yes`",
+        "explanation": "The first two points join cluster 1 and the last two join cluster 2. Coordinate means give (1,1.5) and (4.5,4). Reassignment with these centers is unchanged, so this is a Lloyd fixed point. Accept no if the student explicitly means a stopping test comparing old and new centers: the centers did move, so that implementation needs a further iteration to confirm convergence.\n\nPlatform practice rubric: 1 point per correct blank, up to 5; accept equivalent code, set order, mathematical forms, and rounding consistent with the prompt. Apply the source-specific alternatives above. This per-blank rubric is independently prepared, not an official marking scheme.",
+        "grading": "manual",
+        "section": "Unsupervised Learning"
+      },
+      {
+        "id": "caio_2026_a_q32",
+        "number": 32,
+        "points": 5,
+        "text": "A* Trace (fill in the 5 blanks)\nEdges: S→A cost 1, S→B cost 2, A→G cost 6, B→G cost 3.\nHeuristic: h(S)=5, h(A)=5, h(B)=2, h(G)=0.\n\n```text\nAfter expanding S: f(A) = ______ , f(B) = ______\nThe node expanded next (after S) is ______\nf(G) via the next expansion = ______\nThe optimal path found is ______ (e.g. S -> B -> G)\n```\n\nWrite five answers labeled (a), (b), (c), (d), and (e), in order. Include any assumptions or calculations.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "(a) `6`\n(b) `4`\n(c) `B`\n(d) `5`\n(e) `S -> B -> G`",
+        "explanation": "After S, f(A)=1+5=6 and f(B)=2+2=4. B generates G with g=2+3=5 and h=0, so G is popped before A.\n\nPlatform practice rubric: 1 point per correct blank, up to 5; accept equivalent code, set order, mathematical forms, and rounding consistent with the prompt. Apply the source-specific alternatives above. This per-blank rubric is independently prepared, not an official marking scheme.",
+        "grading": "manual",
+        "section": "AI Search"
+      },
+      {
+        "id": "caio_2026_a_q33",
+        "number": 33,
+        "points": 5,
+        "text": "RBF Kernel by Hand (fill in the 5 blanks; 3 decimals)\nk(x,z) = exp(−γ‖x−z‖²). Hint: e^(−2.5)≈0.082, e^(−0.9)≈0.407.\n\n```text\nx=(1,2), z=(4,6), γ=0.1: ‖x−z‖² = ______\n−γ‖x−z‖² = ______ ; k(x,z) ≈ ______\nx=(1,2), z=(1,5), γ=0.1: ‖x−z‖² = ______ ; k(x,z) ≈ ______\n```\n\nWrite five answers labeled (a), (b), (c), (d), and (e), in order. Include any assumptions or calculations.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "(a) `25`\n(b) `-2.5`\n(c) `0.082`\n(d) `9`\n(e) `0.407`",
+        "explanation": "Squared distances are 3^2+4^2=25 and 0^2+3^2=9. Exponents are -2.5 and -0.9; exponentiation gives 0.082085 and 0.406570.\n\nPlatform practice rubric: 1 point per correct blank, up to 5; accept equivalent code, set order, mathematical forms, and rounding consistent with the prompt. Apply the source-specific alternatives above. This per-blank rubric is independently prepared, not an official marking scheme.",
+        "grading": "manual",
+        "section": "Kernel Methods"
+      },
+      {
+        "id": "caio_2026_a_q34",
+        "number": 34,
+        "points": 5,
+        "text": "Forward Checking Trace (fill in the 5 blanks)\nVariables A, B, C, each domain {1,2,3}. Constraints: A < B, B ≠ C.\n\n```text\nAssign A=2. After forward checking: B ∈ {______} ; C ∈ {______}\n  (list values comma-separated, e.g. 1,2,3)\nThen assign B=3: C ∈ {______}\nIf instead (after A=2) we tried B=1, forward checking would report ______\n  (write: failure or success)\nNumber of complete assignments satisfying all constraints: ______\n```\n\nWrite five answers labeled (a), (b), (c), (d), and (e), in order. Include any assumptions or calculations.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "(a) `3`\n(b) `1,2,3`\n(c) `1,2`\n(d) `failure`\n(e) `6`",
+        "explanation": "A=2 forces B=3; forward checking does not yet propagate from unassigned B to C. Then B=3 excludes 3 from C. B=1 violates A<B. In the original problem there are 3 ordered pairs A<B and two C values for each, so 6 total assignments. Accept 2 for the last blank if explicitly counting extensions after A=2, since the source does not state whether that assignment is reset.\n\nPlatform practice rubric: 1 point per correct blank, up to 5; accept equivalent code, set order, mathematical forms, and rounding consistent with the prompt. Apply the source-specific alternatives above. This per-blank rubric is independently prepared, not an official marking scheme.",
+        "grading": "manual",
+        "section": "Constraint Satisfaction Problems"
+      },
+      {
+        "id": "caio_2026_a_q35",
+        "number": 35,
+        "points": 5,
+        "text": "Least-Squares Fit by Hand (fill in the 5 blanks; 2 decimals)\nFit y = wx + b to points (1,2), (2,3), (3,5) via least squares:\nw = Cov(x,y)/Var(x), b = Ƀ − w·x̄.\n\n```text\nx̄ = ______ ; Ƀ = ______\nw = ______ ; b = ______\nprediction at x=4: ŷ = ______\n```\n\nWrite five answers labeled (a), (b), (c), (d), and (e), in order. Include any assumptions or calculations.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "(a) `2.00`\n(b) `3.33`\n(c) `1.50`\n(d) `0.33`\n(e) `6.33`",
+        "explanation": "Means are x-bar=2 and y-bar=10/3. The slope is 3/2, intercept 1/3, and prediction at 4 is 19/3. The PDF glyph shown as Ƀ is interpreted as y-bar. Keep exact fractions until final rounding.\n\nPlatform practice rubric: 1 point per correct blank, up to 5; accept equivalent code, set order, mathematical forms, and rounding consistent with the prompt. Apply the source-specific alternatives above. This per-blank rubric is independently prepared, not an official marking scheme.",
+        "grading": "manual",
+        "section": "Supervised Learning"
+      }
+    ]
+  },
+  {
+    "id": "caio_2026_b",
+    "name": "2026-27 CAIO National Qualifier - Paper B",
+    "year": 2026,
+    "competition": "CAIO",
+    "durationMinutes": 90,
+    "source": "2026-27-caio-national-qualifier-practical-competition-b.pdf",
+    "description": "Part 1 - AI Fundamentals Challenge. 35 questions, 100 marks. Independently prepared solutions.",
+    "instructions": "Answer all 35 questions. Q1-15: choose one answer (2 marks each). Q16-25: select ALL correct options; full marks only for the complete correct set (2 marks each). Q26-35: five blanks per question (5 marks each); submit labeled answers (a)-(e) in the text box for teacher marking. A non-programmable calculator may be used. Ambiguous source questions are identified and teacher-marked. The 90-minute timer is the existing CAIO platform practice setting; these PDFs specify no duration. Solutions and the 1-point-per-blank practice rubric are independently prepared, not an official answer key.",
+    "questions": [
+      {
+        "id": "caio_2026_b_q1",
+        "number": 1,
+        "points": 2,
+        "text": "Consider the following Python code:\n\n```python\nimport numpy as np\na = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])\nmask = a > 4\nb = a[mask]\nb[0] = 99\nc = a.flatten(order='F')\nprint(a[1, 2], b[0], c[1], mask.sum())\n```\nWhat is the printed output?",
+        "type": "multiple-choice",
+        "options": [
+          "A. 99 99 4 5",
+          "B. 6 99 5 5",
+          "C. 6 99 4 5",
+          "D. 6 5 4 5",
+          "E. 99 99 5 5"
+        ],
+        "correctAnswer": "C. 6 99 4 5",
+        "explanation": "Boolean advanced indexing creates a copy, so changing b does not change a. Column-major flatten gives [1,4,7,2,5,8,3,6,9]. Thus a[1,2]=6, b[0]=99, c[1]=4, and five entries exceed 4.",
+        "grading": "automatic",
+        "section": "Data Preparation"
+      },
+      {
+        "id": "caio_2026_b_q2",
+        "number": 2,
+        "points": 2,
+        "text": "Consider the following Python code:\n\n```python\nimport pandas as pd\nleft = pd.DataFrame({'id': [1, 2, 3], 'score': [80, 90, 70]})\nright = pd.DataFrame({'id': [2, 3, 4], 'club': ['A', 'B', 'C']})\nm = left.merge(right, on='id', how='left')\nprint(len(m), m['club'].isna().sum(), int(m['score'].sum()))\n```\nWhat is the printed output?",
+        "type": "multiple-choice",
+        "options": [
+          "A. 3 1 240",
+          "B. 2 0 170",
+          "C. 4 1 240",
+          "D. 3 0 240",
+          "E. 3 1 170"
+        ],
+        "correctAnswer": "A. 3 1 240",
+        "explanation": "A left join retains ids 1,2,3. Only id 1 has a missing club; scores sum to 80+90+70=240.",
+        "grading": "automatic",
+        "section": "Data Preparation"
+      },
+      {
+        "id": "caio_2026_b_q3",
+        "number": 3,
+        "points": 2,
+        "text": "For binary logistic regression the cross-entropy loss is\nL(w, b) = −(1/n) Σᵢ [ yᵢ log pᵢ + (1−yᵢ) log(1−pᵢ) ], pᵢ = σ(w·xᵢ + b)\nThe gradient of L with respect to w is:",
+        "type": "multiple-choice",
+        "options": [
+          "A. −(1/n)Σᵢ (pᵢ−yᵢ)xᵢ",
+          "B. (1/n)Σᵢ (pᵢ−yᵢ)xᵢ",
+          "C. (1/n)Σᵢ (yᵢ−pᵢ)",
+          "D. (2/n)Σᵢ (pᵢ−yᵢ)xᵢ",
+          "E. (1/n)Σᵢ pᵢ(1−pᵢ)xᵢ"
+        ],
+        "correctAnswer": "B. (1/n)Σᵢ (pᵢ−yᵢ)xᵢ",
+        "explanation": "The sigmoid derivative and cross-entropy derivative simplify to p_i-y_i. Averaging gives (1/n) sum (p_i-y_i)x_i.",
+        "grading": "automatic",
+        "section": "Supervised Learning"
+      },
+      {
+        "id": "caio_2026_b_q4",
+        "number": 4,
+        "points": 2,
+        "text": "You train k-nearest-neighbors classifiers on the same dataset with different values of k.\nWhich statement is TRUE?",
+        "type": "multiple-choice",
+        "options": [
+          "A. k = 1 gives the smoothest decision boundary.",
+          "B. A larger k always improves test accuracy.",
+          "C. kNN with k = n (all training points) has the lowest bias.",
+          "D. Increasing k typically increases bias and decreases variance.",
+          "E. kNN needs no feature scaling because Euclidean distance is scale-invariant."
+        ],
+        "correctAnswer": "D. Increasing k typically increases bias and decreases variance.",
+        "explanation": "Increasing k smooths the decision boundary, generally increasing bias and decreasing variance. Distance-based neighbors remain sensitive to scaling.",
+        "grading": "automatic",
+        "section": "Supervised Learning"
+      },
+      {
+        "id": "caio_2026_b_q5",
+        "number": 5,
+        "points": 2,
+        "text": "Batch gradient descent minimizes J(w) = w² from w₀ = 4 with the update w := w −\nα·J′(w).\nFor which learning rate α does the sequence diverge (|w| → ∞)?",
+        "type": "multiple-choice",
+        "options": [
+          "A. 0.1",
+          "B. 0.5",
+          "C. 1.5",
+          "D. 0.9",
+          "E. 1.0"
+        ],
+        "correctAnswer": "C. 1.5",
+        "explanation": "w_next=(1-2alpha)w. Divergence requires |1-2alpha|>1. At alpha=1.5 the multiplier is -2. At alpha=1 it is -1, so the sequence oscillates without growing.",
+        "grading": "automatic",
+        "section": "Supervised Learning"
+      },
+      {
+        "id": "caio_2026_b_q6",
+        "number": 6,
+        "points": 2,
+        "text": "A decision-tree node holds 10 samples (6 of class A, 4 of class B). A candidate split\nsends 5 samples left (4 A, 1 B) and 5 right (2 A, 3 B).\nThe weighted Gini impurity after the split is:",
+        "type": "multiple-choice",
+        "options": [
+          "A. 0.48",
+          "B. 0.40",
+          "C. 0.32",
+          "D. 0.50",
+          "E. 0.44"
+        ],
+        "correctAnswer": "B. 0.40",
+        "explanation": "Left Gini=1-(4/5)^2-(1/5)^2=0.32; right Gini=1-(2/5)^2-(3/5)^2=0.48. Equal weights give 0.40.",
+        "grading": "automatic",
+        "section": "Supervised Learning"
+      },
+      {
+        "id": "caio_2026_b_q7",
+        "number": 7,
+        "points": 2,
+        "text": "A 3-class classifier has per-class precision and recall: class 1: P=1.00, R=0.50; class 2:\nP=0.50, R=1.00; class 3: P=0.80, R=0.80.\nThe macro-averaged F1 score is:",
+        "type": "multiple-choice",
+        "options": [
+          "A. 0.67",
+          "B. 0.80",
+          "C. 0.73",
+          "D. 0.71",
+          "E. 0.77"
+        ],
+        "correctAnswer": "D. 0.71",
+        "explanation": "Per-class F1 values are 2/3, 2/3, and 0.8. Their arithmetic mean is 0.7111, rounding to 0.71. Averaging precision and recall first is not macro-F1.",
+        "grading": "automatic",
+        "section": "Evaluation of ML Models"
+      },
+      {
+        "id": "caio_2026_b_q8",
+        "number": 8,
+        "points": 2,
+        "text": "You are building a fraud-detection model on a dataset with 1% fraudulent transactions.\nWhich evaluation choice is most appropriate?",
+        "type": "multiple-choice",
+        "options": [
+          "A. Accuracy, because it is the simplest and most intuitive metric.",
+          "B. Precision–recall analysis (e.g., F1 or PR-AUC), because accuracy can be misleading on imbalanced data.",
+          "C. Training accuracy, because it reflects the model’s full capacity.",
+          "D. ROC-AUC must never be used on imbalanced data.",
+          "E. Mean squared error computed on the predicted class labels."
+        ],
+        "correctAnswer": "B. Precision–recall analysis (e.g., F1 or PR-AUC), because accuracy can be misleading on imbalanced data.",
+        "explanation": "A trivial all-negative model gets 99% accuracy. Precision-recall analysis exposes positive-class performance. ROC-AUC is not forbidden, but can hide practical rare-class tradeoffs.",
+        "grading": "automatic",
+        "section": "Evaluation of ML Models"
+      },
+      {
+        "id": "caio_2026_b_q9",
+        "number": 9,
+        "points": 2,
+        "text": "PCA is applied to centered data whose covariance matrix has eigenvalues 6, 3, 1.\nWhat fraction of the total variance is retained by projecting onto the first two\nprincipal components?",
+        "type": "multiple-choice",
+        "options": [
+          "A. 0.60",
+          "B. 0.30",
+          "C. 0.90",
+          "D. 1.00",
+          "E. 0.67"
+        ],
+        "correctAnswer": "C. 0.90",
+        "explanation": "Retained variance=(6+3)/(6+3+1)=9/10=0.90.",
+        "grading": "automatic",
+        "section": "Unsupervised Learning"
+      },
+      {
+        "id": "caio_2026_b_q10",
+        "number": 10,
+        "points": 2,
+        "text": "A kernel is valid (Mercer) if it equals an inner product ⟨φ(x), φ(z)⟩ for some feature map\nφ.\nWhich of the following is NOT a valid Mercer kernel?",
+        "type": "multiple-choice",
+        "options": [
+          "A. k(x,z) = (x·z + 2)²",
+          "B. k(x,z) = exp(−2‖x − z‖²)",
+          "C. k(x,z) = (x·z)³",
+          "D. k(x,z) = −(x·z)²",
+          "E. k(x,z) = x·z"
+        ],
+        "correctAnswer": "D. k(x,z) = −(x·z)²",
+        "explanation": "For a nonzero x, k(x,x)=-||x||^4<0, impossible for an inner-product kernel. The other options are standard positive-semidefinite kernels.",
+        "grading": "automatic",
+        "section": "Kernel Methods"
+      },
+      {
+        "id": "caio_2026_b_q11",
+        "number": 11,
+        "points": 2,
+        "text": "A hard-margin SVM has support vectors x₁=(1,1) with y₁=+1, α₁=1 and x₂=(−1,−1) with\ny₂=−1, α₂=1.\nThe weight vector w of the SVM equals:",
+        "type": "multiple-choice",
+        "options": [
+          "A. (2, 2)",
+          "B. (0, 0)",
+          "C. (1, 1)",
+          "D. (2, −2)",
+          "E. (1, −1)"
+        ],
+        "correctAnswer": "A. (2, 2)",
+        "explanation": "Using the supplied dual coefficients, w=sum alpha_i*y_i*x_i=(1,1)+(1,1)=(2,2). Source caveat: these coefficients are not the optimum of the two-point canonical hard-margin problem (the listed support equalities cannot both hold); the requested algebraic calculation is still A.",
+        "grading": "automatic",
+        "section": "Kernel Methods"
+      },
+      {
+        "id": "caio_2026_b_q12",
+        "number": 12,
+        "points": 2,
+        "text": "Greedy best-first search expands nodes in order of increasing heuristic value h(n),\nignoring the path cost so far.\nWhich statement is TRUE?",
+        "type": "multiple-choice",
+        "options": [
+          "A. Greedy best-first search always finds the optimal path.",
+          "B. Greedy best-first search is optimal whenever the heuristic is admissible.",
+          "C. A* with an admissible but inconsistent heuristic never re-expands a node.",
+          "D. Greedy best-first search always expands fewer nodes than A* with the same heuristic.",
+          "E. On a finite graph, greedy best-first search with a closed (visited) set is complete, though not optimal."
+        ],
+        "correctAnswer": "E. On a finite graph, greedy best-first search with a closed (visited) set is complete, though not optimal.",
+        "explanation": "With a finite graph and visited-state checking, greedy search eventually exhausts reachable states if necessary. Its heuristic-only priority does not guarantee the cheapest path or fewer expansions than A*.",
+        "grading": "automatic",
+        "section": "AI Search"
+      },
+      {
+        "id": "caio_2026_b_q13",
+        "number": 13,
+        "points": 2,
+        "text": "Knowledge base KB = { ¬P ∨ Q, ¬Q ∨ R, P }.\nWhich formula is logically entailed by KB?",
+        "type": "multiple-choice",
+        "options": [
+          "A. ¬R",
+          "B. R",
+          "C. ¬P",
+          "D. Q ∧ ¬R",
+          "E. ¬Q"
+        ],
+        "correctAnswer": "B. R",
+        "explanation": "The first implication and P yield Q; the second implication then yields R.",
+        "grading": "automatic",
+        "section": "Logical Reasoning"
+      },
+      {
+        "id": "caio_2026_b_q14",
+        "number": 14,
+        "points": 2,
+        "text": "Variables X, Y with domains D(X) = {1, 2, 3}, D(Y) = {1, 2, 3} and a single constraint X\n< Y.\nAfter enforcing arc consistency, the domains are:",
+        "type": "multiple-choice",
+        "options": [
+          "A. D(X) = {1, 2, 3}, D(Y) = {1, 2, 3}",
+          "B. D(X) = {1, 2}, D(Y) = {1, 2, 3}",
+          "C. D(X) = {1, 2}, D(Y) = {2, 3}",
+          "D. D(X) = {1}, D(Y) = {3}",
+          "E. D(X) = {2, 3}, D(Y) = {1, 2}"
+        ],
+        "correctAnswer": "C. D(X) = {1, 2}, D(Y) = {2, 3}",
+        "explanation": "X=3 has no larger Y, and Y=1 has no smaller X. Every remaining value has support, giving X={1,2}, Y={2,3}.",
+        "grading": "automatic",
+        "section": "Constraint Satisfaction Problems"
+      },
+      {
+        "id": "caio_2026_b_q15",
+        "number": 15,
+        "points": 2,
+        "text": "An agent in state s takes action a, receives reward r = 4, and moves to s′. Currently\nQ(s,a) = 2. In s′, Q(s′,a₁)=1, Q(s′,a₂)=5, Q(s′,a₃)=3. Learning rate α = 0.5, discount γ =\n0.8.\nAfter one Q-learning update, Q(s,a) becomes:",
+        "type": "multiple-choice",
+        "options": [
+          "A. 5.0",
+          "B. 5.5",
+          "C. 4.2",
+          "D. 8.0",
+          "E. 3.0"
+        ],
+        "correctAnswer": "A. 5.0",
+        "explanation": "Target=4+0.8*5=8. Update=2+0.5*(8-2)=5.",
+        "grading": "automatic",
+        "section": "Reinforcement Learning"
+      },
+      {
+        "id": "caio_2026_b_q16",
+        "number": 16,
+        "points": 2,
+        "text": "Select ALL correct options. You receive full marks only if every correct option — and no incorrect option\n— is selected.\nWhich statements about handling missing data are TRUE?\n\n**Platform note:** This item has ambiguous source wording and will be teacher-marked. Select the options supported by your reading.",
+        "type": "multi-select",
+        "options": [
+          "A. Filling missing values with the column mean reduces that column’s variance compared with the complete data.",
+          "B. Dropping every row that contains a missing value can bias results if the missingness depends on unobserved values.",
+          "C. Forward-fill is always the best imputation strategy for time-series data.",
+          "D. Imputation statistics (e.g., the mean) should be computed on the training set only, then applied to the test set.",
+          "E. A missing-value indicator column can never help a model."
+        ],
+        "correctAnswer": "[\"A\", \"B\", \"D\"]",
+        "explanation": "Usual intended selection: A,B,D. Mean imputation shrinks variance relative to the observed nonmissing sample; dropping missing-not-at-random rows can bias results; fit imputation on training data. Source ambiguity: A compares against the unknown complete data, for which variance reduction is not guaranteed. Accept B,D under that literal reading, or A,B,D under the conventional observed-data reading. C and E are false.\n\nMarking: award 2 points for either defensible complete selection described above, otherwise 0. This preserves the source all-or-nothing scoring rule.",
+        "grading": "manual",
+        "section": "Data Preparation"
+      },
+      {
+        "id": "caio_2026_b_q17",
+        "number": 17,
+        "points": 2,
+        "text": "Select ALL correct options. You receive full marks only if every correct option — and no incorrect option\n— is selected.\nWhich statements about feature encoding and scaling are TRUE?",
+        "type": "multi-select",
+        "options": [
+          "A. One-hot encoding a categorical feature with k levels creates k binary columns.",
+          "B. Label-encoding (0, 1, 2, …) a nominal feature like “color” can mislead a linear model into assuming an ordering.",
+          "C. Standardization (zero mean, unit variance) is required before training a decision tree.",
+          "D. Min–max scaling to [0, 1] keeps kNN and RBF-kernel SVM from being dominated by large-range features.",
+          "E. Target encoding never causes leakage because it only uses the target column."
+        ],
+        "correctAnswer": "[\"A\", \"B\", \"D\"]",
+        "explanation": "Full one-hot encoding (without dropping a reference category) gives k columns. Nominal integer codes imply an artificial order to a linear model. Scaling helps distance-based methods. Trees do not require standardization; target encoding can leak labels.",
+        "grading": "automatic",
+        "section": "Data Preparation"
+      },
+      {
+        "id": "caio_2026_b_q18",
+        "number": 18,
+        "points": 2,
+        "text": "Select ALL correct options. You receive full marks only if every correct option — and no incorrect option\n— is selected.\nWhich statements about logistic regression are TRUE?\n\n**Platform note:** This item has ambiguous source wording and will be teacher-marked. Select the options supported by your reading.",
+        "type": "multi-select",
+        "options": [
+          "A. The decision boundary of binary logistic regression is linear in the feature space.",
+          "B. The cross-entropy loss for logistic regression is convex, so gradient descent converges to the global optimum.",
+          "C. Logistic regression outputs can be interpreted as estimated class probabilities.",
+          "D. Logistic regression cannot handle more than two classes.",
+          "E. Adding L2 regularization always increases training accuracy."
+        ],
+        "correctAnswer": "[\"A\", \"B\", \"C\"]",
+        "explanation": "Intended selection: A,B,C. Logistic regression has a linear feature-space boundary and estimates probabilities. Source caveat: convexity alone does not guarantee gradient-descent convergence; step size matters, and separable unregularized data may have no finite optimum. Accept A,C for the literal unconditional reading of B, or A,B,C with the standard convergence assumptions. Multiclass variants exist; L2 does not always increase training accuracy.\n\nMarking: award 2 points for either defensible complete selection described above, otherwise 0. This preserves the source all-or-nothing scoring rule.",
+        "grading": "manual",
+        "section": "Supervised Learning"
+      },
+      {
+        "id": "caio_2026_b_q19",
+        "number": 19,
+        "points": 2,
+        "text": "Select ALL correct options. You receive full marks only if every correct option — and no incorrect option\n— is selected.\nWhich statements about Naive Bayes are TRUE?",
+        "type": "multi-select",
+        "options": [
+          "A. Naive Bayes assumes the features are conditionally independent given the class.",
+          "B. Laplace (add-α) smoothing prevents zero probabilities for unseen feature–class combinations.",
+          "C. Gaussian Naive Bayes models each continuous feature with a Gaussian per class.",
+          "D. Naive Bayes can only be used with binary features.",
+          "E. Violating the independence assumption always makes Naive Bayes worse than logistic regression."
+        ],
+        "correctAnswer": "[\"A\", \"B\", \"C\"]",
+        "explanation": "Naive Bayes assumes conditional independence. Additive smoothing avoids zero categorical probabilities, and Gaussian NB uses per-class Gaussian feature models. It supports nonbinary data and may work well despite imperfect independence.",
+        "grading": "automatic",
+        "section": "Supervised Learning"
+      },
+      {
+        "id": "caio_2026_b_q20",
+        "number": 20,
+        "points": 2,
+        "text": "Select ALL correct options. You receive full marks only if every correct option — and no incorrect option\n— is selected.\nWhich statements about PCA are TRUE?",
+        "type": "multi-select",
+        "options": [
+          "A. Principal components are eigenvectors of the covariance matrix, ordered by decreasing eigenvalue.",
+          "B. The first principal component is the direction of maximum variance in the data.",
+          "C. PCA is unaffected by the scale of the features.",
+          "D. Projecting onto all principal components loses information.",
+          "E. PCA can denoise data by dropping low-variance components."
+        ],
+        "correctAnswer": "[\"A\", \"B\", \"E\"]",
+        "explanation": "PCA directions are covariance eigenvectors; the first maximizes projected variance. Dropping low-variance directions can remove noise. Scaling affects PCA; using the full orthonormal basis preserves information.",
+        "grading": "automatic",
+        "section": "Unsupervised Learning"
+      },
+      {
+        "id": "caio_2026_b_q21",
+        "number": 21,
+        "points": 2,
+        "text": "Select ALL correct options. You receive full marks only if every correct option — and no incorrect option\n— is selected.\nWhich statements about model evaluation methodology are TRUE?",
+        "type": "multi-select",
+        "options": [
+          "A. The test set should be used only once, for the final performance estimate.",
+          "B. Hyperparameters should be tuned on the validation set, not the test set.",
+          "C. k-fold cross-validation reduces the variance of the performance estimate compared with a single train/validation split.",
+          "D. Stratified k-fold is only useful for regression problems.",
+          "E. Computing preprocessing statistics (e.g., the scaler mean) on the full dataset before splitting is harmless."
+        ],
+        "correctAnswer": "[\"A\", \"B\", \"C\"]",
+        "explanation": "Reserve test data for final evaluation, tune on validation data, and fit preprocessing within training folds. Cross-validation generally stabilizes estimates over a single split, though not a universal variance guarantee. Stratification is particularly useful for classification.",
+        "grading": "automatic",
+        "section": "Evaluation of ML Models"
+      },
+      {
+        "id": "caio_2026_b_q22",
+        "number": 22,
+        "points": 2,
+        "text": "Select ALL correct options. You receive full marks only if every correct option — and no incorrect option\n— is selected.\nWhich statements about SVMs and kernels are TRUE?",
+        "type": "multi-select",
+        "options": [
+          "A. The kernel (Gram) matrix of a valid kernel is always positive semidefinite.",
+          "B. In the soft-margin SVM, a larger C penalizes margin violations more heavily.",
+          "C. The polynomial kernel (x·z + c)^d corresponds to a finite-dimensional feature space.",
+          "D. Support vectors are exactly the training points lying strictly inside the margin.",
+          "E. The RBF kernel can be written as a finite polynomial in the input features."
+        ],
+        "correctAnswer": "[\"A\", \"B\", \"C\"]",
+        "explanation": "Valid kernels have PSD Gram matrices. Larger C penalizes margin violations more. Integer-degree polynomial kernels on finite-dimensional inputs have finite feature maps. Support vectors may be on the margin or inside it; RBF is not a finite polynomial.",
+        "grading": "automatic",
+        "section": "Kernel Methods"
+      },
+      {
+        "id": "caio_2026_b_q23",
+        "number": 23,
+        "points": 2,
+        "text": "Select ALL correct options. You receive full marks only if every correct option — and no incorrect option\n— is selected.\nWhich statements about search are TRUE?",
+        "type": "multi-select",
+        "options": [
+          "A. Iterative deepening DFS combines the memory efficiency of DFS with the optimality (for unit step costs) of BFS.",
+          "B. If h₁(n) ≤ h₂(n) ≤ h*(n) for all n, A* with h₂ expands no more nodes than A* with h₁ (up to tie-breaking).",
+          "C. Tree search can revisit the same state many times, while graph search avoids this with a closed set.",
+          "D. A consistent heuristic can overestimate the true cost to the goal.",
+          "E. Depth-limited search is complete in infinite state spaces."
+        ],
+        "correctAnswer": "[\"A\", \"B\", \"C\"]",
+        "explanation": "With finite branching and unit costs, iterative deepening combines DFS-like memory and BFS optimality. A more informative admissible heuristic weakly reduces necessary A* expansions under the standard dominance assumptions (consistent heuristics, excluding ties/re-expansion complications). Graph search tracks repeated states. With h(goal)=0, consistency implies admissibility. A fixed depth limit may miss a deeper solution.",
+        "grading": "automatic",
+        "section": "AI Search"
+      },
+      {
+        "id": "caio_2026_b_q24",
+        "number": 24,
+        "points": 2,
+        "text": "Select ALL correct options. You receive full marks only if every correct option — and no incorrect option\n— is selected.\nWhich statements about recommender systems are TRUE?",
+        "type": "multi-select",
+        "options": [
+          "A. Matrix factorization learns latent user and item vectors whose dot product predicts ratings.",
+          "B. Implicit feedback (clicks, views) can train a recommender, but it does not directly reveal negative preference.",
+          "C. Popularity bias can cause a recommender to over-recommend already-popular items.",
+          "D. Matrix factorization requires explicit star ratings and cannot use implicit feedback.",
+          "E. Precision@k counts how many relevant items appear anywhere in the full catalog."
+        ],
+        "correctAnswer": "[\"A\", \"B\", \"C\"]",
+        "explanation": "Factorization learns user/item vectors. Clicks are implicit positive evidence, while missing clicks need not indicate dislike. Popularity bias is real. Implicit factorization is possible; precision@k is the relevant fraction among the top k recommendations.",
+        "grading": "automatic",
+        "section": "Recommender Systems"
+      },
+      {
+        "id": "caio_2026_b_q25",
+        "number": 25,
+        "points": 2,
+        "text": "Select ALL correct options. You receive full marks only if every correct option — and no incorrect option\n— is selected.\nWhich statements about propositional logic are TRUE?\n\n**Platform note:** This item has ambiguous source wording and will be teacher-marked. Select the options supported by your reading.",
+        "type": "multi-select",
+        "options": [
+          "A. Modus ponens: from P → Q and P, infer Q.",
+          "B. Affirming the consequent — from P → Q and Q, infer P — is a valid inference rule.",
+          "C. The contrapositive ¬Q → ¬P is logically equivalent to P → Q.",
+          "D. De Morgan’s law: ¬(P ∧ Q) is equivalent to ¬P ∨ ¬Q.",
+          "E. A formula that is true under every assignment is called satisfiable."
+        ],
+        "correctAnswer": "[\"A\", \"C\", \"D\", \"E\"]",
+        "explanation": "A,C,D are unambiguously true; affirming the consequent is invalid. Literally E is also true: a formula true under every assignment is satisfiable, although the precise term is tautology (valid). Accept A,C,D,E for the literal reading or A,C,D if E is interpreted as asking for the defining term. This source ambiguity is teacher-marked.\n\nMarking: award 2 points for either defensible complete selection described above, otherwise 0. This preserves the source all-or-nothing scoring rule.",
+        "grading": "manual",
+        "section": "Logical Reasoning"
+      },
+      {
+        "id": "caio_2026_b_q26",
+        "number": 26,
+        "points": 5,
+        "text": "Movie Ratings Pipeline (fill in the 5 blanks)\nmovies.csv columns: title, year, genre, rating (float, may be NaN).\nClean the titles, drop duplicate (title, year) rows, fill missing ratings with the genre\nmedian, then rank genres with at least 10 movies by mean rating.\n\n```python\nimport pandas as pd\ndf = pd.read_csv('movies.csv')\ndf['title'] = df['title']______\ndf = df.______(subset=['title', 'year'], keep='first')\ndf['rating'] = df.groupby('genre')['rating'].______(\n    lambda s: s.fillna(s.median()))\ng = df.groupby('genre')['rating'].______(['mean', 'count'])\ng = g[g['count'] >= 10].______('mean', ascending=False)\n```\n\nWrite five answers labeled (a), (b), (c), (d), and (e), in order. Include any assumptions or calculations.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "(a) `.str.strip()`\n(b) `drop_duplicates`\n(c) `transform`\n(d) `agg`\n(e) `sort_values`",
+        "explanation": "Strip surrounding title whitespace, deduplicate title/year, use transform to return one imputed rating per row, aggregate mean/count, filter, and sort descending. Other justified title-cleaning chains are acceptable because cleaning is not precisely defined. A genre containing only missing ratings still has a missing median; no fallback is specified.\n\nPlatform practice rubric: 1 point per correct blank, up to 5; accept equivalent code, set order, mathematical forms, and rounding consistent with the prompt. Apply the source-specific alternatives above. This per-blank rubric is independently prepared, not an official marking scheme.",
+        "grading": "manual",
+        "section": "Data Preparation"
+      },
+      {
+        "id": "caio_2026_b_q27",
+        "number": 27,
+        "points": 5,
+        "text": "Outlier Removal with NumPy (fill in the 5 blanks)\nStandardize the columns of a numeric CSV, drop rows containing any |z| ≥ 3 outlier,\nthen find the 5 largest values in column 0.\n\n```python\nimport numpy as np\nX = np.loadtxt('data.csv', ______=',')\nmu = X.______(axis=0)\nsd = X.std(axis=0)\nZ = (X - mu) / sd\nok = np.______(Z).max(axis=1) < 3\nclean = X[______]\nk = 5\nidx = np.______(clean[:, 0])[-k:]\nprint(round(float(clean[idx][-1, 0]), 3), len(clean))\n```\n\nWrite five answers labeled (a), (b), (c), (d), and (e), in order. Include any assumptions or calculations.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "(a) `delimiter`\n(b) `mean`\n(c) `abs`\n(d) `ok`\n(e) `argsort`",
+        "explanation": "Compute column means/stds, select rows whose maximum absolute standardized entry is below 3, and take the final five indices of an ascending argsort. Assume nonconstant finite columns and at least five retained rows, as required by this skeleton. argpartition alone does not guarantee the last selected value is the maximum printed here.\n\nPlatform practice rubric: 1 point per correct blank, up to 5; accept equivalent code, set order, mathematical forms, and rounding consistent with the prompt. Apply the source-specific alternatives above. This per-blank rubric is independently prepared, not an official marking scheme.",
+        "grading": "manual",
+        "section": "Data Preparation"
+      },
+      {
+        "id": "caio_2026_b_q28",
+        "number": 28,
+        "points": 5,
+        "text": "Polynomial Ridge with Cross-Validation (fill in the 5 blanks)\nFit a degree-3 polynomial ridge regression with 5-fold cross-validation. X, y are already\nloaded.\n\n```python\nfrom sklearn.preprocessing import PolynomialFeatures, StandardScaler\nfrom sklearn.linear_model import Ridge\nfrom sklearn.pipeline import make_pipeline\nfrom sklearn.model_selection import cross_val_score\nmodel = make_pipeline(\n    PolynomialFeatures(degree=______, include_bias=______),\n    StandardScaler(),\n    Ridge(alpha=______))\nscores = cross_val_score(model, X, y, cv=______, scoring=______)\nprint(round(-scores.mean(), 3), round(scores.std(), 3))\n```\n\nWrite five answers labeled (a), (b), (c), (d), and (e), in order. Include any assumptions or calculations.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "(a) `3`\n(b) `False`\n(c) `1.0`\n(d) `5`\n(e) `'neg_mean_squared_error'`",
+        "explanation": "A pipeline refits polynomial/scaling transformations inside each training fold. Degree=3 and cv=5 are specified. False avoids a redundant bias feature when Ridge fits an intercept. Source omissions: no ridge alpha or scoring metric is specified; 1.0 and negative MSE are conventional choices, not uniquely determined. Accept any positive alpha and a coherent negative loss scorer; include_bias=True is also a valid though redundant configuration.\n\nPlatform practice rubric: 1 point per correct blank, up to 5; accept equivalent code, set order, mathematical forms, and rounding consistent with the prompt. Apply the source-specific alternatives above. This per-blank rubric is independently prepared, not an official marking scheme.",
+        "grading": "manual",
+        "section": "Supervised Learning"
+      },
+      {
+        "id": "caio_2026_b_q29",
+        "number": 29,
+        "points": 5,
+        "text": "Naive Bayes by Hand (fill in the 5 blanks)\nSpam filter, binary word features, Laplace smoothing α=1.\nTraining: 10 emails — 4 spam, 6 ham.\n“offer” appears in 3 spam, 1 ham; “meeting” in 1 spam, 4 ham.\nClassify a new email containing “offer” but NOT “meeting”. Round to 2–3 decimals.\n\n```text\nP(spam) = ______ # prior\nP(offer | spam) ≈ ______ # Laplace α=1\nP(meeting | spam) ≈ ______\nunnormalized score(ham) ≈ ______\npredicted class: ______\n```\n\nWrite five answers labeled (a), (b), (c), (d), and (e), in order. Include any assumptions or calculations.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "(a) `0.40`\n(b) `0.667`\n(c) `0.333`\n(d) `0.056`\n(e) `spam`",
+        "explanation": "Bernoulli NB: spam prior=4/10; P(offer|spam)=(3+1)/(4+2)=2/3; P(meeting|spam)=(1+1)/6=1/3. Ham score=(6/10)*(2/8)*(1-5/8)=0.05625; spam score=(4/10)*(4/6)*(1-2/6)=0.17778, so spam wins. Accept 0.06 when rounding the score to two decimals, as permitted.\n\nPlatform practice rubric: 1 point per correct blank, up to 5; accept equivalent code, set order, mathematical forms, and rounding consistent with the prompt. Apply the source-specific alternatives above. This per-blank rubric is independently prepared, not an official marking scheme.",
+        "grading": "manual",
+        "section": "Supervised Learning"
+      },
+      {
+        "id": "caio_2026_b_q30",
+        "number": 30,
+        "points": 5,
+        "text": "PCA Eigenvalues by Hand (fill in the 5 blanks)\n2-D centered data has covariance matrix [[4, 2], [2, 3]].\nHint: √17 ≈ 4.123. Round eigenvalues to 2 decimals.\n\n```text\ncovariance = [[4, 2], [2, 3]]\ntrace = ______\ndet = ______\nλ₁ (larger eigenvalue) ≈ ______\nλ₂ (smaller eigenvalue) ≈ ______\nvariance fraction explained by PC1 ≈ ______\n```\n\nWrite five answers labeled (a), (b), (c), (d), and (e), in order. Include any assumptions or calculations.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "(a) `7`\n(b) `8`\n(c) `5.56`\n(d) `1.44`\n(e) `0.79`",
+        "explanation": "Trace=4+3=7; determinant=12-4=8. Eigenvalues=(7 +/- sqrt(17))/2=5.56155 and 1.43845. The leading variance fraction is 5.56155/7=0.794508; accept 0.795 or 79.45% as equivalent precision.\n\nPlatform practice rubric: 1 point per correct blank, up to 5; accept equivalent code, set order, mathematical forms, and rounding consistent with the prompt. Apply the source-specific alternatives above. This per-blank rubric is independently prepared, not an official marking scheme.",
+        "grading": "manual",
+        "section": "Unsupervised Learning"
+      },
+      {
+        "id": "caio_2026_b_q31",
+        "number": 31,
+        "points": 5,
+        "text": "Uniform-Cost Search Trace (fill in the 5 blanks)\nUniform-cost search from S to G.\nEdges: S→A (3), S→B (1), A→C (1), B→D (4), B→C (5), C→G (2), D→G (1).\n\n```text\n1st node expanded: ______\n2nd node expanded: ______\n3rd node expanded: ______\ncost of the path found to G: ______\nthe optimal path is: ______ (e.g. S -> B -> D -> G)\n```\n\nWrite five answers labeled (a), (b), (c), (d), and (e), in order. Include any assumptions or calculations.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "(a) `S`\n(b) `B`\n(c) `A`\n(d) `6`\n(e) `S -> A -> C -> G`",
+        "explanation": "UCS pops S(0), B(1), A(3), C(4), D(5), G(6). Both S-A-C-G and S-B-D-G cost 6; no tie policy for equal-cost goal parents is specified. Accept either optimal path.\n\nPlatform practice rubric: 1 point per correct blank, up to 5; accept equivalent code, set order, mathematical forms, and rounding consistent with the prompt. Apply the source-specific alternatives above. This per-blank rubric is independently prepared, not an official marking scheme.",
+        "grading": "manual",
+        "section": "AI Search"
+      },
+      {
+        "id": "caio_2026_b_q32",
+        "number": 32,
+        "points": 5,
+        "text": "Resolution Proof (fill in the 5 blanks)\nConvert each formula to CNF clauses, then refute the negated goal.\n\n```text\nProve P → R from KB = { P → Q, Q → R } by resolution.\nclause (1): ______\nclause (2): ______\nclause (3): ______\nclause (4): ______\nresolve (3)+(1) → Q; resolve with (2) → R; resolve with (4)\nyields the ______ clause\n```\n\nWrite five answers labeled (a), (b), (c), (d), and (e), in order. Include any assumptions or calculations.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "(a) `¬P ∨ Q`\n(b) `¬Q ∨ R`\n(c) `P`\n(d) `¬R`\n(e) `empty`",
+        "explanation": "CNF of the implications gives the first two clauses. Negating P->R gives P and not R. Resolve P with not P or Q to get Q, then R, then the empty clause with not R.\n\nPlatform practice rubric: 1 point per correct blank, up to 5; accept equivalent code, set order, mathematical forms, and rounding consistent with the prompt. Apply the source-specific alternatives above. This per-blank rubric is independently prepared, not an official marking scheme.",
+        "grading": "manual",
+        "section": "Logical Reasoning"
+      },
+      {
+        "id": "caio_2026_b_q33",
+        "number": 33,
+        "points": 5,
+        "text": "Arc Consistency and Counting (fill in the 5 blanks)\nVariables X, Y, Z, each with domain {1, 2, 3, 4}.\nConstraints: X < Y, Y ≠ Z.\n\n```text\nvalue removed from D(X) by arc consistency: ______\nvalue removed from D(Y) by arc consistency: ______\nD(X) after arc consistency: ______ (e.g. 1,2,3)\nnumber of complete assignments satisfying all constraints: ______\nassign X=2; after forward checking, D(Y) = ______\n```\n\nWrite five answers labeled (a), (b), (c), (d), and (e), in order. Include any assumptions or calculations.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "(a) `4`\n(b) `1`\n(c) `1,2,3`\n(d) `18`\n(e) `3,4`",
+        "explanation": "X=4 has no greater Y; Y=1 has no smaller X. There are 6 pairs X<Y and 3 choices of Z not equal to Y, giving 18 assignments. Assigning X=2 leaves Y={3,4}.\n\nPlatform practice rubric: 1 point per correct blank, up to 5; accept equivalent code, set order, mathematical forms, and rounding consistent with the prompt. Apply the source-specific alternatives above. This per-blank rubric is independently prepared, not an official marking scheme.",
+        "grading": "manual",
+        "section": "Constraint Satisfaction Problems"
+      },
+      {
+        "id": "caio_2026_b_q34",
+        "number": 34,
+        "points": 5,
+        "text": "Polynomial Kernel by Hand (fill in the 5 blanks)\nPolynomial kernel k(x,z) = (x·z + 2)². Compute by hand.\n\n```text\nk(x, z) = (x·z + 2)²\nx=(1,2), z=(3,−1): x·z = ______ ; k(x,z) = ______\nx=(2,0), z=(1,1): x·z = ______ ; k(x,z) = ______\ndimension of the explicit feature map φ for degree 2 in 2-D inputs: ______\n```\n\nWrite five answers labeled (a), (b), (c), (d), and (e), in order. Include any assumptions or calculations.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "(a) `1`\n(b) `9`\n(c) `2`\n(d) `16`\n(e) `6`",
+        "explanation": "Dot products are 3-2=1 and 2+0=2; add 2 and square. The full inhomogeneous degree-two map in two variables has 1 constant, 2 linear, and 3 quadratic coordinates.\n\nPlatform practice rubric: 1 point per correct blank, up to 5; accept equivalent code, set order, mathematical forms, and rounding consistent with the prompt. Apply the source-specific alternatives above. This per-blank rubric is independently prepared, not an official marking scheme.",
+        "grading": "manual",
+        "section": "Kernel Methods"
+      },
+      {
+        "id": "caio_2026_b_q35",
+        "number": 35,
+        "points": 5,
+        "text": "One Gradient-Descent Step by Hand (fill in the 5 blanks; 2 decimals)\nDo one batch gradient-descent step by hand.\n\n```text\npoints (1,1), (2,2), (3,2); w = 0, b = 0, α = 0.1\nJ(w,b) = (1/2m) Σᵢ (wxᵢ + b − yᵢ)²\n∂J/∂w = ______ (2 decimals)\n∂J/∂b = ______\nafter one GD step: w = ______ ; b = ______\nnew mean squared error = ______\n```\n\nWrite five answers labeled (a), (b), (c), (d), and (e), in order. Include any assumptions or calculations.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "(a) `-3.67`\n(b) `-1.67`\n(c) `0.37`\n(d) `0.17`\n(e) `0.66`",
+        "explanation": "Initial residuals are -1,-2,-2. Gradients are -11/3 and -5/3. Exact updates are w=11/30, b=1/6; predictions are 8/15,9/10,19/15. New MSE=1769/2700=0.655185. This is MSE, not the half-MSE objective. Using rounded parameters 0.37 and 0.17 gives MSE 0.639367, rounding to 0.64; accept that if intermediate rounding is shown.\n\nPlatform practice rubric: 1 point per correct blank, up to 5; accept equivalent code, set order, mathematical forms, and rounding consistent with the prompt. Apply the source-specific alternatives above. This per-blank rubric is independently prepared, not an official marking scheme.",
+        "grading": "manual",
+        "section": "Supervised Learning"
+      }
+    ]
+  },
+  {
+    "id": "caio_2026_c",
+    "name": "2026-27 CAIO National Qualifier - Paper C",
+    "year": 2026,
+    "competition": "CAIO",
+    "durationMinutes": 90,
+    "source": "2026-27-caio-national-qualifier-practical-competition-c.pdf",
+    "description": "Part 1 - AI Fundamentals Challenge. 35 questions, 100 marks. Independently prepared solutions.",
+    "instructions": "Answer all 35 questions. Q1-15: choose one answer (2 marks each). Q16-25: select ALL correct options; full marks only for the complete correct set (2 marks each). Q26-35: five blanks per question (5 marks each); submit labeled answers (a)-(e) in the text box for teacher marking. A non-programmable calculator may be used. Ambiguous source questions are identified and teacher-marked. The 90-minute timer is the existing CAIO platform practice setting; these PDFs specify no duration. Solutions and the 1-point-per-blank practice rubric are independently prepared, not an official answer key.",
+    "questions": [
+      {
+        "id": "caio_2026_c_q1",
+        "number": 1,
+        "points": 2,
+        "text": "Consider the following Python code:\n\n```python\nimport numpy as np\nA = np.array([[1, 2, 3], [4, 5, 6]])\nB = A[0, :]\nC = A[0, :].copy()\nB += 10\nC += 100\nprint(A[0, 0], A[0, 1], A[1, 0], A.sum())\n```\nWhat is the printed output?",
+        "type": "multiple-choice",
+        "options": [
+          "A. 11 12 4 51",
+          "B. 11 12 104 351",
+          "C. 1 2 4 21",
+          "D. 11 112 4 151",
+          "E. 101 102 4 321"
+        ],
+        "correctAnswer": "A. 11 12 4 51",
+        "explanation": "B is a view and adds 10 to the first row of A; C is an independent copy. A becomes [[11,12,13],[4,5,6]], with sum 51.",
+        "grading": "automatic",
+        "section": "Data Preparation"
+      },
+      {
+        "id": "caio_2026_c_q2",
+        "number": 2,
+        "points": 2,
+        "text": "Consider the following Python code:\n\n```python\nimport pandas as pd\nleft = pd.DataFrame({'id': [1, 2, 3], 'v': [10, 20, 30]})\nright = pd.DataFrame({'id': [2, 3, 3], 'w': [5, 6, 7]})\nm = left.merge(right, on='id', how='left')\nprint(len(m), m['w'].sum())\n```\nWhat is the printed output?",
+        "type": "multiple-choice",
+        "options": [
+          "A. 4 18.0",
+          "B. 3 18.0",
+          "C. 4 13.0",
+          "D. 3 12.0",
+          "E. 4 18"
+        ],
+        "correctAnswer": "A. 4 18.0",
+        "explanation": "The duplicate right-hand id 3 creates two joined rows. Four rows result; w values are NaN,5,6,7. Their skip-NaN sum is the float 18.0.",
+        "grading": "automatic",
+        "section": "Data Preparation"
+      },
+      {
+        "id": "caio_2026_c_q3",
+        "number": 3,
+        "points": 2,
+        "text": "For binary logistic regression with σ(z) = 1/(1+e^(−z)), z = w·x + b, the per-example\nloss is\nL = −[y·log σ(z) + (1−y)·log(1−σ(z))]\nThe gradient of L with respect to w is:",
+        "type": "multiple-choice",
+        "options": [
+          "A. (σ(z)−y)·x",
+          "B. (y−σ(z))·x",
+          "C. σ(z)(1−σ(z))·x",
+          "D. (σ(z)−y)",
+          "E. −y(1−σ(z))·x"
+        ],
+        "correctAnswer": "A. (σ(z)−y)·x",
+        "explanation": "Applying the chain rule to sigmoid cross-entropy gives dL/dz=sigma(z)-y, then dL/dw=(sigma(z)-y)x.",
+        "grading": "automatic",
+        "section": "Supervised Learning"
+      },
+      {
+        "id": "caio_2026_c_q4",
+        "number": 4,
+        "points": 2,
+        "text": "Training points (features → class): (0,0)→0, (4,0)→0, (0,3)→1, (2,2)→1. Euclidean\ndistance.\nA 3-NN classifier predicts which class for the test point (1,1)?",
+        "type": "multiple-choice",
+        "options": [
+          "A. Class 1",
+          "B. Class 0",
+          "C. Tie — cannot decide",
+          "D. Class 1, but 1-NN would predict class 0",
+          "E. It depends on the distance metric used"
+        ],
+        "correctAnswer": "A. Class 1",
+        "explanation": "Squared distances are 2,10,5,2. The nearest three labels are 0,1,1, so the vote is class 1. The two nearest points tie, so the added claim about 1-NN in D is not guaranteed without a tie-breaking rule.",
+        "grading": "automatic",
+        "section": "Supervised Learning"
+      },
+      {
+        "id": "caio_2026_c_q5",
+        "number": 5,
+        "points": 2,
+        "text": "A hard-margin SVM learns the weight vector w = [3, 4] (bias b chosen to maximize the\nmargin).\nmargin width = 2/‖w‖\nWhat is the width of the margin (distance between the two supporting\nhyperplanes)?",
+        "type": "multiple-choice",
+        "options": [
+          "A. 0.4",
+          "B. 0.2",
+          "C. 2.5",
+          "D. 5.0",
+          "E. 0.8"
+        ],
+        "correctAnswer": "A. 0.4",
+        "explanation": "||w||=sqrt(3^2+4^2)=5. The distance between the two support hyperplanes is 2/5=0.4.",
+        "grading": "automatic",
+        "section": "Kernel Methods"
+      },
+      {
+        "id": "caio_2026_c_q6",
+        "number": 6,
+        "points": 2,
+        "text": "DBSCAN with ε = 1.5 and minPts = 3 is run on the points (0,0), (0,1), (1,0), (10,10).\nEuclidean distance.\nHow many core points and how many noise points are there?",
+        "type": "multiple-choice",
+        "options": [
+          "A. 3 core, 1 noise",
+          "B. 4 core, 0 noise",
+          "C. 2 core, 2 noise",
+          "D. 3 core, 0 noise (the far point is a border point)",
+          "E. 0 core, 4 noise"
+        ],
+        "correctAnswer": "A. 3 core, 1 noise",
+        "explanation": "Using the standard convention that minPts includes the point itself, each of the first three points has three points in its epsilon-neighborhood. All are core; (10,10) has no core neighbor and is noise.",
+        "grading": "automatic",
+        "section": "Unsupervised Learning"
+      },
+      {
+        "id": "caio_2026_c_q7",
+        "number": 7,
+        "points": 2,
+        "text": "A test set has 1000 samples: 950 negative, 50 positive. A classifier predicts \"negative\"\nfor every sample.\nWhat are its accuracy and its recall on the positive class?",
+        "type": "multiple-choice",
+        "options": [
+          "A. Accuracy 0.95, recall 0.0",
+          "B. Accuracy 0.95, recall 0.95",
+          "C. Accuracy 0.50, recall 0.0",
+          "D. Accuracy 0.95, recall undefined",
+          "E. Accuracy 0.05, recall 0.0"
+        ],
+        "correctAnswer": "A. Accuracy 0.95, recall 0.0",
+        "explanation": "Accuracy=950/1000=0.95. Positive recall=TP/(TP+FN)=0/50=0.",
+        "grading": "automatic",
+        "section": "Evaluation of ML Models"
+      },
+      {
+        "id": "caio_2026_c_q8",
+        "number": 8,
+        "points": 2,
+        "text": "Edges: S→A cost 2, S→B cost 1, A→G cost 4, B→G cost 6. True cheapest costs to the goal:\nh*(S)=6, h*(A)=4, h*(B)=6.\nWhich heuristic is admissible but NOT consistent?",
+        "type": "multiple-choice",
+        "options": [
+          "A. h(S)=6, h(A)=4, h(B)=5",
+          "B. h(S)=6, h(A)=3, h(B)=6",
+          "C. h(S)=7, h(A)=4, h(B)=6",
+          "D. h(S)=0, h(A)=0, h(B)=0",
+          "E. h(S)=6, h(A)=4, h(B)=6"
+        ],
+        "correctAnswer": "B. h(S)=6, h(A)=3, h(B)=6",
+        "explanation": "B never overestimates, but on S->A it violates consistency: h(S)=6>2+h(A)=5. The other admissible options satisfy the edge inequalities, assuming h(G)=0.",
+        "grading": "automatic",
+        "section": "AI Search"
+      },
+      {
+        "id": "caio_2026_c_q9",
+        "number": 9,
+        "points": 2,
+        "text": "All step costs are positive but NOT all equal. A student claims breadth-first search will\nreturn the cheapest path because \"it explores level by level\".\nWhich statement is TRUE?",
+        "type": "multiple-choice",
+        "options": [
+          "A. The student is right: BFS expands nodes in order of increasing path cost.",
+          "B. BFS is optimal here, but only if the goal sits at the shallowest depth.",
+          "C. The student is wrong: BFS levels count steps, not cost — uniform-cost search should be used for cheapest-path optimality.",
+          "D. The student is wrong: BFS is not even complete when step costs differ.",
+          "E. Iterative deepening would fix the problem because it re-expands nodes."
+        ],
+        "correctAnswer": "C. The student is wrong: BFS levels count steps, not cost — uniform-cost search should be used for cheapest-path optimality.",
+        "explanation": "BFS orders by edge count, not accumulated weight. UCS orders by path cost and finds the cheapest path under the usual positive-cost termination assumptions.",
+        "grading": "automatic",
+        "section": "AI Search"
+      },
+      {
+        "id": "caio_2026_c_q10",
+        "number": 10,
+        "points": 2,
+        "text": "Tree-search A* (no repeated-state checking). Edges: S→A cost 1, S→B cost 2, A→G cost\n1, B→G cost 1. Heuristic: h(S)=0, h(A)=10, h(B)=0, h(G)=0.\nWhich path does A* return, and is it optimal?",
+        "type": "multiple-choice",
+        "options": [
+          "A. S → B → G, cost 3 — not optimal (the optimum is S → A → G, cost 2)",
+          "B. S → A → G, cost 2 — optimal",
+          "C. S → B → G, cost 3 — optimal",
+          "D. S → A → G, cost 11 — not optimal",
+          "E. S → B → G, cost 4 — not optimal"
+        ],
+        "correctAnswer": "A. S → B → G, cost 3 — not optimal (the optimum is S → A → G, cost 2)",
+        "explanation": "After S, A has f=11 and B has f=2. Expanding B generates G with f=3, which is popped before A. The returned cost 3 exceeds the true optimum 2 because h(A) overestimates.",
+        "grading": "automatic",
+        "section": "AI Search"
+      },
+      {
+        "id": "caio_2026_c_q11",
+        "number": 11,
+        "points": 2,
+        "text": "State space: branching factor b, solution depth d, maximum depth m (m ≥ d).\nWhich algorithm has the LOWEST worst-case memory complexity?",
+        "type": "multiple-choice",
+        "options": [
+          "A. Breadth-first search: O(b^d)",
+          "B. Depth-first search: O(b·m)",
+          "C. Iterative deepening DFS: O(b·d)",
+          "D. A*: O(b^d)",
+          "E. Uniform-cost search: O(b^d)"
+        ],
+        "correctAnswer": "C. Iterative deepening DFS: O(b·d)",
+        "explanation": "Iterative deepening stores O(bd), no worse than DFS O(bm) since d<=m; it is lower than exponential frontiers in the usual branching regime. It can tie DFS when d=m.",
+        "grading": "automatic",
+        "section": "AI Search"
+      },
+      {
+        "id": "caio_2026_c_q12",
+        "number": 12,
+        "points": 2,
+        "text": "Knowledge base KB = { P → Q, Q → R, ¬R }.\nWhich formula is logically entailed by KB?",
+        "type": "multiple-choice",
+        "options": [
+          "A. P",
+          "B. Q",
+          "C. ¬Q",
+          "D. P ∧ ¬R",
+          "E. R ∨ P"
+        ],
+        "correctAnswer": "C. ¬Q",
+        "explanation": "From Q->R and not R, modus tollens yields not Q (and then not P). Only not Q is listed as a consequence.",
+        "grading": "automatic",
+        "section": "Logical Reasoning"
+      },
+      {
+        "id": "caio_2026_c_q13",
+        "number": 13,
+        "points": 2,
+        "text": "KB = { A ∨ B, ¬A ∨ C, ¬B ∨ C, ¬C }.\nHow many models (satisfying truth assignments) does KB have?",
+        "type": "multiple-choice",
+        "options": [
+          "A. 0",
+          "B. 1",
+          "C. 2",
+          "D. 3",
+          "E. 4"
+        ],
+        "correctAnswer": "A. 0",
+        "explanation": "Not C together with not A or C forces not A; similarly it forces not B. This contradicts A or B, so there are no models.",
+        "grading": "automatic",
+        "section": "Logical Reasoning"
+      },
+      {
+        "id": "caio_2026_c_q14",
+        "number": 14,
+        "points": 2,
+        "text": "CSP: variables X (domain {1,2}), Y (domain {1,2,3}), Z (domain {1}). Constraints: X ≠\nZ, Y > X.\nUsing the minimum-remaining-values (MRV) heuristic, which variable is\nselected first?",
+        "type": "multiple-choice",
+        "options": [
+          "A. Z",
+          "B. X",
+          "C. Y",
+          "D. X or Y (tie)",
+          "E. Any — MRV does not apply before any assignment"
+        ],
+        "correctAnswer": "A. Z",
+        "explanation": "On the supplied domains, Z has only one remaining value, fewer than X or Y. MRV therefore selects Z before any propagation not specified in the question.",
+        "grading": "automatic",
+        "section": "Constraint Satisfaction Problems"
+      },
+      {
+        "id": "caio_2026_c_q15",
+        "number": 15,
+        "points": 2,
+        "text": "Q-learning update: Q(s,a) ← Q(s,a) + α·[r + γ·max_a′ Q(s′,a′) − Q(s,a)]. Current Q(s,a) =\n4, α = 0.5, reward r = 10, γ = 0.9, max_a′ Q(s′,a′) = 8.\nWhat is the updated Q(s,a)?",
+        "type": "multiple-choice",
+        "options": [
+          "A. 10.6",
+          "B. 17.2",
+          "C. 11.2",
+          "D. 13.6",
+          "E. 8.6"
+        ],
+        "correctAnswer": "A. 10.6",
+        "explanation": "Target=10+0.9*8=17.2. Q_new=4+0.5*(17.2-4)=10.6.",
+        "grading": "automatic",
+        "section": "Reinforcement Learning"
+      },
+      {
+        "id": "caio_2026_c_q16",
+        "number": 16,
+        "points": 2,
+        "text": "Select ALL correct options. You receive full marks only if every correct option — and no incorrect option\n— is selected.\nWhich statements about search algorithms are TRUE?",
+        "type": "multi-select",
+        "options": [
+          "A. A* using graph search with a consistent heuristic never needs to re-expand a node.",
+          "B. Greedy best-first search guarantees an optimal solution.",
+          "C. Uniform-cost search is equivalent to A* with h(n) = 0 for all n.",
+          "D. Iterative deepening A* (IDA*) uses asymptotically less memory than A*.",
+          "E. Depth-first search is optimal when all step costs are equal."
+        ],
+        "correctAnswer": "[\"A\", \"C\", \"D\"]",
+        "explanation": "Consistency makes closed-node A* re-expansion unnecessary. A* with h=0 is UCS. IDA* keeps a depth-first path instead of an exponential frontier. Greedy and DFS are not generally optimal.",
+        "grading": "automatic",
+        "section": "AI Search"
+      },
+      {
+        "id": "caio_2026_c_q17",
+        "number": 17,
+        "points": 2,
+        "text": "Select ALL correct options. You receive full marks only if every correct option — and no incorrect option\n— is selected.\nWhich statements about uninformed search are TRUE?",
+        "type": "multi-select",
+        "options": [
+          "A. Iterative deepening search is complete and optimal when all step costs are equal.",
+          "B. Breadth-first search is optimal when all step costs are equal.",
+          "C. Depth-first search is complete in infinite state spaces.",
+          "D. Uniform-cost search expands nodes in nondecreasing order of path cost g(n).",
+          "E. Breadth-first search uses less memory than depth-first search."
+        ],
+        "correctAnswer": "[\"A\", \"B\", \"D\"]",
+        "explanation": "With finite branching and equal positive costs, BFS and iterative deepening are complete and optimal. UCS pops nondecreasing g. DFS can get trapped on infinite branches and usually uses less memory than BFS.",
+        "grading": "automatic",
+        "section": "AI Search"
+      },
+      {
+        "id": "caio_2026_c_q18",
+        "number": 18,
+        "points": 2,
+        "text": "Select ALL correct options. You receive full marks only if every correct option — and no incorrect option\n— is selected.\nWhich statements about logical entailment are TRUE?",
+        "type": "multi-select",
+        "options": [
+          "A. If KB ⊨ φ then KB ∪ {ψ} ⊨ φ for any sentence ψ.",
+          "B. If φ is consistent with KB then KB ⊨ φ.",
+          "C. KB is unsatisfiable if and only if KB ⊨ ⊥ (false).",
+          "D. If KB ⊨ φ ∨ ψ then KB ⊨ φ or KB ⊨ ψ.",
+          "E. Propositional resolution is refutation-complete: KB ⊨ φ iff KB ∪ {¬φ} derives a contradiction by resolution."
+        ],
+        "correctAnswer": "[\"A\", \"C\", \"E\"]",
+        "explanation": "Classical entailment is monotonic; inconsistency entails false. Resolution is refutation-complete after conversion to clauses. Mere consistency is not entailment, and entailing a disjunction need not entail either disjunct separately.",
+        "grading": "automatic",
+        "section": "Logical Reasoning"
+      },
+      {
+        "id": "caio_2026_c_q19",
+        "number": 19,
+        "points": 2,
+        "text": "Select ALL correct options. You receive full marks only if every correct option — and no incorrect option\n— is selected.\nWhich statements about constraint propagation are TRUE?",
+        "type": "multi-select",
+        "options": [
+          "A. Forward checking prunes values from the domains of ALL unassigned variables after each assignment.",
+          "B. Maintaining arc consistency (e.g. AC-3) can detect failures that forward checking misses.",
+          "C. The MRV heuristic selects the variable involved in the greatest number of constraints.",
+          "D. Chronological backtracking is complete: it finds a solution if one exists.",
+          "E. With forward checking, an unassigned variable’s domain can become empty before that variable itself is assigned."
+        ],
+        "correctAnswer": "[\"B\", \"D\", \"E\"]",
+        "explanation": "Arc consistency can propagate through unassigned neighbors and find failures missed by forward checking. Finite-domain chronological backtracking is complete. Forward checking can empty an unassigned neighbor domain. It only checks neighbors, not all unassigned variables; MRV counts remaining values, not constraints.",
+        "grading": "automatic",
+        "section": "Constraint Satisfaction Problems"
+      },
+      {
+        "id": "caio_2026_c_q20",
+        "number": 20,
+        "points": 2,
+        "text": "Select ALL correct options. You receive full marks only if every correct option — and no incorrect option\n— is selected.\nWhich statements about CSPs are TRUE?",
+        "type": "multi-select",
+        "options": [
+          "A. A binary CSP with n variables of domain size d has at most d^n complete assignments.",
+          "B. Enforcing arc consistency at every node of the search tree is always faster than plain backtracking.",
+          "C. If every arc in the constraint graph is consistent, the CSP is guaranteed to have a solution.",
+          "D. The least-constraining-value heuristic orders values by how few options they remove for neighboring variables.",
+          "E. Forward checking enforces constraints only between the most recently assigned variable and the unassigned variables."
+        ],
+        "correctAnswer": "[\"A\", \"D\", \"E\"]",
+        "explanation": "There are at most d^n full assignments. LCV preserves neighbors choices, and forward checking tests constraints from the latest assignment to unassigned neighbors. Arc consistency has overhead and does not guarantee satisfiability on cyclic graphs.",
+        "grading": "automatic",
+        "section": "Constraint Satisfaction Problems"
+      },
+      {
+        "id": "caio_2026_c_q21",
+        "number": 21,
+        "points": 2,
+        "text": "Select ALL correct options. You receive full marks only if every correct option — and no incorrect option\n— is selected.\nWhich statements about supervised learning are TRUE?",
+        "type": "multi-select",
+        "options": [
+          "A. 1-NN has zero training error when no two training points share identical features but different labels.",
+          "B. Lasso (L1 regularization) can drive some coefficients to exactly zero, performing feature selection.",
+          "C. In bagging, each base learner is trained on a bootstrap sample (drawn with replacement) the same size as the training set.",
+          "D. Adding more trees to a random forest always reduces its bias.",
+          "E. One-hot encoding is required before a decision tree can use categorical features."
+        ],
+        "correctAnswer": "[\"A\", \"B\", \"C\"]",
+        "explanation": "With no conflicting duplicates, a training point is its own nearest neighbor. L1 promotes sparse coefficients. Standard bagging uses size-n bootstrap samples. More trees do not always reduce bias, and categorical trees need not use one-hot encoding.",
+        "grading": "automatic",
+        "section": "Supervised Learning"
+      },
+      {
+        "id": "caio_2026_c_q22",
+        "number": 22,
+        "points": 2,
+        "text": "Select ALL correct options. You receive full marks only if every correct option — and no incorrect option\n— is selected.\nWhich statements about clustering are TRUE?\n\n**Platform note:** This item has ambiguous source wording and will be teacher-marked. Select the options supported by your reading.",
+        "type": "multi-select",
+        "options": [
+          "A. In DBSCAN, a border point may be assigned to more than one cluster.",
+          "B. Single-linkage agglomerative clustering can discover elongated, chain-like clusters.",
+          "C. The elbow method always pinpoints a single unambiguous optimal k for k-means.",
+          "D. A Gaussian mixture model with diagonal covariances assumes features are uncorrelated within each component.",
+          "E. In agglomerative clustering, the height at which two clusters merge in the dendrogram equals the distance between them."
+        ],
+        "correctAnswer": "[\"B\", \"D\", \"E\"]",
+        "explanation": "B,D,E are true using the chosen linkage distance for dendrogram heights. In a standard DBSCAN run each point receives one label, so A is false if it means simultaneous assignment. A border point may be reachable from two clusters and assigned to either depending on traversal order; accept A,B,D,E if A is read as possible assignment across runs. The elbow need not be unambiguous. This source ambiguity is teacher-marked.\n\nMarking: award 2 points for either defensible complete selection described above, otherwise 0. This preserves the source all-or-nothing scoring rule.",
+        "grading": "manual",
+        "section": "Unsupervised Learning"
+      },
+      {
+        "id": "caio_2026_c_q23",
+        "number": 23,
+        "points": 2,
+        "text": "Select ALL correct options. You receive full marks only if every correct option — and no incorrect option\n— is selected.\nWhich statements about evaluation are TRUE?",
+        "type": "multi-select",
+        "options": [
+          "A. A classifier with 99% accuracy on a dataset that is 99% negative can still have zero recall on the positive class.",
+          "B. Raising the decision threshold always increases the F1 score.",
+          "C. An AUC-ROC of 0.5 indicates performance no better than random guessing.",
+          "D. A classifier that never predicts the positive class has precision 1.0 on that class.",
+          "E. Macro-averaged recall gives equal weight to each class, regardless of class size."
+        ],
+        "correctAnswer": "[\"A\", \"C\", \"E\"]",
+        "explanation": "An all-negative predictor can have 99% accuracy and zero positive recall. AUC 0.5 means random-level ranking by this metric, not necessarily identical behavior at every threshold. Macro recall weights classes equally. F1 need not rise with threshold; no positive predictions makes precision undefined (often reported as 0), not 1.",
+        "grading": "automatic",
+        "section": "Evaluation of ML Models"
+      },
+      {
+        "id": "caio_2026_c_q24",
+        "number": 24,
+        "points": 2,
+        "text": "Select ALL correct options. You receive full marks only if every correct option — and no incorrect option\n— is selected.\nWhich statements about kernels and SVMs are TRUE?",
+        "type": "multi-select",
+        "options": [
+          "A. The polynomial kernel (x·z + c)^1 is equivalent to a linear kernel (up to the constant c).",
+          "B. A smaller γ in the RBF kernel gives each training point a wider sphere of influence.",
+          "C. The Gram (kernel) matrix of a valid kernel is always positive semidefinite.",
+          "D. The RBF kernel can be expanded as a finite-degree polynomial in the input features.",
+          "E. Increasing the SVM regularization parameter C always increases the number of support vectors."
+        ],
+        "correctAnswer": "[\"A\", \"B\", \"C\"]",
+        "explanation": "Degree one gives the dot product plus c; smaller gamma broadens RBF influence; valid Gram matrices are PSD. RBF has an infinite expansion, and support-vector counts do not increase monotonically with C.",
+        "grading": "automatic",
+        "section": "Kernel Methods"
+      },
+      {
+        "id": "caio_2026_c_q25",
+        "number": 25,
+        "points": 2,
+        "text": "Select ALL correct options. You receive full marks only if every correct option — and no incorrect option\n— is selected.\nWhich statements about recommender systems are TRUE?",
+        "type": "multi-select",
+        "options": [
+          "A. Content-based filtering recommends items similar to ones the user has liked before.",
+          "B. User-based collaborative filtering predicts ratings from users with similar taste profiles.",
+          "C. Matrix factorization learns latent vector representations for both users and items.",
+          "D. Collaborative filtering needs item content features (genre, text) to compute recommendations.",
+          "E. A brand-new user with no ratings can receive personalized collaborative-filtering recommendations."
+        ],
+        "correctAnswer": "[\"A\", \"B\", \"C\"]",
+        "explanation": "Content-based methods compare item attributes; user CF uses similar taste profiles; factorization learns both user and item vectors. Pure CF does not require content features and cannot infer personalized preferences for a user with no interactions or other information.",
+        "grading": "automatic",
+        "section": "Recommender Systems"
+      },
+      {
+        "id": "caio_2026_c_q26",
+        "number": 26,
+        "points": 5,
+        "text": "Sensor Log Aggregation (fill in the 5 blanks)\nreadings.csv columns: ts (string 'YYYY-MM-DD HH:MM'), sensor, value.\nGoal: daily mean value per sensor, forward-filling days with no readings.\nComplete the script:\n\n```python\nimport pandas as pd\ndf = pd.read_csv('readings.csv')\ndf['ts'] = pd.______(df['ts'])\ndf = df.drop_duplicates(______)\ndf = df.______('ts')\ndaily = df.set_index('ts').groupby('sensor')['value'].______('D').mean()\ndaily = daily.______() # forward-fill days with no readings\n```\n\nWrite five answers labeled (a), (b), (c), (d), and (e), in order. Include any assumptions or calculations.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "(a) `to_datetime`\n(b) `subset=['ts', 'sensor']`\n(c) `sort_values`\n(d) `resample`\n(e) `groupby(level=0).ffill`",
+        "explanation": "Parse timestamps, remove duplicate sensor/timestamp keys, sort time, then resample each sensor to daily means. Group the final MultiIndex series by sensor before forward filling to prevent one sensor leaking into another. Source does not define duplicate identity: accept a justified alternative subset. Plain ffill is the likely intended fifth answer but can fill a leading missing value from a different sensor; accept it only under the explicit assumption that each sensor starts with a valid daily mean.\n\nPlatform practice rubric: 1 point per correct blank, up to 5; accept equivalent code, set order, mathematical forms, and rounding consistent with the prompt. Apply the source-specific alternatives above. This per-blank rubric is independently prepared, not an official marking scheme.",
+        "grading": "manual",
+        "section": "Data Preparation"
+      },
+      {
+        "id": "caio_2026_c_q27",
+        "number": 27,
+        "points": 5,
+        "text": "Gini Split Selection (fill in the 5 blanks; 2 decimals)\n8 samples. Feature X and class y:\nX: 1 2 3 | 4 5 | 6 7 8\ny: 0 0 0 | 1 1 | 1 1 1\nConsider the candidate splits at 3.5 and 5.5. Round to 2 decimals.\n\n```text\nGini(parent) = ______\nSplit at 3.5 → Gini(left) = ______ (right side is pure)\nSplit at 5.5 → weighted Gini = ______\nGini gain at 5.5 = ______\nBetter split threshold = ______\n```\n\nWrite five answers labeled (a), (b), (c), (d), and (e), in order. Include any assumptions or calculations.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "(a) `0.47`\n(b) `0.00`\n(c) `0.30`\n(d) `0.17`\n(e) `3.5`",
+        "explanation": "Parent Gini=1-(3/8)^2-(5/8)^2=0.46875. At 3.5 both children are pure. At 5.5 the left has 3 zeros/2 ones (Gini 0.48) and right is pure, so weighted Gini=(5/8)*0.48=0.30; gain=0.16875.\n\nPlatform practice rubric: 1 point per correct blank, up to 5; accept equivalent code, set order, mathematical forms, and rounding consistent with the prompt. Apply the source-specific alternatives above. This per-blank rubric is independently prepared, not an official marking scheme.",
+        "grading": "manual",
+        "section": "Supervised Learning"
+      },
+      {
+        "id": "caio_2026_c_q28",
+        "number": 28,
+        "points": 5,
+        "text": "Naive Bayes by Hand (fill in the 5 blanks; 2 decimals)\n6 training emails, Laplace smoothing α = 1.\nSpam: \"buy cheap\", \"buy now\", \"cheap deal\"\nHam: \"see now\", \"see deal\", \"lunch now\"\nVocabulary: {buy, cheap, now, deal, see, lunch}. Test email: \"buy now\".\nRound to 2 decimals.\n\n```text\nP(buy | spam) = ______\nP(now | spam) ≈ ______\nP(buy | ham) ≈ ______\nP(spam | \"buy now\") ≈ ______ (normalized posterior)\nPredicted class = ______\n```\n\nWrite five answers labeled (a), (b), (c), (d), and (e), in order. Include any assumptions or calculations.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "(a) `0.25`\n(b) `0.17`\n(c) `0.08`\n(d) `0.67`\n(e) `spam`",
+        "explanation": "Using multinomial NB, each class has 6 tokens and vocabulary size 6, so the smoothed denominator is 12. P(buy|spam)=3/12, P(now|spam)=2/12, P(buy|ham)=1/12. P(now|ham)=3/12 and equal priors give posterior 2/3. Source does not name the NB variant: accept a consistent Bernoulli interpretation too (0.60,0.40,0.20,0.73,spam when all six presence/absence features are used). Do not mix Bernoulli and multinomial denominators.\n\nPlatform practice rubric: 1 point per correct blank, up to 5; accept equivalent code, set order, mathematical forms, and rounding consistent with the prompt. Apply the source-specific alternatives above. This per-blank rubric is independently prepared, not an official marking scheme.",
+        "grading": "manual",
+        "section": "Supervised Learning"
+      },
+      {
+        "id": "caio_2026_c_q29",
+        "number": 29,
+        "points": 5,
+        "text": "One Perceptron Update (fill in the 5 blanks)\nPerceptron: predict 1 if w·x + b > 0, else 0.\nStart: w = [0.5, −1.0], b = 0.2. Training example: x = (1, 2), y = 1.\nUpdate rule on a mistake: w ← w + y·x, b ← b + y.\n\n```text\nz = w·x + b = ______\npredicted class = ______\nupdated w = ______ (e.g. [1.5, 1.0])\nupdated b = ______\nnew z on the same example = ______\n```\n\nWrite five answers labeled (a), (b), (c), (d), and (e), in order. Include any assumptions or calculations.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "(a) `-1.3`\n(b) `0`\n(c) `[1.5, 1.0]`\n(d) `1.2`\n(e) `4.7`",
+        "explanation": "Initial score=0.5-2+0.2=-1.3, so prediction 0 is mistaken. Apply the stated positive-label update: w=[0.5,-1]+[1,2], b=0.2+1. New score=1.5+2+1.2=4.7. The supplied rule is evaluated only on this y=1 example.\n\nPlatform practice rubric: 1 point per correct blank, up to 5; accept equivalent code, set order, mathematical forms, and rounding consistent with the prompt. Apply the source-specific alternatives above. This per-blank rubric is independently prepared, not an official marking scheme.",
+        "grading": "manual",
+        "section": "Supervised Learning"
+      },
+      {
+        "id": "caio_2026_c_q30",
+        "number": 30,
+        "points": 5,
+        "text": "Uniform-Cost Search Trace (fill in the 5 blanks)\nEdges: S→A cost 2, S→B cost 5, A→B cost 1, A→G cost 6, B→G cost 2.\nUniform-cost search (graph search), ties broken deterministically.\n\n```text\nAfter expanding S, the frontier holds A(2) and B(5). Expanded next: ______\nB's path cost is then improved from 5 to ______\nThe node expanded after that is ______\nReturned optimal path cost = ______\nReturned optimal path = ______\n```\n\nWrite five answers labeled (a), (b), (c), (d), and (e), in order. Include any assumptions or calculations.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "(a) `A`\n(b) `3`\n(c) `B`\n(d) `5`\n(e) `S -> A -> B -> G`",
+        "explanation": "A is cheapest at cost 2. Its edge to B improves B to 3, then B improves G to 5. UCS pops that goal before any more expensive path.\n\nPlatform practice rubric: 1 point per correct blank, up to 5; accept equivalent code, set order, mathematical forms, and rounding consistent with the prompt. Apply the source-specific alternatives above. This per-blank rubric is independently prepared, not an official marking scheme.",
+        "grading": "manual",
+        "section": "AI Search"
+      },
+      {
+        "id": "caio_2026_c_q31",
+        "number": 31,
+        "points": 5,
+        "text": "BFS vs DFS Expansion Order (fill in the 5 blanks)\nEdges: S→A, S→B, A→D, B→C, C→G, D→G. Goal: G.\nBFS: queue; neighbors enqueued alphabetically.\nDFS: stack; neighbors pushed in reverse-alphabetical order (so the alphabetically-first\nneighbor is popped first).\n\n```text\nBFS node expansion order (until G is popped): ______\nDFS node expansion order (until G is popped): ______\nNodes expanded by BFS before popping G: ______\nNodes expanded by DFS before popping G: ______\nWhich algorithm popped the goal first: ______\n```\n\nWrite five answers labeled (a), (b), (c), (d), and (e), in order. Include any assumptions or calculations.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "(a) `S, A, B, D, C, G`\n(b) `S, A, D, G`\n(c) `5`\n(d) `3`\n(e) `DFS`",
+        "explanation": "BFS visits both depth-one nodes before D and C, then pops G. DFS follows S-A-D-G. Counts in (c,d) exclude G because the wording says before popping G; the order lists include G. Duplicate-state handling does not affect these prefixes.\n\nPlatform practice rubric: 1 point per correct blank, up to 5; accept equivalent code, set order, mathematical forms, and rounding consistent with the prompt. Apply the source-specific alternatives above. This per-blank rubric is independently prepared, not an official marking scheme.",
+        "grading": "manual",
+        "section": "AI Search"
+      },
+      {
+        "id": "caio_2026_c_q32",
+        "number": 32,
+        "points": 5,
+        "text": "Model Counting (fill in the 5 blanks)\nKB = { A → B, B → C } over variables {A, B, C}.\n\n```text\nTotal truth assignments: ______\nModels of KB: ______\nIs (A → C) entailed by KB? (yes/no): ______\nModels in which ¬A holds: ______\nModels in which (B ∧ ¬C) holds: ______\n```\n\nWrite five answers labeled (a), (b), (c), (d), and (e), in order. Include any assumptions or calculations.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "(a) `8`\n(b) `4`\n(c) `yes`\n(d) `3`\n(e) `0`",
+        "explanation": "Valid (A,B,C) assignments are 000,001,011,111. Thus 4 of 2^3 assignments satisfy KB; 3 have not A, none have B and not C. The implication A->C holds in every model.\n\nPlatform practice rubric: 1 point per correct blank, up to 5; accept equivalent code, set order, mathematical forms, and rounding consistent with the prompt. Apply the source-specific alternatives above. This per-blank rubric is independently prepared, not an official marking scheme.",
+        "grading": "manual",
+        "section": "Logical Reasoning"
+      },
+      {
+        "id": "caio_2026_c_q33",
+        "number": 33,
+        "points": 5,
+        "text": "Backtracking with Forward Checking (fill in the 5 blanks)\nVariables X, Y, Z, each domain {R, G, B}. Constraints: X ≠ Y, Y ≠ Z.\nBacktracking with MRV (ties → alphabetical) and forward checking.\n\n```text\nAssign X = R. Forward checking reduces Y’s domain to ______ (e.g. G,B)\nMRV now selects variable ______\nAssign Y = G. Forward checking reduces Z’s domain to ______\nComplete solutions with X = R: ______\nTotal complete solutions: ______\n```\n\nWrite five answers labeled (a), (b), (c), (d), and (e), in order. Include any assumptions or calculations.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "(a) `G,B`\n(b) `Y`\n(c) `R,B`\n(d) `4`\n(e) `12`",
+        "explanation": "After X=R, Y loses R and is the smallest remaining domain. After Y=G, Z loses G. With X fixed there are 2 choices for Y and 2 for Z, giving 4; across all three X values there are 12.\n\nPlatform practice rubric: 1 point per correct blank, up to 5; accept equivalent code, set order, mathematical forms, and rounding consistent with the prompt. Apply the source-specific alternatives above. This per-blank rubric is independently prepared, not an official marking scheme.",
+        "grading": "manual",
+        "section": "Constraint Satisfaction Problems"
+      },
+      {
+        "id": "caio_2026_c_q34",
+        "number": 34,
+        "points": 5,
+        "text": "Cost-Sensitive Comparison (fill in the 5 blanks)\nTest set: 1000 samples. Costs: false positive = 1, false negative = 10.\nClassifier A: TP=80, FP=20, FN=30, TN=870.\nClassifier B: TP=60, FP=5, FN=50, TN=885.\n\n```text\nTotal cost of A = ______\nTotal cost of B = ______\nAccuracy of A = ______\nAccuracy of B = ______\nBetter classifier under this cost model: ______\n```\n\nWrite five answers labeled (a), (b), (c), (d), and (e), in order. Include any assumptions or calculations.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "(a) `320`\n(b) `505`\n(c) `0.95`\n(d) `0.945`\n(e) `A`",
+        "explanation": "Costs are 20+10*30=320 and 5+10*50=505. Accuracies are (80+870)/1000=0.95 and (60+885)/1000=0.945. A is better under the supplied cost model despite having more false positives.\n\nPlatform practice rubric: 1 point per correct blank, up to 5; accept equivalent code, set order, mathematical forms, and rounding consistent with the prompt. Apply the source-specific alternatives above. This per-blank rubric is independently prepared, not an official marking scheme.",
+        "grading": "manual",
+        "section": "Evaluation of ML Models"
+      },
+      {
+        "id": "caio_2026_c_q35",
+        "number": 35,
+        "points": 5,
+        "text": "Polynomial Kernel by Hand (fill in the 5 blanks)\nk(x, z) = (x·z + 1)². Explicit map for 2-D inputs:\nφ(x) = [1, √2·x₁, √2·x₂, x₁², √2·x₁x₂, x₂²].\nTake x = (1, 2), z = (2, 0). Hint: √2 ≈ 1.414.\n\n```text\nx·z = ______\nk(x, z) = ______\nDimension of the explicit feature space = ______\nThe √2·x₁x₂ component of φ(x) ≈ ______\n‖φ(x)‖² = k(x, x) = ______\n```\n\nWrite five answers labeled (a), (b), (c), (d), and (e), in order. Include any assumptions or calculations.",
+        "type": "text-input",
+        "options": [],
+        "correctAnswer": "(a) `2`\n(b) `9`\n(c) `6`\n(d) `2.828`\n(e) `36`",
+        "explanation": "x dot z=2; kernel=(2+1)^2=9. The given map has 6 coordinates. Its cross term is sqrt(2)*1*2=2.828. Self-kernel=(1^2+2^2+1)^2=36.\n\nPlatform practice rubric: 1 point per correct blank, up to 5; accept equivalent code, set order, mathematical forms, and rounding consistent with the prompt. Apply the source-specific alternatives above. This per-blank rubric is independently prepared, not an official marking scheme.",
+        "grading": "manual",
+        "section": "Kernel Methods"
+      }
+    ]
+  }
+]

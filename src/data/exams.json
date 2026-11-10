@@ -1,7 +1,8 @@
 [
   {
     "id": "exam_1",
-    "name": "Past Exam 1 (Questions 1-35 of 35)",
+    "name": "2025 CAIO - Past Exam 1 (Questions 1-35 of 35)",
+    "year": 2025,
     "difficulty": "Harder than actual exam",
     "questions": [
       {
@@ -502,7 +503,8 @@
   },
   {
     "id": "exam_2",
-    "name": "Past Exam 2 (Questions 1-35 of 35)",
+    "name": "2025 CAIO - Past Exam 2 (Questions 1-35 of 35)",
+    "year": 2025,
     "difficulty": "Equivalent to actual exam",
     "questions": [
       {
@@ -1009,7 +1011,8 @@
   },
   {
     "id": "exam_3",
-    "name": "Past Exam 3 (Questions 1-35 of 35)",
+    "name": "2025 CAIO - Past Exam 3 (Questions 1-35 of 35)",
+    "year": 2025,
     "difficulty": "Harder than actual exam",
     "questions": [
       {

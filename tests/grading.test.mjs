@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import ts from 'typescript';
 import { createRequire } from 'node:module';
+import { fileURLToPath } from 'node:url';
 
 // Load the pure grading module without a new test runner or a particular Node
 // TypeScript-loader version. TypeScript is already a project dependency.
@@ -12,6 +13,91 @@ const { checkAnswer, getAttemptGrade, getQuestionGrade, MANUAL_MARKS_KEY, parseS
 
 const sets = JSON.parse(readFileSync(new URL('../src/data/cjaio-exams.json', import.meta.url), 'utf8'));
 const drills = JSON.parse(readFileSync(new URL('../src/data/cjaio-drills.json', import.meta.url), 'utf8'));
+const caio2026 = JSON.parse(readFileSync(new URL('../src/data/caio-2026-exams.json', import.meta.url), 'utf8'));
+
+test('the live catalog includes the 2025 and 2026 papers without changing saved exam IDs', () => {
+  const require = createRequire(import.meta.url);
+  const source = readFileSync(new URL('../src/data/all-exams.ts', import.meta.url), 'utf8');
+  const compiled = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS, esModuleInterop: true } }).outputText;
+  const loaded = { exports: {} };
+  const dataRequire = path => require(fileURLToPath(new URL(`../src/data/${path}`, import.meta.url)));
+  new Function('require', 'module', 'exports', compiled)(dataRequire, loaded, loaded.exports);
+  const exams = loaded.exports.default;
+  const older = exams.filter(exam => exam.competition === 'CAIO' && exam.year === 2025);
+  const newer = exams.filter(exam => exam.competition === 'CAIO' && exam.year === 2026);
+  assert.deepEqual(older.map(exam => exam.id), ['exam_1', 'exam_2', 'exam_3']);
+  assert.deepEqual(newer.map(exam => exam.id), ['caio_2026_a', 'caio_2026_b', 'caio_2026_c']);
+  for (const exam of [...older, ...newer]) {
+    assert(exam.name.startsWith(String(exam.year)));
+    assert.equal(exam.durationMinutes, 90);
+    assert.equal(exam.questions.length, 35);
+    assert(exam.questions.every(q => q.id === `${exam.id}_q${q.number}`));
+  }
+  assert(exams.filter(exam => exam.name.startsWith("Max's")).every(exam => exam.year === undefined));
+  assert.equal(exams.filter(exam => exam.competition === 'CJAIO').length, 4);
+});
+
+test('2026 CAIO papers preserve the 35-question, 100-point format and unique IDs', () => {
+  assert.equal(caio2026.length, 3);
+  const legacy = JSON.parse(readFileSync(new URL('../src/data/exams.json', import.meta.url), 'utf8'));
+  const all = [...legacy, ...sets, ...drills, ...caio2026];
+  assert.equal(new Set(all.map(e => e.id)).size, all.length);
+  const questions = all.flatMap(e => e.questions);
+  assert.equal(new Set(questions.map(q => q.id)).size, questions.length);
+  for (const exam of caio2026) {
+    assert.equal(exam.competition, 'CAIO');
+    assert.equal(exam.durationMinutes, 90);
+    assert.equal(exam.questions.reduce((sum,q) => sum+q.points,0), 100);
+    assert.deepEqual(exam.questions.map(q => q.number), Array.from({length:35},(_,i)=>i+1));
+    assert.equal(exam.questions.filter(q => q.type === 'multiple-choice').length,15);
+    assert.equal(exam.questions.filter(q => q.type === 'multi-select').length,10);
+    assert.equal(exam.questions.filter(q => q.type === 'text-input').length,10);
+    for (const q of exam.questions) {
+      assert(q.explanation.trim());
+      assert.equal((q.text.match(/```/g) || []).length % 2,0);
+      if (q.number <= 25) {
+        assert.equal(q.points,2);
+        assert.equal(q.options.length,5);
+        if (q.type === 'multiple-choice') {
+          assert(q.options.includes(q.correctAnswer));
+          for (const option of q.options) assert.equal(checkAnswer(option,q.correctAnswer,q.type), option === q.correctAnswer);
+        } else {
+          assert(parseSelections(q.correctAnswer).length > 0);
+          assert(checkAnswer(q.correctAnswer,q.correctAnswer,q.type));
+          assert(!checkAnswer('["A","B","C","D","E"]',q.correctAnswer,q.type));
+        }
+      } else {
+        assert.equal(q.points,5);
+        assert.equal(q.grading,'manual');
+        assert.equal((q.text.match(/_{3,}/g) || []).length,5);
+        assert.equal((q.correctAnswer.match(/^\([a-e]\)/gm) || []).length,5);
+      }
+    }
+  }
+});
+
+test('2026 CAIO grading supports complete attempts, pending work, and teacher credit', () => {
+  for (const [index, exam] of caio2026.entries()) {
+    const answers = Object.fromEntries(exam.questions.map(q => [q.id,q.correctAnswer]));
+    const pendingCount = [10,13,11][index];
+    const score = [50,44,48][index];
+    assert.deepEqual(getAttemptGrade(exam,answers), {score,pendingCount,pendingPoints:100-score,gradedPoints:score});
+    assert.deepEqual(getAttemptGrade(exam,{}), {score:0,pendingCount:0,pendingPoints:0,gradedPoints:100});
+    answers[MANUAL_MARKS_KEY] = JSON.stringify(Object.fromEntries(exam.questions.filter(q=>q.grading==='manual').map(q=>[q.id,q.points])));
+    assert.equal(getAttemptGrade(exam,JSON.parse(JSON.stringify(answers))).score,100);
+    const marks = JSON.parse(answers[MANUAL_MARKS_KEY]);
+    marks[exam.questions[25].id]=3;
+    answers[MANUAL_MARKS_KEY]=JSON.stringify(marks);
+    assert.equal(getAttemptGrade(exam,answers).score,98);
+  }
+});
+
+test('clearing a teacher-marked select-all response is skipped rather than pending', () => {
+  const q = caio2026[1].questions[15];
+  assert.equal(q.grading,'manual');
+  assert.deepEqual(getQuestionGrade(q,{[q.id]:'[]'}), {status:'incorrect',score:0});
+  assert.deepEqual(getQuestionGrade(q,{[q.id]:'["B","D"]'}), {status:'pending',score:0});
+});
 
 test('attempt payload uses a nullable completion timestamp until submission', async () => {
   const source = readFileSync(new URL('../src/lib/attempt-persistence.ts', import.meta.url), 'utf8');
@@ -52,6 +138,15 @@ test('legacy indented code options render as code and keep math and unsafe text 
   assert(mixed.includes('&lt;script&gt;'));
   assert(!mixed.includes('<script>'));
   assert(mixed.includes('class="inline-code"'));
+  for (const exam of caio2026) {
+    for (const q of exam.questions) {
+      for (const text of [q.text, ...q.options, q.correctAnswer, q.explanation]) {
+        const rendered = renderToStaticMarkup(createElement(MathRenderer, { text }));
+        assert(!rendered.includes('```'), `${q.id}: unrendered code fence`);
+        if (text.includes('```')) assert(rendered.includes('<pre><code>'), `${q.id}: missing code block`);
+      }
+    }
+  }
 });
 
 test('the equivalent and harder drills use the CJAIO format and have independent stable IDs', () => {

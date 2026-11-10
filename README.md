@@ -6,6 +6,14 @@ The application uses a shared light workspace: a white sidebar and header, cool 
 
 Design tokens and shared screen styles live in `src/app/globals.css`; the reference specification and preserved feature inventory are in `docs/design-system.md`. Stored paper names/IDs and marking rules remain unchanged; display names are shortened only in the interface. Code blocks support the indented fences used by older CAIO papers, and KaTeX CSS ships from the installed package.
 
+## 2026-27 CAIO National Qualifier papers
+
+Papers A, B, and C are available in the CAIO catalog, adding 105 questions and independently worked solutions. Each paper has 35 questions and 100 marks. Q1-15 are single-choice; Q16-25 use exact select-all scoring; Q26-35 accept five labeled answers and use teacher marking with a practice rubric of one point per blank. Four ambiguous select-all items (B16, B18, B25, C22) also use teacher review. The existing 90-minute CAIO practice setting is retained; the PDFs do not state a time limit.
+
+The catalog groups dated papers newest first: **2026 papers** (A-C), then **2025 papers** (Past Exams 1-3). Max's drills remain separate and undated. Numeric `year` metadata is retained by both importers; year-prefixed paper names appear in practice, review, history, and the question book. Existing exam/question IDs remain unchanged, including saved 2025 attempts.
+
+See [the import guide and solution index](content/caio-2026/README.md) for source caveats, alternative answers, regeneration, and validation. Runtime data is `src/data/caio-2026-exams.json`; existing CAIO and CJAIO IDs are preserved. These files use a dedicated importer because the legacy Markdown parser does not support select-all or manual marking metadata.
+
 ## CJAIO practice and marking
 
 - The header's **CAIO** and **CJAIO** tabs open `/` and `/cjaio` respectively. Existing CAIO exam IDs and saved attempts are preserved.

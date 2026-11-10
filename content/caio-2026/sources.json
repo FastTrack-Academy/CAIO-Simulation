@@ -1,0 +1,17 @@
+[
+  {
+    "paper": "A",
+    "file": "2026-27-caio-national-qualifier-practical-competition-a.pdf",
+    "sha256": "085390fcd12678d712ac332aef8e4fadf8991df7fba2c40e774d1b25ceed0a8a"
+  },
+  {
+    "paper": "B",
+    "file": "2026-27-caio-national-qualifier-practical-competition-b.pdf",
+    "sha256": "26346a17f57594eacb0cb5c03f4dc0bb383b9cec0a14685d9c522e691fd82a44"
+  },
+  {
+    "paper": "C",
+    "file": "2026-27-caio-national-qualifier-practical-competition-c.pdf",
+    "sha256": "03fdc5c7a165c72bb07db5dc2186693f0c1cb0733114f9a8f896ad538c61eb03"
+  }
+]

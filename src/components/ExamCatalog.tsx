@@ -40,8 +40,11 @@ export function ExamCatalog({ competition }: { competition: NonNullable<Exam['co
       bestScore: marked.length ? Math.max(...marked.map(attempt => Math.round(100 * attempt.score / attempt.totalPoints))) : null,
     };
   });
+  const papers = examStatus.filter(exam => !exam.name.startsWith("Max's"));
+  const years = [...new Set(papers.flatMap(exam => exam.year ? [exam.year] : []))].sort((a, b) => b - a);
   const groups = [
-    { title: 'Practice sets', exams: examStatus.filter(exam => !exam.name.startsWith("Max's")) },
+    ...years.map(year => ({ title: `${year} papers`, exams: papers.filter(exam => exam.year === year) })),
+    { title: 'Practice sets', exams: papers.filter(exam => !exam.year) },
     { title: 'Max’s drills', exams: examStatus.filter(exam => exam.name.startsWith("Max's")) },
   ];
 
